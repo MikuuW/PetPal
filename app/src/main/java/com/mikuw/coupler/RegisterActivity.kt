@@ -1,8 +1,11 @@
 package com.mikuw.coupler
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -19,7 +22,8 @@ class RegisterActivity : AppCompatActivity() {
         // Variablen zuweisen
         val emailTextView = findViewById<TextView>(R.id.etv_register_email)
         val passwordTextView = findViewById<TextView>(R.id.etv_register_password)
-        val passwordConfirmationTextView = findViewById<TextView>(R.id.etv_register_passwordConfirmation)
+        val passwordConfirmationTextView =
+            findViewById<TextView>(R.id.etv_register_passwordConfirmation)
         val registerButton = findViewById<Button>(R.id.button_register)
 
         registerButton.setOnClickListener {
@@ -27,27 +31,27 @@ class RegisterActivity : AppCompatActivity() {
             val password = passwordTextView.text.toString()
             val passwordConfirmation = passwordConfirmationTextView.text.toString()
 
-            if (email.isNotEmpty() && password.isNotEmpty() && passwordConfirmation.isNotEmpty()) {
-                // This code will be executed when the button is clicked and all the fields are not empty
-                println(email)
-                println(password)
-                println(passwordConfirmation)
 
-                val auth = FirebaseAuth.getInstance()
-
-                if (password == passwordConfirmation) {
-                    auth.createUserWithEmailAndPassword(email, password)
-                }
-            } else {
-                // Handle the case when any of the fields are empty
-                // For example, show an error message to the user
-                println("Please fill all the fields.")
+            // Wenn ein Feld leer ist oder Passwörter nicht übereinstimmen
+            if (email.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()) {
+                Toast.makeText(this, "Please fill all the fields.", Toast.LENGTH_SHORT).show()
+            } else if (password != passwordConfirmation) {
+                Toast.makeText(this, "Passwords does not match!", Toast.LENGTH_SHORT).show()
             }
+
+
+            val auth = FirebaseAuth.getInstance()
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        // User creation failed
+                        Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
+
         }
-
-
-
-
 
 
     }
