@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "54836878225",
+    "project_id": "coupler-a6842",
+    "storage_bucket": "coupler-a6842.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54836878225:android:a8ccedec84aed98d5c9830",
+        "android_client_info": {
+          "package_name": "com.mikuw.coupler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54836878225-7otkci2pou2c0ppvj1334uid6rip1hmo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3AYBUV6h5QMoOrJRYkwIRoqk6391aqKM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54836878225-7otkci2pou2c0ppvj1334uid6rip1hmo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
