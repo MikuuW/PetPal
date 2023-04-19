@@ -50,52 +50,41 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         try {
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        // Login successful, you can get the user information from the AuthResult object
-                        val user = task.result?.user
-                        Log.d(TAG, "User account created with email: ${user?.email}")
-                        Toast.makeText(
-                            this,
-                            "User created successful",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        // Login failed, handle specific types of exceptions
-                        when (val exception = task.exception) {
-                            is FirebaseAuthWeakPasswordException -> {
-                                Toast.makeText(
-                                    this,
-                                    "The password is too weak.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            is FirebaseAuthInvalidCredentialsException -> {
-                                Toast.makeText(
-                                    this,
-                                    "The email address is not valid.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            is FirebaseAuthUserCollisionException -> {
-                                Toast.makeText(
-                                    this,
-                                    "The email address is already in use.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            else -> {
-                                // Unknown error occurred, display a generic error message
-                                Toast.makeText(
-                                    this,
-                                    "An error occurred: ${exception?.message}",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Login successful, you can get the user information from the AuthResult object
+                    val user = task.result?.user
+                    Log.d(TAG, "User account created with email: ${user?.email}")
+                    Toast.makeText(
+                        this, "User created successful", Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    // Login failed, handle specific types of exceptions
+                    when (val exception = task.exception) {
+                        is FirebaseAuthWeakPasswordException -> {
+                            Toast.makeText(
+                                this, "The password is too weak.", Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is FirebaseAuthInvalidCredentialsException -> {
+                            Toast.makeText(
+                                this, "The email address is not valid.", Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is FirebaseAuthUserCollisionException -> {
+                            Toast.makeText(
+                                this, "The email address is already in use.", Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        else -> {
+                            // Unknown error occurred, display a generic error message
+                            Toast.makeText(
+                                this, "An error occurred: ${exception?.message}", Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
+            }
         } catch (e: Exception) {
             Log.e(TAG, "Error creating user account", e)
             Toast.makeText(this, "An error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
