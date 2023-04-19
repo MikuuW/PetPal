@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -24,14 +25,18 @@ class RegisterActivity : AppCompatActivity() {
 
         // Do any additional setup for your activity here
         // Variablen zuweisen
-        val emailTextView = findViewById<TextView>(R.id.etv_register_email).text.toString()
-        val passwordTextView = findViewById<TextView>(R.id.etv_register_password).text.toString()
+        val emailTextView = findViewById<TextView>(R.id.etv_register_email)
+        val passwordTextView = findViewById<TextView>(R.id.etv_register_password)
         val passwordConfirmationTextView =
-            findViewById<TextView>(R.id.etv_register_passwordConfirmation).text.toString()
+            findViewById<TextView>(R.id.etv_register_passwordConfirmation)
         val registerButton = findViewById<Button>(R.id.button_register)
 
         registerButton.setOnClickListener {
-            registerUser(emailTextView, passwordTextView, passwordConfirmationTextView)
+            val email = emailTextView.text.toString()
+            val password = passwordTextView.text.toString()
+            val passwordConfirmation = passwordConfirmationTextView.text.toString()
+            registerUser(email, password, passwordConfirmation)
+            createUserinFirestore(email)
         }
     }
 
@@ -87,4 +92,24 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-}
+    private fun createUserinFirestore(email: String) {
+        // Access a Cloud Firestore instance from your Activity
+        val db = FirebaseFirestore.getInstance()
+
+        // Create a new user object with the given email
+        val user = hashMapOf(
+            "email" to email
+        )
+
+        // Add the user object to a new document in the "users" collection
+        db.collection("users")
+            .add(user)
+            .addOnSuccessListener { documentReference ->
+                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
+    }
+
+} //end
