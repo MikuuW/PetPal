@@ -8,8 +8,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 
 class RegisterActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -30,29 +34,72 @@ class RegisterActivity : AppCompatActivity() {
             val email = emailTextView.text.toString()
             val password = passwordTextView.text.toString()
             val passwordConfirmation = passwordConfirmationTextView.text.toString()
-
-
-            // Wenn ein Feld leer ist oder Passwörter nicht übereinstimmen
-            if (email.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()) {
-                Toast.makeText(this, "Please fill all the fields.", Toast.LENGTH_SHORT).show()
-            } else if (password != passwordConfirmation) {
-                Toast.makeText(this, "Passwords does not match!", Toast.LENGTH_SHORT).show()
-            }
-
-            // Versucht einzuloggen - bei Fehler wird der Fehler als Toast ausgegeben
-            val auth = FirebaseAuth.getInstance()
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        // User creation failed
-                        Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-
+            registerUser(email, password, passwordConfirmation)
 
         }
-
-
     }
+
+    private fun registerUser(email: String, password: String, passwordConfirmation: String) {
+        val auth = FirebaseAuth.getInstance()
+
+        // Wenn ein Feld leer ist oder Passwörter nicht übereinstimmen
+        if (email.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()) {
+            Toast.makeText(this, "Please fill all the fields.", Toast.LENGTH_SHORT).show()
+        } else if (password != passwordConfirmation) {
+            Toast.makeText(this, "Passwords does not match!", Toast.LENGTH_SHORT).show()
+        }
+
+        try {
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Login successful, you can get the user information from the AuthResult object
+                        val user = task.result?.user
+                        Log.d(TAG, "User account created with email: ${user?.email}")
+                        Toast.makeText(
+                            this,
+                            "User created successful",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        // Login failed, handle specific types of exceptions
+                        when (val exception = task.exception) {
+                            is FirebaseAuthWeakPasswordException -> {
+                                Toast.makeText(
+                                    this,
+                                    "The password is too weak.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            is FirebaseAuthInvalidCredentialsException -> {
+                                Toast.makeText(
+                                    this,
+                                    "The email address is not valid.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            is FirebaseAuthUserCollisionException -> {
+                                Toast.makeText(
+                                    this,
+                                    "The email address is already in use.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            else -> {
+                                // Unknown error occurred, display a generic error message
+                                Toast.makeText(
+                                    this,
+                                    "An error occurred: ${exception?.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error creating user account", e)
+            Toast.makeText(this, "An error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }
