@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,12 +32,21 @@ class RegisterActivity : AppCompatActivity() {
                 println(email)
                 println(password)
                 println(passwordConfirmation)
+
+                val auth = FirebaseAuth.getInstance()
+
+                if (password == passwordConfirmation) {
+                    auth.createUserWithEmailAndPassword(email, password)
+                }
             } else {
                 // Handle the case when any of the fields are empty
                 // For example, show an error message to the user
                 println("Please fill all the fields.")
             }
         }
+
+
+
 
 
 
