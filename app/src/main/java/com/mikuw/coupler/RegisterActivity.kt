@@ -24,18 +24,14 @@ class RegisterActivity : AppCompatActivity() {
 
         // Do any additional setup for your activity here
         // Variablen zuweisen
-        val emailTextView = findViewById<TextView>(R.id.etv_register_email)
-        val passwordTextView = findViewById<TextView>(R.id.etv_register_password)
+        val emailTextView = findViewById<TextView>(R.id.etv_register_email).text.toString()
+        val passwordTextView = findViewById<TextView>(R.id.etv_register_password).text.toString()
         val passwordConfirmationTextView =
-            findViewById<TextView>(R.id.etv_register_passwordConfirmation)
+            findViewById<TextView>(R.id.etv_register_passwordConfirmation).text.toString()
         val registerButton = findViewById<Button>(R.id.button_register)
 
         registerButton.setOnClickListener {
-            val email = emailTextView.text.toString()
-            val password = passwordTextView.text.toString()
-            val passwordConfirmation = passwordConfirmationTextView.text.toString()
-            registerUser(email, password, passwordConfirmation)
-
+            registerUser(emailTextView, passwordTextView, passwordConfirmationTextView)
         }
     }
 
