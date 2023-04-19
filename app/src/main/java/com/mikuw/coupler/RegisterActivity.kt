@@ -39,7 +39,7 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Passwords does not match!", Toast.LENGTH_SHORT).show()
             }
 
-
+            // Versucht einzuloggen - bei Fehler wird der Fehler als Toast ausgegeben
             val auth = FirebaseAuth.getInstance()
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
