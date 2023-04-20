@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,22 +26,20 @@ class RegisterActivity : AppCompatActivity() {
 
         // Do any additional setup for your activity here
         // Variablen zuweisen
-        val emailTextView = findViewById<TextView>(R.id.etv_register_email)
-        val passwordTextView = findViewById<TextView>(R.id.etv_register_password)
-        val passwordConfirmationTextView =
+        val email = findViewById<TextView>(R.id.etv_register_email)
+        val person1 = findViewById<TextView>(R.id.etv_register_person_1)
+        val person2 = findViewById<TextView>(R.id.etv_register_person_2)
+        val password = findViewById<TextView>(R.id.etv_register_password)
+        val passwordConfirmation =
             findViewById<TextView>(R.id.etv_register_passwordConfirmation)
         val registerButton = findViewById<Button>(R.id.button_register)
 
         registerButton.setOnClickListener {
-            val email = emailTextView.text.toString()
-            val password = passwordTextView.text.toString()
-            val passwordConfirmation = passwordConfirmationTextView.text.toString()
-            registerUser(email, password, passwordConfirmation)
-            createUserinFirestore(email)
+            registerUser(email.text.toString(), password.text.toString(), passwordConfirmation.text.toString(), person1.text.toString(), person2.text.toString())
         }
     }
 
-    private fun registerUser(email: String, password: String, passwordConfirmation: String) {
+    private fun registerUser(email: String, password: String, passwordConfirmation: String, person1: String, person2: String) {
         val auth = FirebaseAuth.getInstance()
 
         // Wenn ein Feld leer ist oder Passwörter nicht übereinstimmen
@@ -50,10 +49,20 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this, "Passwords does not match!", Toast.LENGTH_SHORT).show()
         }
 
+        // Get reference to the AGB checkbox
+        val agbCheckBox = findViewById<CheckBox>(R.id.cb_agb)
+
+        // Check if AGB checkbox is checked
+        if (!agbCheckBox.isChecked) {
+            Toast.makeText(this, "You must accept our AGBs", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         try {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Login successful, you can get the user information from the AuthResult object
+                    createUserinFirestore(email, person1, person2)
                     val user = task.result?.user
                     Log.d(TAG, "User account created with email: ${user?.email}")
                     Toast.makeText(
@@ -92,13 +101,15 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun createUserinFirestore(email: String) {
+    private fun createUserinFirestore(email: String, person1: String, person2: String) {
         // Access a Cloud Firestore instance from your Activity
         val db = FirebaseFirestore.getInstance()
 
         // Create a new user object with the given email
         val user = hashMapOf(
-            "email" to email
+            "Email" to email,
+            "Person1" to person1,
+            "Person2" to person2
         )
 
         // Add the user object to a new document in the "users" collection

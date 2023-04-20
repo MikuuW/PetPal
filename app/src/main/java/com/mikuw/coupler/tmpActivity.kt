@@ -20,6 +20,7 @@ class tmpActivity : AppCompatActivity() {
         val textViewMain = findViewById<TextView>(R.id.tv_main)
         val textViewLogin = findViewById<TextView>(R.id.tv_login)
         val textViewRegister = findViewById<TextView>(R.id.tv_register)
+        val textViewProfile = findViewById<TextView>(R.id.tv_profile)
 
         textViewMain.setOnClickListener {
             // Launch HomeActivity
@@ -36,6 +37,12 @@ class tmpActivity : AppCompatActivity() {
         textViewRegister.setOnClickListener {
             // Launch RegisterActivity
             val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+
+        textViewProfile.setOnClickListener {
+            // Launch ProfileActivity
+            val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
     }
