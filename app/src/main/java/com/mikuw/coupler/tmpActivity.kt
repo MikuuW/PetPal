@@ -2,9 +2,9 @@ package com.mikuw.coupler
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class tmpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,11 +16,13 @@ class tmpActivity : AppCompatActivity() {
         actionBar?.title = "TMP Overview"
 
 
-
         val textViewMain = findViewById<TextView>(R.id.tv_main)
         val textViewLogin = findViewById<TextView>(R.id.tv_login)
+        val textViewLogout = findViewById<TextView>(R.id.tv_logout)
         val textViewRegister = findViewById<TextView>(R.id.tv_register)
-        val textViewProfile = findViewById<TextView>(R.id.tv_profile)
+        val textViewEditProfile = findViewById<TextView>(R.id.tv_edit_profile)
+        val textViewShowProfile = findViewById<TextView>(R.id.tv_show_profile)
+        val textViewCreateMission = findViewById<TextView>(R.id.tv_create_mission)
 
         textViewMain.setOnClickListener {
             // Launch HomeActivity
@@ -40,10 +42,38 @@ class tmpActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        textViewProfile.setOnClickListener {
-            // Launch ProfileActivity
-            val intent = Intent(this, ProfileActivity::class.java)
+        textViewEditProfile.setOnClickListener {
+            // Launch com.mikuw.coupler.ProfileActivity
+            val intent = Intent(this, EditProfileActivity::class.java)
             startActivity(intent)
+        }
+
+        textViewShowProfile.setOnClickListener {
+            // Launch com.mikuw.coupler.ProfileActivity
+            val intent = Intent(this, ShowProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        textViewCreateMission.setOnClickListener {
+            // Launch com.mikuw.coupler.ProfileActivity
+            val intent = Intent(this, CreateMissionActivity::class.java)
+            startActivity(intent)
+        }
+
+        textViewLogout.setOnClickListener {
+            // Launch com.mikuw.coupler.ProfileActivity
+            FirebaseAuth.getInstance().signOut()
+            println("User signed out")
+            val intent = Intent(this, tmpActivity::class.java)
+            startActivity(intent)
+        }
+
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            // User is signed in
+            textViewMain.text = "Main (Logged in)"
+        } else {
+            // No user is signed in
+            textViewMain.text = "Main (Logged out)"
         }
     }
 }

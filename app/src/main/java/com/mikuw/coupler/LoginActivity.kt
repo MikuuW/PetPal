@@ -35,5 +35,32 @@ class LoginActivity : AppCompatActivity() {
                 println("Please fill all the fields.")
             }
         }
+
+        loginButton.setOnClickListener() {
+            val email = emailTextView.text.toString()
+            val password = passwordTextView.text.toString()
+
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                val auth = FirebaseAuth.getInstance()
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            println("signInWithEmail:success")
+                            val user = auth.currentUser
+                            val intent = Intent(this, tmpActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            println("signInWithEmail:failure")
+                            println(task.exception)
+                        }
+                    }
+            } else {
+                // Handle the case when any of the fields are empty
+                // For example, show an error message to the user
+                println("Please fill all the fields.")
+            }
+        }
     }
 }
