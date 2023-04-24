@@ -1,11 +1,9 @@
 package com.mikuw.coupler
 
-import android.content.Intent
+import ItemAdapter
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.mikuw.coupler.adapter.ItemAdapter
 import com.mikuw.coupler.data.Datasource
 
 class MainActivity : AppCompatActivity() {
@@ -18,16 +16,17 @@ class MainActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.title = "Main"
 
-        // Do any additional setup for your activity here
         // Initialize data.
-        val myDataset = Datasource().loadAffirmations()
+        val datasource = Datasource()
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        recyclerView.adapter = ItemAdapter(this, myDataset)
+        datasource.loadEvents { events ->
+            val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+            recyclerView.adapter = ItemAdapter(this, events)
 
-        // Use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        recyclerView.setHasFixedSize(true)
-
+            // Use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            recyclerView.setHasFixedSize(true)
+        }
     }
+
 }

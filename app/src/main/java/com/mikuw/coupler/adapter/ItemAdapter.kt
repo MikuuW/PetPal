@@ -1,5 +1,3 @@
-package com.mikuw.coupler.adapter
-
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -7,11 +5,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mikuw.coupler.R
-import com.mikuw.coupler.model.Affirmation
+import com.mikuw.coupler.model.Event
 
 class ItemAdapter(
     private val context: Context,
-    private val dataset: List<Affirmation>
+    private val dataset: List<Event>
 ) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -34,7 +32,7 @@ class ItemAdapter(
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
-        holder.textView.text = context.resources.getString(item.stringResourceId)
+        holder.textView.text = item.name
     }
 
 }

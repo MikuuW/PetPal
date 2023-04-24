@@ -1,9 +1,38 @@
 package com.mikuw.coupler.data
 
+import com.google.firebase.firestore.FirebaseFirestore
+import com.mikuw.coupler.model.Event
+
+class Datasource {
+    private val db = FirebaseFirestore.getInstance()
+
+    fun loadEvents(callback: (List<Event>) -> Unit) {
+        db.collection("events")
+            .get()
+            .addOnSuccessListener { result ->
+                val events = mutableListOf<Event>()
+                for (document in result) {
+                    val name = document.getString("name") ?: continue
+                    events.add(Event(name))
+                }
+                callback(events)
+            }
+    }
+}
+
+
+
+
+
+
+
+/*
+package com.mikuw.coupler.data
+
 import com.mikuw.coupler.R
 import com.mikuw.coupler.model.Affirmation
 
-class Datasource {
+class com.mikuw.coupler.data.Datasource {
     fun loadAffirmations(): List<Affirmation> {
         return listOf<Affirmation>(
             Affirmation(R.string.affirmation1),
@@ -20,3 +49,4 @@ class Datasource {
         )
     }
 }
+ */
