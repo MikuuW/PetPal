@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import org.w3c.dom.Text
 
 class ShowProfileActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_profile)

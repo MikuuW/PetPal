@@ -9,6 +9,7 @@ import com.mikuw.coupler.adapter.ItemAdapter
 import com.mikuw.coupler.data.Datasource
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
