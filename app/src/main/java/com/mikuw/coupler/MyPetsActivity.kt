@@ -1,11 +1,11 @@
 package com.mikuw.coupler
 
+import Datasource_Firebase_Pets
 import PetsAdapter
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.mikuw.coupler.data.Datasource_Firebase_Pets
 import com.mikuw.coupler.model.Pet
 
 class MyPetsActivity : AppCompatActivity() {

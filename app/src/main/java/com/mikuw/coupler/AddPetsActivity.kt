@@ -2,21 +2,33 @@ package com.mikuw.coupler
 
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.data.Datasource_Animal_Types
+import java.util.*
 
 class AddPetsActivity : AppCompatActivity() {
 
     private lateinit var selectedItem: String
+    private val REQUEST_IMAGE_CAPTURE = 1
+    private val REQUEST_PICK_IMAGE = 2
+    private lateinit var iv_pet_add_image: ImageView
+    private lateinit var imageUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,18 +54,113 @@ class AddPetsActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // do something when nothing is selected
+                // do something when nothing is selected    private var imageUri: Uri? = null // Declare imageUri as a member variable
             }
         }
 
         val btn_pet_submit = findViewById<View>(R.id.btn_pet_submit)
         btn_pet_submit.setOnClickListener {
-            createPetInFirestore(tv_pet_name.text.toString(), tv_pet_desc.text.toString(), selectedItem)
-            println(tv_pet_name.text.toString())
+            createPetInFirestore(tv_pet_name.text.toString(), tv_pet_desc.text.toString(), selectedItem, imageUri)
+            println("In onCreate: $imageUri")
+        }
+
+        // TEST IMAGE UPLOAD
+        iv_pet_add_image = findViewById(R.id.iv_pet_add_image)
+        iv_pet_add_image.setOnClickListener{
+            openImagePicker()
+        }
+
+
+        // TEST IMAGE UPLOAD ENDE
+    }
+
+
+    private fun openImagePicker() {
+        val REQUEST_IMAGE_CAPTURE = 1
+        val REQUEST_PICK_IMAGE = 2
+
+            val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Add Photo")
+            builder.setItems(options) { dialog, item ->
+                when {
+                    options[item] == "Take Photo" -> {
+                        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                            takePictureIntent.resolveActivity(packageManager)?.also {
+                                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                            }
+                        }
+                    }
+                    options[item] == "Choose from Gallery" -> {
+                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).also { pickPhotoIntent ->
+                            startActivityForResult(pickPhotoIntent, REQUEST_PICK_IMAGE)
+                        }
+                    }
+                    options[item] == "Cancel" -> {
+                        dialog.dismiss()
+                    }
+                }
+            }
+            builder.show()
+
+
+    }
+
+    private fun setImageFromPicker(data: Intent?) {
+        data?.data?.let { imageUri ->
+            iv_pet_add_image.setImageURI(imageUri)
+            this.imageUri = imageUri
+            println("In SetImageFromPicker: $imageUri")
+            uploadImageToFirebaseStorage(imageUri)
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                REQUEST_IMAGE_CAPTURE -> {
+                    setImageFromCamera(data)
+                }
+                REQUEST_PICK_IMAGE -> {
+                    setImageFromPicker(data)
+                }
+            }
+        }
+    }
+    private fun setImageFromCamera(data: Intent?) {
+        data?.extras?.get("data")?.let { imageBitmap ->
+            iv_pet_add_image.setImageBitmap(imageBitmap as Bitmap)
+            uploadImageToFirebaseStorage(imageBitmap as Uri)
         }
     }
 
-    private fun createPetInFirestore(name: String, desc: String, type: String) {
+    private fun uploadImageToFirebaseStorage(imageUri: Uri) {
+        val storageRef = FirebaseStorage.getInstance().reference.child("images_pet")
+        val imageName = UUID.randomUUID().toString() + ".jpg"
+
+        val imageRef = storageRef.child(imageName)
+
+        val uploadTask = imageRef.putFile(imageUri)
+
+        uploadTask.addOnSuccessListener {
+            // Image upload successful
+            Toast.makeText(this, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+
+            // Get the URL of the uploaded image
+            imageRef.downloadUrl.addOnSuccessListener { uri ->
+                val imageUrl = uri.toString()
+
+                // Do something with the image URL, such as storing it in Firestore
+            }
+        }.addOnFailureListener { exception ->
+            // Image upload failed
+            Toast.makeText(this, "Image upload failed: ${exception.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    private fun createPetInFirestore(name: String, desc: String, type: String, ImageUri: Uri?) {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
@@ -67,7 +174,8 @@ class AddPetsActivity : AppCompatActivity() {
                         "owner" to userId,
                         "name" to name,
                         "type" to type,
-                        "desc" to desc
+                        "desc" to desc,
+                        "imageUri" to ImageUri
                     )
 
                     db.collection("pets")
@@ -86,8 +194,6 @@ class AddPetsActivity : AppCompatActivity() {
             Toast.makeText(this, "Pet name, description, or type cannot be empty", Toast.LENGTH_SHORT).show()
         }
     }
-
-
 
     private fun checkIfPetAlreadyExists(name: String, userId: String, callback: (Boolean) -> Unit) {
         val db = FirebaseFirestore.getInstance()
