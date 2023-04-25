@@ -100,6 +100,7 @@ class EditProfileActivity : AppCompatActivity() {
         // Access a Cloud Firestore instance from your Activity
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
         // Create a new user object with the given email
         val user = hashMapOf(
             "email" to email,
