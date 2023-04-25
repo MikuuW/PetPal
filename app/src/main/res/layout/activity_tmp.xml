@@ -3,22 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/purple_200">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/black">
 
             <TextView
                 android:id="@+id/tv_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
+                android:background="@android:color/black"
                 android:padding="16dp"
                 android:text="Main"
                 android:textSize="20sp" />
@@ -30,7 +33,7 @@
                 android:text="Login"
                 android:textSize="20sp"
                 android:padding="16dp"
-                android:background="@android:color/white"/>
+                android:background="@android:color/black"/>
 
             <TextView
                 android:id="@+id/tv_register"
@@ -39,7 +42,7 @@
                 android:text="Register"
                 android:textSize="20sp"
                 android:padding="16dp"
-                android:background="@android:color/white"/>
+                android:background="@android:color/black"/>
             <TextView
                 android:id="@+id/tv_edit_profile"
                 android:layout_width="match_parent"
@@ -47,7 +50,7 @@
                 android:text="Edit Profile"
                 android:textSize="20sp"
                 android:padding="16dp"
-                android:background="@android:color/white"/>
+                android:background="@android:color/black"/>
             <TextView
                 android:id="@+id/tv_show_profile"
                 android:layout_width="match_parent"
@@ -55,7 +58,7 @@
                 android:text="Show Profile"
                 android:textSize="20sp"
                 android:padding="16dp"
-                android:background="@android:color/white"/>
+                android:background="@android:color/black"/>
             <TextView
                 android:id="@+id/tv_create_mission"
                 android:layout_width="match_parent"
@@ -63,7 +66,7 @@
                 android:text="Create Mission"
                 android:textSize="20sp"
                 android:padding="16dp"
-                android:background="@android:color/white"/>
+                android:background="@android:color/black"/>
 
             <TextView
                 android:id="@+id/tv_logout"
@@ -72,13 +75,13 @@
                 android:text="Logout"
                 android:textSize="20sp"
                 android:padding="16dp"
-                android:background="@android:color/white"/>
+                android:background="@android:color/black"/>
 
             <TextView
                 android:id="@+id/tv_my_pets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
+                android:background="@android:color/black"
                 android:padding="16dp"
                 android:text="My Pets"
                 android:textSize="20sp" />
@@ -87,7 +90,7 @@
                 android:id="@+id/tv_add_pets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
+                android:background="@android:color/black"
                 android:padding="16dp"
                 android:text="Add Pets"
                 android:textSize="20sp" />
