@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mikuw.coupler.R
 import com.mikuw.coupler.model.Event
 
-class ItemAdapter(
+class EventsAdapter(
     private val context: Context,
     private val dataset: List<Event>
-) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+) : RecyclerView.Adapter<EventsAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val tv_title: TextView = view.findViewById(R.id.item_title)
@@ -20,7 +20,7 @@ class ItemAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         // create a new view
         val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item, parent, false)
+            .inflate(R.layout.list_item_events, parent, false)
 
         return ItemViewHolder(adapterLayout)
     }

@@ -1,10 +1,10 @@
 package com.mikuw.coupler
 
-import ItemAdapter
+import EventsAdapter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.mikuw.coupler.data.Datasource
+import com.mikuw.coupler.data.Datasource_Firebase_Events
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,11 +17,11 @@ class MainActivity : AppCompatActivity() {
         actionBar?.title = "Main"
 
         // Initialize data.
-        val datasource = Datasource()
+        val datasourceFirebaseEvents = Datasource_Firebase_Events()
 
-        datasource.loadEvents { events ->
+        datasourceFirebaseEvents.loadEvents { events ->
             val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-            recyclerView.adapter = ItemAdapter(this, events)
+            recyclerView.adapter = EventsAdapter(this, events)
 
             // Use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView

@@ -1,25 +1,23 @@
 package com.mikuw.coupler.data
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mikuw.coupler.model.Event
+import com.mikuw.coupler.model.Pet
 
-class Datasource {
+class Datasource_Firebase_Pets {
     private val db = FirebaseFirestore.getInstance()
 
-    fun loadEvents(callback: (List<Event>) -> Unit) {
-        db.collection("events")
+    fun loadPets(callback: (List<Pet>) -> Unit) {
+        db.collection("pets")
             .get()
             .addOnSuccessListener { result ->
-                val events = mutableListOf<Event>()
-                val locations = mutableListOf<Event>()
+                val pets = mutableListOf<Pet>()
                 for (document in result) {
                     val name = document.getString("name") ?: continue
-                    val location = document.getString("location") ?: "not specified"
-                    val event = Event(name, location)
-                    events.add(Event(name, location))
-                    println(event)
+                    val pet = Pet(name)
+                    pets.add(Pet(name))
+                    println(pet)
                 }
-                callback(events)
+                callback(pets)
             }
     }
 }
