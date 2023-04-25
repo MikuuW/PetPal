@@ -74,6 +74,24 @@
                 android:padding="16dp"
                 android:background="@android:color/white"/>
 
+            <TextView
+                android:id="@+id/tv_my_pets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="16dp"
+                android:text="My Pets"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_add_pets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="16dp"
+                android:text="Add Pets"
+                android:textSize="20sp" />
+
         </LinearLayout>
 
     </ScrollView>
