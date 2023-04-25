@@ -12,7 +12,7 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/circle_background"
         android:scaleType="centerInside"
-        android:src="@drawable/pet_image"
+        android:src="@drawable/baseline_add_photo_alternate_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

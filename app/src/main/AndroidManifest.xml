@@ -28,6 +28,7 @@
         <activity android:name=".CreateMissionActivity" />
         <activity android:name=".MyPetsActivity" />
         <activity android:name=".AddPetsActivity" />
+        <activity android:name=".PetProfileActivity" />
     </application>
 
 </manifest>

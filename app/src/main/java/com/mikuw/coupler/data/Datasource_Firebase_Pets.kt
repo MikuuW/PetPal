@@ -13,8 +13,11 @@ class Datasource_Firebase_Pets {
                 val pets = mutableListOf<Pet>()
                 for (document in result) {
                     val name = document.getString("name") ?: continue
-                    val pet = Pet(name)
-                    pets.add(Pet(name))
+                    val desc = document.getString("desc") ?: continue
+                    val owner = document.getString("owner") ?: continue
+                    val type = document.getString("type") ?: continue
+                    val pet = Pet(name, desc, owner, type)
+                    pets.add(Pet(name, desc, owner, type))
                     println(pet)
                 }
                 callback(pets)
