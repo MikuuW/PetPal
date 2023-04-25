@@ -11,9 +11,13 @@ class Datasource {
             .get()
             .addOnSuccessListener { result ->
                 val events = mutableListOf<Event>()
+                val locations = mutableListOf<Event>()
                 for (document in result) {
                     val name = document.getString("name") ?: continue
-                    events.add(Event(name))
+                    val location = document.getString("location") ?: "not specified"
+                    val event = Event(name, location)
+                    events.add(Event(name, location))
+                    println(event)
                 }
                 callback(events)
             }

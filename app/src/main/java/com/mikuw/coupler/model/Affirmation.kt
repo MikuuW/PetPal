@@ -3,5 +3,5 @@ package com.mikuw.coupler.model
 /*data class Affirmation(val stringResourceId: Int) {
 }*/
 
-data class Event(val name: String) {
+data class Event(val name: String, val location: String? = null) {
 }
