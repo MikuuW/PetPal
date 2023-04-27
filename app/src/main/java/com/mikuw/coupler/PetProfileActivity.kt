@@ -32,14 +32,11 @@ class PetProfileActivity : AppCompatActivity() {
         val pet = intent.getSerializableExtra("pet") as? Pet
         val name = pet?.name
         val desc = pet?.desc
-        val imageUri = pet?.imageUri
-        println(imageUri)
 
 
 
 
         // Assuming you have the imageUri string in a variable called imageUri
-        val uri = Uri.parse(imageUri)
         val iv_petProfile_image = findViewById<ImageView>(R.id.iv_petProfile_image)
         //iv_petProfile_image.setImageURI(uri)
 
@@ -49,11 +46,10 @@ class PetProfileActivity : AppCompatActivity() {
 
         val tv_pet_desc = findViewById<TextView>(R.id.et_pet_desc)
         tv_pet_desc.text = desc
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
 
         //TEST
-        val imageName = "1d7f52b2-138e-4b0d-8f78-ac52d0a60d2a.jpg"
-        val testUri = "content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F25/ORIGINAL/NONE/1884294261"
-        val testRes = FirebaseStorage.getInstance().reference.child("images_pet/$imageName")
+        val testRes = FirebaseStorage.getInstance().reference.child("images_pet/$userId/$name.jpg")
 
         val localFile = File.createTempFile("tmpImage", "jpg")
         testRes.getFile(localFile).addOnSuccessListener {
