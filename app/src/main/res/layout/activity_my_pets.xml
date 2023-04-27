@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         android:scrollbars="vertical"
-        android:id="@+id/recycler_view"
+        android:id="@+id/rv_show_pets"
 
         />
 </FrameLayout>

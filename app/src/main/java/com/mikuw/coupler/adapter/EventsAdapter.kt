@@ -13,7 +13,7 @@ class EventsAdapter(
 ) : RecyclerView.Adapter<EventsAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val tv_title: TextView = view.findViewById(R.id.item_title)
+        val tv_title: TextView = view.findViewById(R.id.iv_show_pet_name)
         val tv_location: TextView = view.findViewById(R.id.item_location)
     }
 

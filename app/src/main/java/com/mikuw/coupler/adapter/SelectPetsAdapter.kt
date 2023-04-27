@@ -10,10 +10,10 @@ import com.mikuw.coupler.R
 import com.mikuw.coupler.model.Pet
 import com.squareup.picasso.Picasso
 
-class PetsAdapter(
+class SelectPetsAdapter(
     private val context: Context,
     private val dataset: List<Pet>
-) : RecyclerView.Adapter<PetsAdapter.ItemViewHolder>() {
+) : RecyclerView.Adapter<SelectPetsAdapter.ItemViewHolder>() {
 
     private var listener: OnItemClickListener? = null
 
@@ -26,13 +26,13 @@ class PetsAdapter(
     }
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val tv_title: TextView = view.findViewById(R.id.item_title)
-        val iv_image: ImageView = view.findViewById(R.id.iv_myPets_image)
+        val tv_title: TextView = view.findViewById(R.id.tv_select_pet_name)
+        val iv_image: ImageView = view.findViewById(R.id.iv_select_pet_image)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_pets, parent, false)
+            .inflate(R.layout.list_item_select_pets, parent, false)
 
         return ItemViewHolder(adapterLayout)
     }

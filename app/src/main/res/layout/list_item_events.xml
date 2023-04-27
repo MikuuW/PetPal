@@ -7,7 +7,7 @@
     android:background="@drawable/border">
 
     <TextView
-        android:id="@+id/item_title"
+        android:id="@+id/iv_show_pet_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Event Title"
@@ -23,7 +23,7 @@
         android:textAlignment="textEnd"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/item_title"
+        android:layout_below="@id/iv_show_pet_name"
         android:layout_marginTop="8dp" />
 
 </RelativeLayout>

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         val datasourceFirebaseEvents = Datasource_Firebase_Events()
 
         datasourceFirebaseEvents.loadEvents { events ->
-            val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+            val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
             recyclerView.adapter = EventsAdapter(this, events)
 
             // Use this setting to improve performance if you know that changes

@@ -1,7 +1,7 @@
 package com.mikuw.coupler
 
 import Datasource_Firebase_Pets
-import PetsAdapter
+import ShowPetsAdapter
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -15,12 +15,12 @@ class MyPetsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_my_pets)
 
         // Initialize data.
-        val datasourceFirebaseEvents = Datasource_Firebase_Pets()
+        val datasourceFirebasePets = Datasource_Firebase_Pets()
 
-        datasourceFirebaseEvents.loadPets { pets ->
-            val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-            recyclerView.adapter = PetsAdapter(this, pets).apply {
-                setOnItemClickListener(object : PetsAdapter.OnItemClickListener {
+        datasourceFirebasePets.loadPets { pets ->
+            val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
+            recyclerView.adapter = ShowPetsAdapter(this, pets).apply {
+                setOnItemClickListener(object : ShowPetsAdapter.OnItemClickListener {
                     override fun onItemClick(pet: Pet) {
                         val intent = Intent(this@MyPetsActivity, PetProfileActivity::class.java)
                         intent.putExtra("pet", pet)

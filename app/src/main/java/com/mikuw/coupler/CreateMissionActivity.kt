@@ -1,12 +1,16 @@
 package com.mikuw.coupler
 
+import Datasource_Firebase_Pets
+import SelectPetsAdapter
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.mikuw.coupler.R
-import org.w3c.dom.Text
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.mikuw.coupler.model.Pet
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -35,6 +39,23 @@ class CreateMissionActivity : AppCompatActivity() {
             val days = calculateDaysBetweenDates(fromDate, toDate)
             println("Number of days between $fromDate and $toDate: $days")
         }
+
+        // Initialize data.
+        val datasourceFirebasePets = Datasource_Firebase_Pets()
+        val recyclerView = findViewById<RecyclerView>(R.id.rv_select_pets)
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+
+        datasourceFirebasePets.loadPets { pets ->
+            recyclerView.adapter = SelectPetsAdapter(this, pets)
+            recyclerView.setHasFixedSize(true)
+        }
+
+
+
+
+
+
     }
 
     private fun showDatePicker(selectButton: Button, isFromDate: Boolean) {
