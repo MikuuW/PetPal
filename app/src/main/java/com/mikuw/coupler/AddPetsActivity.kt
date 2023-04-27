@@ -60,7 +60,7 @@ class AddPetsActivity : AppCompatActivity() {
 
         val btn_pet_submit = findViewById<View>(R.id.btn_pet_submit)
         btn_pet_submit.setOnClickListener {
-            createPetInFirestore(tv_pet_name.text.toString(), tv_pet_desc.text.toString(), selectedItem, imageUri)
+            createPetInFirestore(tv_pet_name.text.toString(), tv_pet_desc.text.toString(), selectedItem)
             println("In onCreate: $imageUri")
         }
 
@@ -111,7 +111,6 @@ class AddPetsActivity : AppCompatActivity() {
             iv_pet_add_image.setImageURI(imageUri)
             this.imageUri = imageUri
             println("In SetImageFromPicker: $imageUri")
-            uploadImageToFirebaseStorage(imageUri)
         }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -131,21 +130,19 @@ class AddPetsActivity : AppCompatActivity() {
     private fun setImageFromCamera(data: Intent?) {
         data?.extras?.get("data")?.let { imageBitmap ->
             iv_pet_add_image.setImageBitmap(imageBitmap as Bitmap)
-            uploadImageToFirebaseStorage(imageBitmap as Uri)
         }
     }
 
-    private fun uploadImageToFirebaseStorage(imageUri: Uri) {
-        val storageRef = FirebaseStorage.getInstance().reference.child("images_pet")
-        val imageName = UUID.randomUUID().toString() + ".jpg"
-
+    private fun uploadImageToFirebaseStorage(name: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val storageRef = FirebaseStorage.getInstance().reference.child("images_pet/$userId/")
+        val imageName = "$name.jpg"
         val imageRef = storageRef.child(imageName)
 
         val uploadTask = imageRef.putFile(imageUri)
 
         uploadTask.addOnSuccessListener {
             // Image upload successful
-            Toast.makeText(this, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
 
             // Get the URL of the uploaded image
             imageRef.downloadUrl.addOnSuccessListener { uri ->
@@ -155,12 +152,11 @@ class AddPetsActivity : AppCompatActivity() {
             }
         }.addOnFailureListener { exception ->
             // Image upload failed
-            Toast.makeText(this, "Image upload failed: ${exception.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
 
-    private fun createPetInFirestore(name: String, desc: String, type: String, ImageUri: Uri?) {
+    private fun createPetInFirestore(name: String, desc: String, type: String) {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
@@ -175,9 +171,8 @@ class AddPetsActivity : AppCompatActivity() {
                         "name" to name,
                         "type" to type,
                         "desc" to desc,
-                        "imageUri" to ImageUri
                     )
-
+                    uploadImageToFirebaseStorage(name)
                     db.collection("pets")
                         .add(pet)
                         .addOnSuccessListener { documentReference ->
