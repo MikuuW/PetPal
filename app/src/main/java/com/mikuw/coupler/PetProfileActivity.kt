@@ -49,10 +49,10 @@ class PetProfileActivity : AppCompatActivity() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
         //TEST
-        val testRes = FirebaseStorage.getInstance().reference.child("images_pet/$userId/$name.jpg")
+        val dbRef = FirebaseStorage.getInstance().reference.child("images_pet/$userId/$name.jpg")
 
         val localFile = File.createTempFile("tmpImage", "jpg")
-        testRes.getFile(localFile).addOnSuccessListener {
+        dbRef.getFile(localFile).addOnSuccessListener {
             val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
             iv_petProfile_image.setImageBitmap(bitmap)
         }

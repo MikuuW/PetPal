@@ -18,7 +18,8 @@ class Datasource_Firebase_Pets {
                     val desc = document.getString("desc") ?: continue
                     val owner = document.getString("owner") ?: continue
                     val type = document.getString("type") ?: continue
-                    val pet = Pet(name, desc, owner, type)
+                    val imageUri = document.getString("imageUri") ?: continue
+                    val pet = Pet(name, desc, owner, type, imageUri)
                     pets.add(pet)
                 }
                 callback(pets)

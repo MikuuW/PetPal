@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
@@ -20,7 +19,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.data.Datasource_Animal_Types
-import java.util.*
 
 class AddPetsActivity : AppCompatActivity() {
 
@@ -60,7 +58,7 @@ class AddPetsActivity : AppCompatActivity() {
 
         val btn_pet_submit = findViewById<View>(R.id.btn_pet_submit)
         btn_pet_submit.setOnClickListener {
-            createPetInFirestore(tv_pet_name.text.toString(), tv_pet_desc.text.toString(), selectedItem)
+            createPetInFirestore(tv_pet_name.text.toString(), tv_pet_desc.text.toString(), selectedItem, imageUri)
             println("In onCreate: $imageUri")
         }
 
@@ -156,7 +154,7 @@ class AddPetsActivity : AppCompatActivity() {
     }
 
 
-    private fun createPetInFirestore(name: String, desc: String, type: String) {
+    private fun createPetInFirestore(name: String, desc: String, type: String, imageUri: Uri) {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
@@ -171,13 +169,14 @@ class AddPetsActivity : AppCompatActivity() {
                         "name" to name,
                         "type" to type,
                         "desc" to desc,
+                        "imageUri" to imageUri
                     )
                     uploadImageToFirebaseStorage(name)
                     db.collection("pets")
                         .add(pet)
                         .addOnSuccessListener { documentReference ->
                             Toast.makeText(this, "$name saved", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this, MyPetsActivity::class.java)
+                            val intent = Intent(this, tmpActivity::class.java)
                             startActivity(intent)
                         }
                         .addOnFailureListener { e ->
