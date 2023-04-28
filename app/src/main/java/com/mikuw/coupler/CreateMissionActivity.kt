@@ -3,13 +3,18 @@ package com.mikuw.coupler
 import Datasource_Firebase_Pets
 import SelectPetsAdapter
 import android.app.DatePickerDialog
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mikuw.coupler.model.Pet
 import java.text.SimpleDateFormat
 import java.util.*
@@ -50,12 +55,48 @@ class CreateMissionActivity : AppCompatActivity() {
             recyclerView.adapter = SelectPetsAdapter(this, pets)
             recyclerView.setHasFixedSize(true)
         }
+        //TODO:
+        //Ausgewählte Tiere der Funktion geben
+        //Funktion erstellen, die die Tiere in die Datenbank schreibt
+
+        val btn_submit = findViewById<Button>(R.id.btn_create_mission)
+
+
+        btn_submit.setOnClickListener {
+            //createMissionInFirestore(fromDate, toDate)
+            val intent = Intent(this, tmpActivity::class.java)
+            startActivity(intent)
+        }
 
 
 
 
 
 
+    }
+
+    private fun createMissionInFirestore(fromDate: Date, toDate: Date) {
+        val db = FirebaseFirestore.getInstance()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        // Check if the name, desc, and type are not empty before creating the pet
+        if (true) {
+            val pet = hashMapOf(
+                "from" to fromDate,
+                "to" to toDate,
+                //"pet" to pet,
+            )
+            db.collection("searches")
+                .add(pet)
+                .addOnSuccessListener { documentReference ->
+                    //Toast.makeText(this, "Mission for $name created", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    Log.w(ContentValues.TAG, "Error adding document", e)
+                }
+        } else {
+            Toast.makeText(this, "Pet name, description, or type cannot be empty", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun showDatePicker(selectButton: Button, isFromDate: Boolean) {
