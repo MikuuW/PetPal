@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
             recyclerView.setHasFixedSize(true)
         }
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
             return true

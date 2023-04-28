@@ -4,16 +4,33 @@ import Datasource_Firebase_Pets
 import ShowPetsAdapter
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import com.mikuw.coupler.model.Pet
 
 class MyPetsActivity : AppCompatActivity() {
+    lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_pets)
 
+        //TEST BURGER MENU
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        setupNavigationDrawer(this)
+        //TEST BURGER MENU
         // Initialize data.
         val datasourceFirebasePets = Datasource_Firebase_Pets()
 
@@ -31,6 +48,13 @@ class MyPetsActivity : AppCompatActivity() {
 
             recyclerView.setHasFixedSize(true)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 

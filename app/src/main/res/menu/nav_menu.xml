@@ -47,8 +47,7 @@
         android:title="Create new search" />
 
 
-</menu>
-    <!--<menu>
+</menu><!--<menu>
                 <item
                     android:id="@+id/nav_my_profile"
                     android:title="My Profile"

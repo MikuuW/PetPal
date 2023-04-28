@@ -3,14 +3,19 @@ package com.mikuw.coupler
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.w3c.dom.Text
 
 class ShowProfileActivity : AppCompatActivity() {
+    lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +25,20 @@ class ShowProfileActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.title = "Show Profile"
 
+        //TEST BURGER MENU
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        setupNavigationDrawer(this)
+        //TEST BURGER MENU
         // Display the email in a TextView
         getProfileInformation()
-
 
 
     }
@@ -31,7 +47,7 @@ class ShowProfileActivity : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
-        if(currentUser == null) {
+        if (currentUser == null) {
             Log.d(TAG, "No user is logged in")
             return
         }
@@ -59,5 +75,12 @@ class ShowProfileActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

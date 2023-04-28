@@ -7,12 +7,16 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mikuw.coupler.model.Pet
@@ -24,12 +28,26 @@ class CreateMissionActivity : AppCompatActivity() {
 
     private lateinit var fromDate: Date
     private lateinit var toDate: Date
+    lateinit var toggle: ActionBarDrawerToggle
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_mission)
 
+
+        //TEST BURGER MENU
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        setupNavigationDrawer(this)
+        //TEST BURGER MENU
         val fromDatePickerButton = findViewById<Button>(R.id.btn_select_from)
         fromDatePickerButton.setOnClickListener {
             showDatePicker(fromDatePickerButton, isFromDate = true)
@@ -69,10 +87,6 @@ class CreateMissionActivity : AppCompatActivity() {
         }
 
 
-
-
-
-
     }
 
     private fun createMissionInFirestore(fromDate: Date, toDate: Date) {
@@ -95,7 +109,11 @@ class CreateMissionActivity : AppCompatActivity() {
                     Log.w(ContentValues.TAG, "Error adding document", e)
                 }
         } else {
-            Toast.makeText(this, "Pet name, description, or type cannot be empty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Pet name, description, or type cannot be empty",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -142,5 +160,12 @@ class CreateMissionActivity : AppCompatActivity() {
     private fun calculateDaysBetweenDates(fromDate: Date, toDate: Date): Long {
         val diffInMillies = toDate.time - fromDate.time
         return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -3,11 +3,15 @@ package com.mikuw.coupler
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -15,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
+    lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +29,18 @@ class RegisterActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.title = "Register"
 
+        //TEST BURGER MENU
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        setupNavigationDrawer(this)
+        //TEST BURGER MENU
         // Do any additional setup for your activity here
         // Variablen zuweisen
         val email = findViewById<TextView>(R.id.etv_register_email)
@@ -33,7 +50,11 @@ class RegisterActivity : AppCompatActivity() {
         val registerButton = findViewById<Button>(R.id.button_register)
 
         registerButton.setOnClickListener {
-            registerUser(email.text.toString(), password.text.toString(), passwordConfirmation.text.toString())
+            registerUser(
+                email.text.toString(),
+                password.text.toString(),
+                passwordConfirmation.text.toString()
+            )
         }
     }
 
@@ -61,7 +82,7 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Login successful, you can get the user information from the AuthResult object
                     var userId = FirebaseAuth.getInstance().currentUser?.uid
-                    createUserInFirestore(email, userId?:"")
+                    createUserInFirestore(email, userId ?: "")
                     val user = task.result?.user
                     Log.d(TAG, "User account created with email: ${user?.email}")
                     Toast.makeText(
@@ -121,5 +142,11 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 } //end
