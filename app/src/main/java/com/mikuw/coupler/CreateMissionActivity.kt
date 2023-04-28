@@ -35,6 +35,9 @@ class CreateMissionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_mission)
 
+        // Retrieve the ActionBar object
+        val actionBar = supportActionBar
+        actionBar?.title = "Create new Search for your Pet"
 
         //TEST BURGER MENU
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)

@@ -19,6 +19,10 @@ class MyPetsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_pets)
 
+        // Retrieve the ActionBar object
+        val actionBar = supportActionBar
+        actionBar?.title = "Your Pets"
+
         //TEST BURGER MENU
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)

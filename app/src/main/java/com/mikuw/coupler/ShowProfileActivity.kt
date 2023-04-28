@@ -23,7 +23,7 @@ class ShowProfileActivity : AppCompatActivity() {
 
         // Retrieve the ActionBar object
         val actionBar = supportActionBar
-        actionBar?.title = "Show Profile"
+        actionBar?.title = "Your Profile"
 
         //TEST BURGER MENU
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
