@@ -2,59 +2,60 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_main"
-        android:title="Main"
-        android:icon="@drawable/baseline_home_24"/>
+        android:icon="@drawable/baseline_home_24"
+        android:title="Main" />
 
 
+    <item
+        android:id="@+id/nav_login"
+        android:icon="@drawable/baseline_login_24"
+        android:title="Login" />
+
+    <item
+        android:id="@+id/nav_register"
+        android:icon="@drawable/baseline_how_to_reg_24"
+        android:title="Register" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/baseline_logout_24"
+        android:title="Logout" />
 
 
+    <item
+        android:id="@+id/nav_my_profile"
+        android:icon="@drawable/baseline_account_box_24"
+        android:title="My Profile" />
 
+    <item
+        android:id="@+id/nav_edit_profile"
+        android:icon="@drawable/baseline_manage_accounts_24"
+        android:title="Edit Profile" />
 
-    <item android:title="Login">
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="Settings" />
+    <item
+        android:id="@+id/nav_pets"
+        android:title="My Pets" />
+    <item
+        android:id="@+id/nav_add_pets"
+        android:title="Add new pet" />
+    <item
+        android:id="@+id/nav_create_mission"
+        android:title="Create new search" />
 
-        <menu>
-
-            <item
-                android:id="@+id/nav_login"
-                android:title="Login"
-                android:icon="@drawable/baseline_login_24"/>
-
-            <item
-                android:id="@+id/nav_register"
-                android:title="Register"
-                android:icon="@drawable/baseline_how_to_reg_24"/>
-
-            <item
-                android:id="@+id/nav_logout"
-                android:title="Logout"
-                android:icon="@drawable/baseline_logout_24"/>
-
-
-
-        </menu>
-    </item>
-
-    <item android:title="Profile">
-        <menu>
-            <item
-                android:id="@+id/nav_my_profile"
-                android:title="My Profile"
-                android:icon="@drawable/baseline_account_box_24"/>
-
-            <item
-                android:id="@+id/nav_edit_profile"
-                android:title="Edit Profile"
-                android:icon="@drawable/baseline_manage_accounts_24"/>
-        </menu>
-    </item>
-
-    <item android:title="Settings">
-        <menu>
-            <item
-                android:id="@+id/nav_setting"
-                android:title="Settings"
-                android:icon="@drawable/baseline_settings_24"/>
-        </menu>
-    </item>
 
 </menu>
+    <!--<menu>
+                <item
+                    android:id="@+id/nav_my_profile"
+                    android:title="My Profile"
+                    android:icon="@drawable/baseline_account_box_24"/>
+                <item
+                    android:id="@+id/nav_edit_profile"
+                    android:title="Edit Profile"
+                    android:icon="@drawable/baseline_manage_accounts_24"/>
+            </menu>-->
+
