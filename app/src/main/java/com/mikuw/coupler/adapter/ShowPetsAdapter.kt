@@ -26,7 +26,7 @@ class ShowPetsAdapter(
     }
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val tv_title: TextView = view.findViewById(R.id.iv_show_pet_name)
+        val tv_title: TextView = view.findViewById(R.id.tv_search_title)
         val iv_image: ImageView = view.findViewById(R.id.iv_show_pet_image)
     }
 

@@ -13,8 +13,9 @@ class EventsAdapter(
 ) : RecyclerView.Adapter<EventsAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val tv_title: TextView = view.findViewById(R.id.iv_show_pet_name)
-        val tv_location: TextView = view.findViewById(R.id.item_location)
+        val tv_title: TextView = view.findViewById(R.id.tv_search_title)
+        val tv_date: TextView = view.findViewById(R.id.tv_search_date)
+        val tv_location: TextView = view.findViewById(R.id.tv_search_city)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -34,6 +35,7 @@ class EventsAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
         holder.tv_title.text = item.name
+        holder.tv_date.text = item.formattedDate(item.from!!) + " - " + item.formattedDate(item.to!!)
         holder.tv_location.text = item.location
     }
 

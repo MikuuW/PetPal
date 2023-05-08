@@ -84,15 +84,22 @@ class CreateMissionActivity : AppCompatActivity() {
 
 
             btn_submit.setOnClickListener {
-                val selectedPets = adapter.getSelectedPets()
-                createMissionInFirestore(
-                    title.text.toString(),
-                    fromDate,
-                    toDate,
-                    desc.text.toString(),
-                    selectedPets,
-                )
+                if (!::fromDate.isInitialized || !::toDate.isInitialized) {
+                    Toast.makeText(this, "Please select dates", Toast.LENGTH_SHORT).show()
+                } else {
+                    val selectedPets = adapter.getSelectedPets()
+                    createMissionInFirestore(
+                        title.text.toString(),
+                        fromDate,
+                        toDate,
+                        desc.text.toString(),
+                        selectedPets,
+                    )
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
             }
+
         }
     }
 
@@ -104,6 +111,7 @@ class CreateMissionActivity : AppCompatActivity() {
         desc: String,
         pets: List<Pet>
     ) {
+
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
