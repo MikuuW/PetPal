@@ -109,6 +109,8 @@ class tmpActivity : AppCompatActivity() {
             val intent = Intent(this, AddPetsActivity::class.java)
             startActivity(intent)
         }
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

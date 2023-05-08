@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -24,6 +25,26 @@ fun setupNavigationDrawer(activity: Activity) {
     toggle.syncState()
 
     activity.actionBar?.setDisplayHomeAsUpEnabled(true)
+
+
+    val btn = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_home)
+    val btn2 = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_register)
+    val btn3 = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_settings)
+
+    btn.setOnClickListener() {
+        val intent = Intent(activity, MainActivity::class.java)
+        activity.startActivity(intent)
+    }
+
+    btn2.setOnClickListener() {
+        val intent = Intent(activity, LoginActivity::class.java)
+        activity.startActivity(intent)
+    }
+
+    btn3.setOnClickListener() {
+        val intent = Intent(activity, ShowProfileActivity::class.java)
+        activity.startActivity(intent)
+    }
 
     navView.setNavigationItemSelectedListener {
         when (it.itemId) {
@@ -71,6 +92,10 @@ fun setupNavigationDrawer(activity: Activity) {
             }
             R.id.nav_create_mission -> {
                 val intent = Intent(activity, CreateMissionActivity::class.java)
+                activity.startActivity(intent)
+            }
+            R.id.nav_tmp -> {
+                val intent = Intent(activity, tmpActivity::class.java)
                 activity.startActivity(intent)
             }
         }

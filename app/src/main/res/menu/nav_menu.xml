@@ -45,6 +45,9 @@
     <item
         android:id="@+id/nav_create_mission"
         android:title="Create new search" />
+    <item
+        android:id="@+id/nav_tmp"
+        android:title="TMP" />
 
 
 </menu><!--<menu>
