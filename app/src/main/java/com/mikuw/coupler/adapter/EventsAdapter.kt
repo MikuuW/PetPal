@@ -6,6 +6,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mikuw.coupler.R
 import com.mikuw.coupler.model.Event
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class EventsAdapter(
     private val context: Context,
@@ -35,8 +37,13 @@ class EventsAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
         holder.tv_title.text = item.name
-        holder.tv_date.text = item.formattedDate(item.from!!) + " - " + item.formattedDate(item.to!!)
+        holder.tv_date.text = item.formattedDate(item.from!!) + " - " + item.formattedDate(item.to!!) + " (" + calculateDaysBetweenDates(item.from!!, item.to!!) + " day(s))"
         holder.tv_location.text = item.location
+    }
+
+    private fun calculateDaysBetweenDates(fromDate: Date, toDate: Date): Long {
+        val diffInMillies = toDate.time - fromDate.time
+        return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS)
     }
 
 }
