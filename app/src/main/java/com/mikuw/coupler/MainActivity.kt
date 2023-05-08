@@ -1,6 +1,7 @@
 package com.mikuw.coupler
 
 import EventsAdapter
+import PetsitterAdapter
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.mikuw.coupler.data.Datasource_Firebase_Events
+import com.mikuw.coupler.data.Datasource_Firebase_Petsitter
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         switch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 // Load events from the second collection
+                loadPetsitters()
                 println("HEllo")
                 val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
                 recyclerView.adapter = null
@@ -62,7 +65,19 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    private fun loadPetsitters() {
+        // Initialize data.
+        val datasourceFirebasePetsitters = Datasource_Firebase_Petsitter()
 
+        datasourceFirebasePetsitters.loadPetsitter { petsitter ->
+            val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
+            recyclerView.adapter = PetsitterAdapter(this, petsitter)
+
+            // Use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            recyclerView.setHasFixedSize(true)
+        }
+    }
     private fun loadSearches() {
         // Initialize data.
         val datasourceFirebaseEvents = Datasource_Firebase_Events()

@@ -11,7 +11,6 @@ class Datasource_Firebase_Events {
             .get()
             .addOnSuccessListener { result ->
                 val events = mutableListOf<Event>()
-                val locations = mutableListOf<Event>()
                 for (document in result) {
                     val name = document.getString("title") ?: continue
                     val location = document.getString("city") ?: continue
@@ -19,7 +18,6 @@ class Datasource_Firebase_Events {
                     val to = document.getDate("to") ?: continue
                     val event = Event(name, location, from, to)
                     events.add(Event(name, location, from, to))
-                    println(event)
                 }
                 callback(events)
             }
