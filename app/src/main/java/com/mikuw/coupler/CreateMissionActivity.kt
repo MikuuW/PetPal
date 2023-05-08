@@ -90,11 +90,12 @@ class CreateMissionActivity : AppCompatActivity() {
                     fromDate,
                     toDate,
                     desc.text.toString(),
-                    selectedPets
+                    selectedPets,
                 )
             }
         }
     }
+
 
     private fun createMissionInFirestore(
         title: String,
@@ -106,32 +107,37 @@ class CreateMissionActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        // Check if the name, desc, and type are not empty before creating the pet
-        if (true) {
-            val pet = hashMapOf(
-                "title" to title,
-                "creator" to userId,
-                "from" to fromDate,
-                "to" to toDate,
-                "desc" to desc,
-                "pets" to pets
-            )
-            db.collection("searches")
-                .add(pet)
-                .addOnSuccessListener { documentReference ->
-                    Toast.makeText(this, "Search created", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { e ->
-                    Log.w(ContentValues.TAG, "Error adding document", e)
-                }
-        } else {
-            Toast.makeText(
-                this,
-                "Pet name, description, or type cannot be empty",
-                Toast.LENGTH_SHORT
-            ).show()
+        val userRef = db.collection("users").document(userId)
+        userRef.get().addOnSuccessListener { document ->
+            if (document != null) {
+                val userLocation = document.getString("city")
+                Log.d(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
+                val pet = hashMapOf(
+                    "title" to title,
+                    "creator" to userId,
+                    "from" to fromDate,
+                    "to" to toDate,
+                    "desc" to desc,
+                    "pets" to pets,
+                    "city" to userLocation
+                )
+                db.collection("searches")
+                    .add(pet)
+                    .addOnSuccessListener { documentReference ->
+                        Toast.makeText(this, "Search created", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(ContentValues.TAG, "Error adding document", e)
+                    }
+            } else {
+                Log.d(ContentValues.TAG, "No such document")
+            }
         }
+            .addOnFailureListener { exception ->
+                Log.d(ContentValues.TAG, "get failed with ", exception)
+            }
     }
+
 
     private fun showDatePicker(selectButton: Button, isFromDate: Boolean) {
         val calendar = Calendar.getInstance()
