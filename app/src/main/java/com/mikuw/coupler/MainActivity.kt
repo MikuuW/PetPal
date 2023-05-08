@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.mikuw.coupler.data.Datasource_Firebase_Events
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +36,34 @@ class MainActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.title = "Main"
 
+
+
+
+        //SWITCH
+        loadSearches()
+        val switch = findViewById<SwitchMaterial>(R.id.switch_petsitter)
+        switch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                // Load events from the second collection
+                println("HEllo")
+                val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
+                recyclerView.adapter = null
+                //loadOriginalCollectionEvents()
+            } else {
+                // Load events from the original collection
+                loadSearches()
+            }
+        }
+
+
+        //SWITCH
+
+
+
+
+    }
+
+    private fun loadSearches() {
         // Initialize data.
         val datasourceFirebaseEvents = Datasource_Firebase_Events()
 
@@ -54,4 +83,7 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    // SWITCH
+
 }
