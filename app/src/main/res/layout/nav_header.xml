@@ -13,25 +13,25 @@
             android:src="@drawable/pic"/>
             -->
     <TextView
-        android:id="@+id/user_name"
+        android:id="@+id/nav_header_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="Mikulas Willaschek"
         android:textColor="@color/black"
         android:textSize="20dp"
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/nav_header_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="mikulaswillaschek@gmail.com"
         android:textSize="16dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
         android:background="@color/cardview_dark_background" />
 
 </LinearLayout>

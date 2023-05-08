@@ -44,6 +44,12 @@ class RegisterActivity : AppCompatActivity() {
         // Do any additional setup for your activity here
         // Variablen zuweisen
         val email = findViewById<TextView>(R.id.etv_register_email)
+        val firstname = findViewById<TextView>(R.id.etv_register_firstname)
+        val lastname = findViewById<TextView>(R.id.etv_register_lastname)
+        val street = findViewById<TextView>(R.id.etv_register_street)
+        val streetNr = findViewById<TextView>(R.id.etv_register_street_nr)
+        val postalcode = findViewById<TextView>(R.id.etv_register_postalcode)
+        val city = findViewById<TextView>(R.id.etv_register_city)
         val password = findViewById<TextView>(R.id.etv_register_password)
         val passwordConfirmation =
             findViewById<TextView>(R.id.etv_register_passwordConfirmation)
@@ -51,6 +57,12 @@ class RegisterActivity : AppCompatActivity() {
 
         registerButton.setOnClickListener {
             registerUser(
+                firstname.text.toString(),
+                lastname.text.toString(),
+                street.text.toString(),
+                streetNr.text.toString(),
+                postalcode.text.toString(),
+                city.text.toString(),
                 email.text.toString(),
                 password.text.toString(),
                 passwordConfirmation.text.toString()
@@ -58,7 +70,17 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun registerUser(email: String, password: String, passwordConfirmation: String) {
+    private fun registerUser(
+        firstname: String,
+        lastname: String,
+        street: String?,
+        streetNr: String?,
+        postalcode: String?,
+        city: String?,
+        email: String,
+        password: String,
+        passwordConfirmation: String
+    ) {
         val auth = FirebaseAuth.getInstance()
 
         // Wenn ein Feld leer ist oder Passwörter nicht übereinstimmen
@@ -82,7 +104,16 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Login successful, you can get the user information from the AuthResult object
                     var userId = FirebaseAuth.getInstance().currentUser?.uid
-                    createUserInFirestore(email, userId ?: "")
+                    createUserInFirestore(
+                        firstname,
+                        lastname,
+                        street,
+                        streetNr,
+                        postalcode,
+                        city,
+                        email,
+                        userId ?: ""
+                    )
                     val user = task.result?.user
                     Log.d(TAG, "User account created with email: ${user?.email}")
                     Toast.makeText(
@@ -121,13 +152,28 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun createUserInFirestore(email: String, userId: String) {
+    private fun createUserInFirestore(
+        firstname: String,
+        lastname: String,
+        street: String?,
+        streetNr: String?,
+        postalcode: String?,
+        city: String?,
+        email: String,
+        userId: String
+    ) {
         // Access a Cloud Firestore instance from your Activity
         val db = FirebaseFirestore.getInstance()
 
         // Create a new user object with the given email
         val user = hashMapOf(
-            "email" to email,
+            "firstname" to firstname,
+            "lastname" to lastname,
+            "street" to street,
+            "streetNr" to streetNr,
+            "postalcode" to postalcode,
+            "city" to city,
+            "email" to email
         )
 
         // Set the user object to a new document in the "users" collection with the user ID as the document ID

@@ -44,7 +44,6 @@ class ShowProfileActivity : AppCompatActivity() {
     }
 
     private fun getProfileInformation() {
-
         val db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser == null) {
@@ -52,19 +51,34 @@ class ShowProfileActivity : AppCompatActivity() {
             return
         }
         val userRef = db.collection("users").document(currentUser!!.uid)
-
-
-        var tv_show_email = findViewById<TextView>(R.id.tv_show_email)
-
+        var tv_show_firstname = findViewById<TextView>(R.id.tv_show_profile_firstname)
+        var tv_show_lastname = findViewById<TextView>(R.id.tv_show_profile_lastname)
+        var tv_show_street = findViewById<TextView>(R.id.tv_show_profile_street)
+        var tv_show_street_nr = findViewById<TextView>(R.id.tv_show_profile_street_nr)
+        var tv_show_postalcode = findViewById<TextView>(R.id.tv_show_profile_postalcode)
+        var tv_show_city = findViewById<TextView>(R.id.tv_show_profile_city)
+        var tv_show_email = findViewById<TextView>(R.id.tv_show_profile_email)
 
         userRef.get().addOnSuccessListener { document ->
             if (document != null && document.exists()) {
                 // retrieve the user's data
+                val firstname = document.getString("firstname")
+                val lastname = document.getString("lastname")
+                var street = document.getString("street")
+                var streetNr = document.getString("streetNr")
+                var postalcode = document.getString("postalcode")
+                var city = document.getString("city")
                 val email = document.getString("email")
+
                 // do something with the retrieved data
-                println("In der Funktion...")
-                println(email)
-                tv_show_email.setText(email)
+                //tv_show_email.setText(name)
+                tv_show_firstname.text = firstname
+                tv_show_lastname.text = lastname
+                tv_show_street.text = street
+                tv_show_street_nr.text = streetNr
+                tv_show_postalcode.text = postalcode
+                tv_show_city.text = city
+                tv_show_email.text = email
             } else {
                 // handle the case when the document does not exist
                 println("No such document")
@@ -73,8 +87,6 @@ class ShowProfileActivity : AppCompatActivity() {
             // handle any exceptions that occur
             println("Error getting documents: $exception")
         }
-
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

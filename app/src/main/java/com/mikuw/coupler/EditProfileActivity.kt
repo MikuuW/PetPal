@@ -1,10 +1,12 @@
 package com.mikuw.coupler
 
 import android.content.ContentValues
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -38,7 +40,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         getProfileInformation()
 
-        val btn_edit_submit = findViewById<TextView>(R.id.btn_edit_submit)
+        val btn_edit_submit = findViewById<TextView>(R.id.btn_edit_profile_submit)
         btn_edit_submit.setOnClickListener {
             updateUserOnSubmit()
         }
@@ -56,11 +58,13 @@ class EditProfileActivity : AppCompatActivity() {
         val userRef = db.collection("users").document(currentUser.uid)
 
 
-        var etv_edit_email = findViewById<TextView>(R.id.etv_edit_email)
-        var etv_edit_firstname = findViewById<TextView>(R.id.etv_edit_firstname)
-        var etv_edit_lastname = findViewById<TextView>(R.id.etv_edit_lastname)
-        var etv_edit_postalcode = findViewById<TextView>(R.id.etv_edit_postalcode)
-        var etv_edit_city = findViewById<TextView>(R.id.etv_edit_city)
+        var etv_edit_email = findViewById<TextView>(R.id.etv_edit_profile_email)
+        var etv_edit_firstname = findViewById<TextView>(R.id.etv_edit_profile_firstname)
+        var etv_edit_lastname = findViewById<TextView>(R.id.etv_edit_profile_lastname)
+        var etv_edit_street = findViewById<TextView>(R.id.etv_edit_profile_street)
+        var etv_edit_street_nr = findViewById<TextView>(R.id.etv_edit_profile_street_nr)
+        var etv_edit_postalcode = findViewById<TextView>(R.id.etv_edit_profile_postalcode)
+        var etv_edit_city = findViewById<TextView>(R.id.etv_edit_profile_city)
 
 
         userRef.get().addOnSuccessListener { document ->
@@ -69,26 +73,20 @@ class EditProfileActivity : AppCompatActivity() {
                 val email = document.getString("email")
                 val firstname = document.getString("firstname")
                 val lastname = document.getString("lastname")
+                val street = document.getString("street")
+                val street_nr = document.getString("streetNr")
                 val postalcode = document.getString("postalcode")
                 val city = document.getString("city")
                 // do something with the retrieved data
 
 
-                etv_edit_email.setText(email)
-
-
-                if (firstname != null) {
-                    etv_edit_firstname.setText(firstname)
-                }
-                if (lastname != null) {
-                    etv_edit_lastname.setText(lastname)
-                }
-                if (postalcode != null) {
-                    etv_edit_postalcode.setText(postalcode)
-                }
-                if (city != null) {
-                    etv_edit_city.setText(city)
-                }
+                etv_edit_email.text = email
+                etv_edit_firstname.text = firstname
+                etv_edit_lastname.text = lastname
+                etv_edit_street.text = street
+                etv_edit_street_nr.text = street_nr
+                etv_edit_postalcode.text = postalcode
+                etv_edit_city.text = city
 
 
             } else {
@@ -105,11 +103,13 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun updateUserOnSubmit() {
 
-        val email = findViewById<TextView>(R.id.etv_edit_email).text.toString()
-        val newFirstname = findViewById<TextView>(R.id.etv_edit_firstname).text.toString().trim()
-        val newLastname = findViewById<TextView>(R.id.etv_edit_lastname).text.toString().trim()
-        val newPostalcode = findViewById<TextView>(R.id.etv_edit_postalcode).text.toString().trim()
-        val newCity = findViewById<TextView>(R.id.etv_edit_city).text.toString().trim()
+        val email = findViewById<TextView>(R.id.etv_edit_profile_email).text.toString()
+        val newFirstname = findViewById<TextView>(R.id.etv_edit_profile_firstname).text.toString().trim()
+        val newLastname = findViewById<TextView>(R.id.etv_edit_profile_lastname).text.toString().trim()
+        val newStreet = findViewById<TextView>(R.id.etv_edit_profile_street).text.toString().trim()
+        val newStreetNr = findViewById<TextView>(R.id.etv_edit_profile_street_nr).text.toString().trim()
+        val newPostalcode = findViewById<TextView>(R.id.etv_edit_profile_postalcode).text.toString().trim()
+        val newCity = findViewById<TextView>(R.id.etv_edit_profile_city).text.toString().trim()
 
 
         //TODO: Nur Updaten wenn etwas geändert wurde
@@ -123,6 +123,8 @@ class EditProfileActivity : AppCompatActivity() {
             "email" to email,
             "firstname" to newFirstname,
             "lastname" to newLastname,
+            "street" to newStreet,
+            "streetNr" to newStreetNr,
             "postalcode" to newPostalcode,
             "city" to newCity
         )
@@ -133,9 +135,12 @@ class EditProfileActivity : AppCompatActivity() {
             .set(user)
             .addOnSuccessListener { documentReference ->
                 Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: $userId")
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             }
             .addOnFailureListener { e ->
                 Log.w(ContentValues.TAG, "Error adding document", e)
+                Toast.makeText(this, "Something went wrong!\nTry again please!", Toast.LENGTH_SHORT).show()
             }
     }
 

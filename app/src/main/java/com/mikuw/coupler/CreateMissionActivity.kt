@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -30,7 +31,6 @@ class CreateMissionActivity : AppCompatActivity() {
     private lateinit var toDate: Date
     lateinit var toggle: ActionBarDrawerToggle
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_mission)
@@ -51,10 +51,12 @@ class CreateMissionActivity : AppCompatActivity() {
 
         setupNavigationDrawer(this)
         //TEST BURGER MENU
+
         val fromDatePickerButton = findViewById<Button>(R.id.btn_select_from)
         fromDatePickerButton.setOnClickListener {
             showDatePicker(fromDatePickerButton, isFromDate = true)
         }
+
         val toDatePickerButton = findViewById<Button>(R.id.btn_select_to)
         toDatePickerButton.setOnClickListener {
             showDatePicker(toDatePickerButton, isFromDate = false)
@@ -66,47 +68,53 @@ class CreateMissionActivity : AppCompatActivity() {
             println("Number of days between $fromDate and $toDate: $days")
         }
 
-        // Initialize data.
         val datasourceFirebasePets = Datasource_Firebase_Pets()
         val recyclerView = findViewById<RecyclerView>(R.id.rv_select_pets)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
 
         datasourceFirebasePets.loadPets { pets ->
-            recyclerView.adapter = SelectPetsAdapter(this, pets)
+            val adapter = SelectPetsAdapter(this, pets)
+            recyclerView.adapter = adapter
             recyclerView.setHasFixedSize(true)
+
+            val btn_submit = findViewById<Button>(R.id.btn_create_mission)
+            val search_desc = findViewById<EditText>(R.id.et_search_desc)
+
+            btn_submit.setOnClickListener {
+                val selectedPets = adapter.getSelectedPets()
+                createMissionInFirestore(
+                    fromDate,
+                    toDate,
+                    search_desc.text.toString(),
+                    selectedPets
+                )
+            }
         }
-        //TODO:
-        //Ausgewählte Tiere der Funktion geben
-        //Funktion erstellen, die die Tiere in die Datenbank schreibt
-
-        val btn_submit = findViewById<Button>(R.id.btn_create_mission)
-
-
-        btn_submit.setOnClickListener {
-            //createMissionInFirestore(fromDate, toDate)
-            val intent = Intent(this, tmpActivity::class.java)
-            startActivity(intent)
-        }
-
-
     }
 
-    private fun createMissionInFirestore(fromDate: Date, toDate: Date) {
+    private fun createMissionInFirestore(
+        fromDate: Date,
+        toDate: Date,
+        desc: String,
+        pets: List<Pet>
+    ) {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
         // Check if the name, desc, and type are not empty before creating the pet
         if (true) {
             val pet = hashMapOf(
+                "userId" to userId,
                 "from" to fromDate,
                 "to" to toDate,
-                //"pet" to pet,
+                "desc" to desc,
+                "pets" to pets
             )
             db.collection("searches")
                 .add(pet)
                 .addOnSuccessListener { documentReference ->
-                    //Toast.makeText(this, "Mission for $name created", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Search created", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
                     Log.w(ContentValues.TAG, "Error adding document", e)
