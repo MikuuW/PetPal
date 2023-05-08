@@ -105,7 +105,7 @@ class CreateMissionActivity : AppCompatActivity() {
         // Check if the name, desc, and type are not empty before creating the pet
         if (true) {
             val pet = hashMapOf(
-                "userId" to userId,
+                "creator" to userId,
                 "from" to fromDate,
                 "to" to toDate,
                 "desc" to desc,
