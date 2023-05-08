@@ -65,7 +65,6 @@ class CreateMissionActivity : AppCompatActivity() {
         val tv_amount_days = findViewById<TextView>(R.id.tv_amount_days)
         tv_amount_days.setOnClickListener {
             val days = calculateDaysBetweenDates(fromDate, toDate)
-            println("Number of days between $fromDate and $toDate: $days")
         }
 
         val datasourceFirebasePets = Datasource_Firebase_Pets()
@@ -79,14 +78,18 @@ class CreateMissionActivity : AppCompatActivity() {
             recyclerView.setHasFixedSize(true)
 
             val btn_submit = findViewById<Button>(R.id.btn_create_mission)
-            val search_desc = findViewById<EditText>(R.id.et_search_desc)
+            val desc = findViewById<EditText>(R.id.et_search_desc)
+            val title = findViewById<EditText>(R.id.et_search_title)
+
+
 
             btn_submit.setOnClickListener {
                 val selectedPets = adapter.getSelectedPets()
                 createMissionInFirestore(
+                    title.text.toString(),
                     fromDate,
                     toDate,
-                    search_desc.text.toString(),
+                    desc.text.toString(),
                     selectedPets
                 )
             }
@@ -94,6 +97,7 @@ class CreateMissionActivity : AppCompatActivity() {
     }
 
     private fun createMissionInFirestore(
+        title: String,
         fromDate: Date,
         toDate: Date,
         desc: String,
@@ -105,6 +109,7 @@ class CreateMissionActivity : AppCompatActivity() {
         // Check if the name, desc, and type are not empty before creating the pet
         if (true) {
             val pet = hashMapOf(
+                "title" to title,
                 "creator" to userId,
                 "from" to fromDate,
                 "to" to toDate,
@@ -149,9 +154,9 @@ class CreateMissionActivity : AppCompatActivity() {
                         var weeks: Long? = null
                         if (days % 7 == 0L) {
                             weeks = amount_days / 7
-                            tvAmountDays.text = "$weeks Weeks"
+                            tvAmountDays.text = "$weeks Week(s)"
                         } else {
-                            tvAmountDays.text = "$days Days"
+                            tvAmountDays.text = "$days Day(s)"
                         }
                     }
                 }
