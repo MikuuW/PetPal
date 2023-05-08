@@ -13,6 +13,17 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import com.mikuw.coupler.data.Datasource_Firebase_Events
 import com.mikuw.coupler.data.Datasource_Firebase_Petsitter
 
+
+//TODO:
+// - Bewertungen für Tiere und Petsitter
+// - Nachrichten schicken / Chat
+// - Searches clickbar mit mehr Infos
+// - Petsitter clickbar mi mehr Infos
+// - Überlegen ob Basis Account und dann ggf.
+//   die Möglichkeit ein Petsitter zu werden
+
+// Optional:
+// - Profilbild wenn BurgerMenu aufklappt
 class MainActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
