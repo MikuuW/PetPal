@@ -21,9 +21,12 @@ import com.mikuw.coupler.data.Datasource_Firebase_Petsitter
 // - Petsitter clickbar mi mehr Infos
 // - Überlegen ob Basis Account und dann ggf.
 //   die Möglichkeit ein Petsitter zu werden
-
-// Optional:
+// - Design
+// - Buttons im BurgerMenu anpassen
 // - Profilbild wenn BurgerMenu aufklappt
+
+
+
 class MainActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
@@ -59,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             if (isChecked) {
                 // Load events from the second collection
                 loadPetsitters()
-                println("HEllo")
                 val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
                 recyclerView.adapter = null
                 //loadOriginalCollectionEvents()
