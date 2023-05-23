@@ -1,9 +1,11 @@
 package com.mikuw.coupler
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -38,6 +40,11 @@ class UserProfileShowActivity : AppCompatActivity() {
         // Display the email in a TextView
         getProfileInformation()
 
+        val btn_edit_profile = findViewById<Button>(R.id.btn_edit_profile)
+        btn_edit_profile.setOnClickListener {
+            val intent = Intent(this, UserProfileEditActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mikuw.coupler.R
 import com.mikuw.coupler.model.Petsitter
+import com.squareup.picasso.Picasso
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -38,5 +39,8 @@ class PetsitterAdapter(
         val item = dataset[position]
         holder.tv_name.text = item.name
         holder.tv_city.text = item.location
+        // TODO: Funzt noch nicht
+        Picasso.get().load(item.imageUrl).resize(40,40).into(holder.iv_image)
+        println(item.imageUrl)
     }
 }

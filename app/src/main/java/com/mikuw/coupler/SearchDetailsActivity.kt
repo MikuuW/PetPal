@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import com.mikuw.coupler.model.Search
+import com.squareup.picasso.Picasso
 
 class SearchDetailsActivity : AppCompatActivity() {
 
@@ -79,7 +81,7 @@ class SearchDetailsActivity : AppCompatActivity() {
         et_desc.text = desc
 
         // get docId of the Search
-
+        getCreatorNameAndImage(creatorUid)
         // TEST
         val recyclerView = findViewById<RecyclerView>(R.id.rv_search_details_pets)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -98,7 +100,10 @@ class SearchDetailsActivity : AppCompatActivity() {
                         setOnItemClickListener(object : ShowPetsAdapter.OnItemClickListener {
                             override fun onItemClick(pet: Pet) {
                                 val intent =
-                                    Intent(this@SearchDetailsActivity, PetProfileEditActivity::class.java)
+                                    Intent(
+                                        this@SearchDetailsActivity,
+                                        PetProfileEditActivity::class.java
+                                    )
                                 intent.putExtra("pet", pet)
                                 startActivity(intent)
                             }
@@ -106,7 +111,8 @@ class SearchDetailsActivity : AppCompatActivity() {
                     }
 
                     recyclerView.setHasFixedSize(true)
-                }            }
+                }
+            }
         }
 
         // TEST ENDE
@@ -139,7 +145,6 @@ class SearchDetailsActivity : AppCompatActivity() {
     }
 
 
-
     private fun getCreatorName(
         userId: String,
         onSuccess: (String) -> Unit,
@@ -165,6 +170,21 @@ class SearchDetailsActivity : AppCompatActivity() {
             }
         }.addOnFailureListener { exception ->
             onFailure(exception)
+        }
+    }
+
+    private fun getCreatorNameAndImage(creatorUid: String?) {
+        val db = FirebaseFirestore.getInstance()
+        val userRef = db.collection("users").document("creatorUid")
+
+        userRef.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists()) {
+                val image = documentSnapshot.getString("image")
+                if (image != null) {
+                    val imageView = findViewById<ImageView>(R.id.iv_search_details_profile_image)
+                    Picasso.get().load(image).into(imageView)
+                }
+            }
         }
     }
 

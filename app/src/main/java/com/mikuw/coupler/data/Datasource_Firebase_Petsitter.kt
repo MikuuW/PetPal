@@ -5,7 +5,7 @@ import com.mikuw.coupler.model.Petsitter
 
 class Datasource_Firebase_Petsitter {
     private val db = FirebaseFirestore.getInstance()
-
+    // TODO: imageUri nur optionial
     fun loadPetsitter(callback: (List<Petsitter>) -> Unit) {
         db.collection("Petsitter")
             .get()
