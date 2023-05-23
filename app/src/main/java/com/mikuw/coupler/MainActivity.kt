@@ -13,7 +13,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.mikuw.coupler.data.Datasource_Firebase_Searches
 import com.mikuw.coupler.data.Datasource_Firebase_Petsitter
-import com.mikuw.coupler.model.Search as Event
+import com.mikuw.coupler.model.Search
 
 
 //TODO:
@@ -89,20 +89,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadSearches() {
         // Initialize data.
-        val datasourceFirebaseEvents = Datasource_Firebase_Searches()
+        val datasourceFirebaseSearches = Datasource_Firebase_Searches()
 
         val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
-        val eventsAdapter = SearchesAdapter(this, emptyList()) // Create an empty adapter initially
-        recyclerView.adapter = eventsAdapter
+        val searchesAdapter = SearchesAdapter(this, emptyList()) // Create an empty adapter initially
+        recyclerView.adapter = searchesAdapter
 
         // Set the item click listener for the events adapter
-        datasourceFirebaseEvents.loadEvents { events ->
+        datasourceFirebaseSearches.loadSearches { searches ->
             val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
-            recyclerView.adapter = SearchesAdapter(this, events).apply {
+            recyclerView.adapter = SearchesAdapter(this, searches).apply {
                 setOnItemClickListener(object : SearchesAdapter.OnItemClickListener {
-                    override fun onItemClick(event: Event) {
+                    override fun onItemClick(search: Search) {
                         val intent = Intent(this@MainActivity, SearchDetailsActivity::class.java)
-                        intent.putExtra("event", event)
+                        intent.putExtra("search", search)
                         startActivity(intent)
 
                     }
@@ -112,9 +112,9 @@ class MainActivity : AppCompatActivity() {
             recyclerView.setHasFixedSize(true)
         }
 
-        datasourceFirebaseEvents.loadEvents { events ->
-            eventsAdapter.dataset = events // Update the dataset in the adapter
-            eventsAdapter.notifyDataSetChanged() // Notify the adapter that the data has changed
+        datasourceFirebaseSearches.loadSearches { searches ->
+            searchesAdapter.dataset = searches // Update the dataset in the adapter
+            searchesAdapter.notifyDataSetChanged() // Notify the adapter that the data has changed
         }
 
         // Use this setting to improve performance if you know that changes

@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import com.mikuw.coupler.model.Search as Event
+import com.mikuw.coupler.model.Search
 class SearchDetailsActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
@@ -27,9 +27,9 @@ class SearchDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_details)
-        val event = intent.getSerializableExtra("event") as? Event
-        val title = event?.name
-        val desc = event?.location
+        val search = intent.getSerializableExtra("search") as? Search
+        val title = search?.name
+        val desc = search?.location
         //TEST BURGER MENU
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)

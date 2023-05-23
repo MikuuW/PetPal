@@ -55,6 +55,6 @@ class SearchesAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(event: Search)
+        fun onItemClick(search: Search)
     }
 }
