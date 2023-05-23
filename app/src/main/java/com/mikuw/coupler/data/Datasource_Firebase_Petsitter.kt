@@ -14,7 +14,7 @@ class Datasource_Firebase_Petsitter {
                 for (document in result) {
                     val name = document.getString("name") ?: continue
                     val city = document.getString("city") ?: continue
-                    petsitters.add(Petsitter(name, city))
+                    petsitters.add(Petsitter(name, city ))
                     println("Petsitter: $name, $city")
                 }
                 callback(petsitters)
