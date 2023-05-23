@@ -1,6 +1,7 @@
 package com.mikuw.coupler
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -69,19 +70,55 @@ class SearchDetailsActivity : AppCompatActivity() {
         }
 
         // Count Days
-        val days = if (fromDate != null && toDate != null) calculateDaysBetweenDates(fromDate, toDate) else null
+        val days = if (fromDate != null && toDate != null) calculateDaysBetweenDates(
+            fromDate,
+            toDate
+        ) else null
         // assign text
         tv_title.text = title
         tv_date.text = formattedDate(fromDate) + " - " + formattedDate(toDate) + " \n$days day(s)"
         tv_location.text = location
         et_desc.text = desc
 
+        // get docId of the Search
+        if (search != null) {
+            getDocId(creatorUid, search.title)
+        }
+    }
+
+    private fun getDocId(uid: String?, title: String?) {
+        if (uid != null) {
+            val db = FirebaseFirestore.getInstance()
+            val searchesRef = db.collection("searches")
+                .whereEqualTo("creator", uid)
+                .whereEqualTo("title", title)
+                .limit(1)
+            searchesRef.get().addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val document = querySnapshot.documents[0]
+                    val searchId = document.id
+
+                    println("Search document ID: $searchId")
+
+                    // ...
+                } else {
+                    Log.d(TAG, "No matching documents found")
+                }
+            }.addOnFailureListener { exception ->
+                Log.d(TAG, "Error getting documents: $exception")
+            }
+        }
     }
 
 
 
 
-    private fun getCreatorName(userId: String, onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit) {
+
+    private fun getCreatorName(
+        userId: String,
+        onSuccess: (String) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
         val db = FirebaseFirestore.getInstance()
         val userRef = db.collection("users").document(userId)
 
@@ -104,8 +141,6 @@ class SearchDetailsActivity : AppCompatActivity() {
             onFailure(exception)
         }
     }
-
-
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
