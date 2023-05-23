@@ -48,40 +48,7 @@ fun setupNavigationDrawer(activity: Activity) {
 
     navView.setNavigationItemSelectedListener {
         when (it.itemId) {
-            R.id.nav_main -> {
-                val intent = Intent(activity, MainActivity::class.java)
-                activity.startActivity(intent)
-            }
-            R.id.nav_login -> {
-                val intent = Intent(activity, LoginActivity::class.java)
-                activity.startActivity(intent)
-            }
-            R.id.nav_register -> {
-                val intent = Intent(activity, RegisterActivity::class.java)
-                activity.startActivity(intent)
-            }
-            R.id.nav_logout -> {
-                FirebaseAuth.getInstance().signOut()
-                val intent = Intent(activity, MainActivity::class.java)
-                activity.startActivity(intent)
-            }
-            R.id.nav_my_profile -> {
-                val intent = Intent(activity, ShowProfileActivity::class.java)
-                activity.startActivity(intent)
-            }
-            R.id.nav_edit_profile -> {
-                val intent = Intent(activity, EditProfileActivity::class.java)
-                activity.startActivity(intent)
-            }
-            R.id.nav_setting -> {
-                val intent = Intent(activity, EditProfileActivity::class.java)
-                activity.startActivity(intent)
-                Toast.makeText(
-                    activity.applicationContext,
-                    "Clicked Setting (not exisiting yet)",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+
             R.id.nav_pets -> {
                 val intent = Intent(activity, MyPetsActivity::class.java)
                 activity.startActivity(intent)
