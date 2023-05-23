@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class CreateMissionActivity : AppCompatActivity() {
+class SearchCreateActivity : AppCompatActivity() {
 
     private lateinit var fromDate: Date
     private lateinit var toDate: Date
@@ -33,7 +33,7 @@ class CreateMissionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_mission)
+        setContentView(R.layout.activity_search_create)
 
         // Retrieve the ActionBar object
         val actionBar = supportActionBar

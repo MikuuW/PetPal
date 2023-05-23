@@ -31,7 +31,7 @@ class ShowPetsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_show_pets, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_pets_show, parent, false)
 
         return ItemViewHolder(adapterLayout)
     }

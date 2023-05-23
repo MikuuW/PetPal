@@ -3,9 +3,7 @@ package com.mikuw.coupler
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -56,35 +54,35 @@ class tmpActivity : AppCompatActivity() {
         // Login Activity
         val tv_login = findViewById<TextView>(R.id.tv_login)
         tv_login.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, UserLoginActivity::class.java)
             startActivity(intent)
         }
 
         // Register Activity
         val tv_register = findViewById<TextView>(R.id.tv_register)
         tv_register.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            val intent = Intent(this, UserRegisterActivity::class.java)
             startActivity(intent)
         }
 
         // Edit Profile Activity
         val tv_editProfile = findViewById<TextView>(R.id.tv_edit_profile)
         tv_editProfile.setOnClickListener {
-            val intent = Intent(this, EditProfileActivity::class.java)
+            val intent = Intent(this, UserProfileEditActivity::class.java)
             startActivity(intent)
         }
 
         // Show Profile Activity
         val tv_showProfile = findViewById<TextView>(R.id.tv_show_profile)
         tv_showProfile.setOnClickListener {
-            val intent = Intent(this, ShowProfileActivity::class.java)
+            val intent = Intent(this, UserProfileShowActivity::class.java)
             startActivity(intent)
         }
 
         // Create Mission Activity
         val tv_createMission = findViewById<TextView>(R.id.tv_create_mission)
         tv_createMission.setOnClickListener {
-            val intent = Intent(this, CreateMissionActivity::class.java)
+            val intent = Intent(this, SearchCreateActivity::class.java)
             startActivity(intent)
         }
 
@@ -99,14 +97,14 @@ class tmpActivity : AppCompatActivity() {
         // MyPets Activity
         val tv_my_pets = findViewById<TextView>(R.id.tv_my_pets)
         tv_my_pets.setOnClickListener {
-            val intent = Intent(this, MyPetsActivity::class.java)
+            val intent = Intent(this, PetsShowActivity::class.java)
             startActivity(intent)
         }
 
         // Add Pets
         val tv_add_pets = findViewById<TextView>(R.id.tv_add_pets)
         tv_add_pets.setOnClickListener {
-            val intent = Intent(this, AddPetsActivity::class.java)
+            val intent = Intent(this, PetAddActivity::class.java)
             startActivity(intent)
         }
 

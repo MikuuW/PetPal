@@ -1,4 +1,4 @@
-// NavigationDrawerHelper.kt
+// NavigationDrawer.kt
 
 package com.mikuw.coupler
 
@@ -8,13 +8,11 @@ import android.content.Intent
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mikuw.coupler.R
 
 fun setupNavigationDrawer(activity: Activity) {
     val drawerLayout: DrawerLayout = activity.findViewById(R.id.drawer_layout)
@@ -37,12 +35,12 @@ fun setupNavigationDrawer(activity: Activity) {
     }
 
     btn2.setOnClickListener() {
-        val intent = Intent(activity, LoginActivity::class.java)
+        val intent = Intent(activity, UserLoginActivity::class.java)
         activity.startActivity(intent)
     }
 
     btn3.setOnClickListener() {
-        val intent = Intent(activity, ShowProfileActivity::class.java)
+        val intent = Intent(activity, UserProfileShowActivity::class.java)
         activity.startActivity(intent)
     }
 
@@ -50,19 +48,19 @@ fun setupNavigationDrawer(activity: Activity) {
         when (it.itemId) {
 
             R.id.nav_pets -> {
-                val intent = Intent(activity, MyPetsActivity::class.java)
+                val intent = Intent(activity, PetsShowActivity::class.java)
                 activity.startActivity(intent)
             }
             R.id.nav_add_pets -> {
-                val intent = Intent(activity, AddPetsActivity::class.java)
+                val intent = Intent(activity, PetAddActivity::class.java)
                 activity.startActivity(intent)
             }
             R.id.nav_create_mission -> {
-                val intent = Intent(activity, CreateMissionActivity::class.java)
+                val intent = Intent(activity, SearchCreateActivity::class.java)
                 activity.startActivity(intent)
             }
             R.id.nav_become_petsitter -> {
-                val intent = Intent(activity, BecomePetsitterActivity::class.java)
+                val intent = Intent(activity, PetsitterRegisterActivity::class.java)
                 activity.startActivity(intent)
             }
             R.id.nav_tmp -> {

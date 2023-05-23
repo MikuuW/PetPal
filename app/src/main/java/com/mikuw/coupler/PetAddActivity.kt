@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.data.Datasource_Animal_Types
 
-class AddPetsActivity : AppCompatActivity() {
+class PetAddActivity : AppCompatActivity() {
 
     private lateinit var selectedItem: String
     private val REQUEST_IMAGE_CAPTURE = 1
@@ -36,7 +36,7 @@ class AddPetsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_pets)
+        setContentView(R.layout.activity_pets_add)
 
         // Retrieve the ActionBar object
         val actionBar = supportActionBar
@@ -93,8 +93,7 @@ class AddPetsActivity : AppCompatActivity() {
                 selectedItem,
                 imageUri
             )
-            val intent = Intent(this, MyPetsActivity::class.java)
-            startActivity(intent)
+
 
         }
 
@@ -218,7 +217,7 @@ class AddPetsActivity : AppCompatActivity() {
                         .add(pet)
                         .addOnSuccessListener { documentReference ->
                             Toast.makeText(this, "$name saved", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this, tmpActivity::class.java)
+                            val intent = Intent(this, PetsShowActivity::class.java)
                             startActivity(intent)
                         }
                         .addOnFailureListener { e ->
@@ -227,6 +226,9 @@ class AddPetsActivity : AppCompatActivity() {
                 }
             }
         } else {
+
+            val intent = Intent(this, PetAddActivity::class.java)
+            startActivity(intent)
             Toast.makeText(
                 this,
                 "Pet name, description, or type cannot be empty",

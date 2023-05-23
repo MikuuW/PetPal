@@ -1,5 +1,4 @@
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +36,7 @@ class SelectPetsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_select_pets, parent, false)
+            .inflate(R.layout.list_item_pets_select, parent, false)
 
         return ItemViewHolder(adapterLayout)
     }

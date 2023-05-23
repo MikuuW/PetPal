@@ -29,7 +29,7 @@ class SearchesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         // create a new view
         val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_events, parent, false)
+            .inflate(R.layout.list_item_search, parent, false)
 
         return ItemViewHolder(adapterLayout)
     }

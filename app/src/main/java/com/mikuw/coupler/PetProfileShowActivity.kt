@@ -12,54 +12,60 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.model.Pet
+import com.squareup.picasso.Picasso
 import java.io.File
 
-class PetProfileActivity : AppCompatActivity() {
+class PetProfileShowActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pet_profile)
+        setContentView(R.layout.activity_pet_profile_show)
 
-        //TEST BURGER MENU
+        //BURGER MENU
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         setupNavigationDrawer(this)
-        //TEST BURGER MENU
+
+        // Get values from the passed object
         val pet = intent.getSerializableExtra("pet") as? Pet
         val name = pet?.name
         val desc = pet?.desc
 
-
-        // Assuming you have the imageUri string in a variable called imageUri
-        val iv_petProfile_image = findViewById<ImageView>(R.id.iv_petProfile_image)
-        //iv_petProfile_image.setImageURI(uri)
-
-        // Retrieve the ActionBar object
+        // Actionbar
         val actionBar = supportActionBar
         actionBar?.title = "$name's Profile"
 
+        // Get the views
         val tv_pet_desc = findViewById<TextView>(R.id.et_pet_desc)
-        tv_pet_desc.text = desc
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-        //TEST
+        // assign the desc value to the textview
+        tv_pet_desc.text = desc
+
+
+        displayImage(name)
+    }
+
+    private fun displayImage(name: String?) {
+        val iv_petProfile_image = findViewById<ImageView>(R.id.iv_petProfile_image)
+
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
         val dbRef = FirebaseStorage.getInstance().reference.child("images_pet/$userId/$name.jpg")
 
-        val localFile = File.createTempFile("tmpImage", "jpg")
-        dbRef.getFile(localFile).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-            iv_petProfile_image.setImageBitmap(bitmap)
+        if(dbRef != null) {
+            val localFile = File.createTempFile("tmpImage", "jpg")
+            dbRef.getFile(localFile).addOnSuccessListener {
+                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                iv_petProfile_image.setImageBitmap(bitmap)
+            }
+        } else {
+            iv_petProfile_image.setImageResource(R.drawable.baseline_hide_image_24)
         }
-        //TEST
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

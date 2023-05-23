@@ -2,14 +2,11 @@ package com.mikuw.coupler
 
 import Datasource_Firebase_Pets
 import ShowPetsAdapter
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -17,16 +14,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.model.Pet
-import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import com.mikuw.coupler.model.Search
-import kotlinx.coroutines.tasks.await
 
 class SearchDetailsActivity : AppCompatActivity() {
 
@@ -105,7 +98,7 @@ class SearchDetailsActivity : AppCompatActivity() {
                         setOnItemClickListener(object : ShowPetsAdapter.OnItemClickListener {
                             override fun onItemClick(pet: Pet) {
                                 val intent =
-                                    Intent(this@SearchDetailsActivity, PetProfileActivity::class.java)
+                                    Intent(this@SearchDetailsActivity, PetProfileEditActivity::class.java)
                                 intent.putExtra("pet", pet)
                                 startActivity(intent)
                             }

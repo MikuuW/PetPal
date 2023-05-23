@@ -13,4 +13,8 @@
     <string name="affirmation11">I WILL BUILD THIS FUCKING APP AMK</string>
     <string name="open">Open</string>
     <string name="close">Closed</string>
+    <string name="become_petsitter_header1">Who are Petsitters?</string>
+    <string name="become_petsitter_text1">Well, Petsitter love Animals and have the opportunity to take care of other peoples pets (e.g. a big and beatiful garden and a lot of time), during their vacation for example.</string>
+    <string name="become_petsitter_header2">You feel like you are the perfect petsitter?</string>
+    <string name="become_petsitter_text2">Then feel free to register as one here!\n Other people gonna see your profile among other Petsitter! So try to describe yourself as best and precise as possible! Also do not forget to upload an image of yourself</string>
 </resources>

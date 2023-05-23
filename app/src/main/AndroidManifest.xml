@@ -20,16 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".EditProfileActivity" />
-        <activity android:name=".ShowProfileActivity" />
-        <activity android:name=".CreateMissionActivity" />
-        <activity android:name=".MyPetsActivity" />
-        <activity android:name=".AddPetsActivity" />
-        <activity android:name=".PetProfileActivity" />
+        <activity android:name=".UserRegisterActivity" />
+        <activity android:name=".UserLoginActivity" />
+        <activity android:name=".UserProfileEditActivity" />
+        <activity android:name=".UserProfileShowActivity" />
+        <activity android:name=".SearchCreateActivity" />
+        <activity android:name=".PetsShowActivity" />
+        <activity android:name=".PetAddActivity" />
+        <activity android:name=".PetProfileEditActivity" />
+        <activity android:name=".PetProfileShowActivity" />
         <activity android:name=".SearchDetailsActivity" />
-        <activity android:name=".BecomePetsitterActivity" />
+        <activity android:name=".PetsitterRegisterActivity" />
     </application>
 
 </manifest>
