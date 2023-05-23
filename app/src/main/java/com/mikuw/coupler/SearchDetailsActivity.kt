@@ -1,7 +1,10 @@
 package com.mikuw.coupler
 
+import Datasource_Firebase_Pets
+import ShowPetsAdapter
 import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -11,6 +14,8 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -81,12 +86,40 @@ class SearchDetailsActivity : AppCompatActivity() {
         et_desc.text = desc
 
         // get docId of the Search
+
+        // TEST
+        val recyclerView = findViewById<RecyclerView>(R.id.rv_search_details_pets)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        val datasourceFirebasePets = Datasource_Firebase_Pets()
+        //val docId = "C18FhpBNrI4qJ4vN1Ety"
+
+        var docId = ""
         if (search != null) {
-            getDocId(creatorUid, search.title)
+            getDocId(creatorUid, search.title) { searchId ->
+                docId = searchId
+                // Continue your code logic here using the obtained `doccId`
+                datasourceFirebasePets.loadPetsinSearch(docId) { pets ->
+                    val recyclerView = findViewById<RecyclerView>(R.id.rv_search_details_pets)
+                    recyclerView.adapter = ShowPetsAdapter(this, pets).apply {
+                        setOnItemClickListener(object : ShowPetsAdapter.OnItemClickListener {
+                            override fun onItemClick(pet: Pet) {
+                                val intent =
+                                    Intent(this@SearchDetailsActivity, PetProfileActivity::class.java)
+                                intent.putExtra("pet", pet)
+                                startActivity(intent)
+                            }
+                        })
+                    }
+
+                    recyclerView.setHasFixedSize(true)
+                }            }
         }
+
+        // TEST ENDE
     }
 
-    private fun getDocId(uid: String?, title: String?) {
+    private fun getDocId(uid: String?, title: String?, callback: (String) -> Unit) {
         if (uid != null) {
             val db = FirebaseFirestore.getInstance()
             val searchesRef = db.collection("searches")
@@ -97,20 +130,20 @@ class SearchDetailsActivity : AppCompatActivity() {
                 if (!querySnapshot.isEmpty) {
                     val document = querySnapshot.documents[0]
                     val searchId = document.id
-
-                    println("Search document ID: $searchId")
-
-                    // ...
+                    callback(searchId) // Invoke the callback with the document ID
+                    println("in function: $searchId")
                 } else {
                     Log.d(TAG, "No matching documents found")
+                    callback("") // Invoke the callback with an empty string
                 }
             }.addOnFailureListener { exception ->
                 Log.d(TAG, "Error getting documents: $exception")
+                callback("") // Invoke the callback with an empty string
             }
+        } else {
+            callback("") // Invoke the callback with an empty string if the UID is null
         }
     }
-
-
 
 
 

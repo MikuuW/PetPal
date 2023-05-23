@@ -43,6 +43,7 @@ class AddPetsActivity : AppCompatActivity() {
         actionBar?.title = "Add Pets"
 
         //TEST BURGER MENU
+        imageUri = Uri.EMPTY
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
 
@@ -92,7 +93,9 @@ class AddPetsActivity : AppCompatActivity() {
                 selectedItem,
                 imageUri
             )
-            println("In onCreate: $imageUri")
+            val intent = Intent(this, MyPetsActivity::class.java)
+            startActivity(intent)
+
         }
 
         // TEST IMAGE UPLOAD
@@ -192,7 +195,7 @@ class AddPetsActivity : AppCompatActivity() {
     }
 
 
-    private fun createPetInFirestore(name: String, desc: String, type: String, imageUri: Uri) {
+    private fun createPetInFirestore(name: String, desc: String, type: String, imageUri: Uri?) {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 

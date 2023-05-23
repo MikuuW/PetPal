@@ -92,7 +92,8 @@ class MainActivity : AppCompatActivity() {
         val datasourceFirebaseSearches = Datasource_Firebase_Searches()
 
         val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
-        val searchesAdapter = SearchesAdapter(this, emptyList()) // Create an empty adapter initially
+        val searchesAdapter = SearchesAdapter(this, emptyList())
+        // Create an empty adapter initially
         recyclerView.adapter = searchesAdapter
 
         // Set the item click listener for the events adapter

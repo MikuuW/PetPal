@@ -11,8 +11,7 @@ import com.mikuw.coupler.model.Pet
 import com.squareup.picasso.Picasso
 
 class ShowPetsAdapter(
-    private val context: Context,
-    private val dataset: List<Pet>
+    private val context: Context, private val dataset: List<Pet>
 ) : RecyclerView.Adapter<ShowPetsAdapter.ItemViewHolder>() {
 
     private var listener: OnItemClickListener? = null
@@ -31,8 +30,8 @@ class ShowPetsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_show_pets, parent, false)
+        val adapterLayout =
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_show_pets, parent, false)
 
         return ItemViewHolder(adapterLayout)
     }
@@ -46,13 +45,14 @@ class ShowPetsAdapter(
         holder.tv_title.text = item.name
 
         // Load image with Picasso
-        val storageRef = FirebaseStorage.getInstance().reference.child("images_pet/${item.ownerId}/${item.name}.jpg")
-        storageRef.downloadUrl.addOnSuccessListener { uri ->
-            Picasso.get()
-                .load(uri)
-                .resize(400, 400)
-                .centerCrop()
-                .into(holder.iv_image)
+        if (item.imageUrl.isNotEmpty()) {
+            val storageRef =
+                FirebaseStorage.getInstance().reference.child("images_pet/${item.ownerId}/${item.name}.jpg")
+            storageRef.downloadUrl.addOnSuccessListener { uri ->
+                Picasso.get().load(uri).resize(400, 400).centerCrop().into(holder.iv_image)
+            }
+        } else {
+            holder.iv_image.setImageResource(R.drawable.baseline_hide_image_24)
         }
 
         holder.itemView.setOnClickListener {
