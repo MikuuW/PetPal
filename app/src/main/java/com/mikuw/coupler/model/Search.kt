@@ -8,7 +8,7 @@ import java.util.*
 }*/
 
 data class Search(
-    val name: String,
+    val title: String,
     val location: String? = null,
     val from: Date? = null,
     val to: Date? = null,
