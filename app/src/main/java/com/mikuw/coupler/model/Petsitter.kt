@@ -8,6 +8,7 @@ import java.util.*
 
 data class Petsitter(
     val name: String,
-    val location: String? = "not specified"
+    val location: String,
+    val imageUrl: String?
 ) {
 }

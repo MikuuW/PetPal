@@ -2,6 +2,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mikuw.coupler.R
@@ -17,13 +18,13 @@ class PetsitterAdapter(
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val tv_name: TextView = view.findViewById(R.id.tv_petsitter_name)
         val tv_city: TextView = view.findViewById(R.id.tv_petsitter_city)
+        val iv_image: ImageView = view.findViewById<ImageView>(R.id.iv_petsitter_image)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         // create a new view
         val adapterLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item_petsitter, parent, false)
-
         return ItemViewHolder(adapterLayout)
     }
 

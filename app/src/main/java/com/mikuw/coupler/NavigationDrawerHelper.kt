@@ -61,6 +61,10 @@ fun setupNavigationDrawer(activity: Activity) {
                 val intent = Intent(activity, CreateMissionActivity::class.java)
                 activity.startActivity(intent)
             }
+            R.id.nav_become_petsitter -> {
+                val intent = Intent(activity, BecomePetsitterActivity::class.java)
+                activity.startActivity(intent)
+            }
             R.id.nav_tmp -> {
                 val intent = Intent(activity, tmpActivity::class.java)
                 activity.startActivity(intent)

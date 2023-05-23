@@ -25,6 +25,9 @@
         android:id="@+id/nav_create_mission"
         android:title="Create new search" />
     <item
+        android:id="@+id/nav_become_petsitter"
+        android:title="Become a Petsitter" />
+    <item
         android:id="@+id/nav_tmp"
         android:title="TMP" />
 
