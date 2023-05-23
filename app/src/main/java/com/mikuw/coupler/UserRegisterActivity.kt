@@ -1,6 +1,7 @@
 package com.mikuw.coupler
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -67,6 +68,8 @@ class UserRegisterActivity : AppCompatActivity() {
                 password.text.toString(),
                 passwordConfirmation.text.toString()
             )
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 

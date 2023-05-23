@@ -29,20 +29,32 @@ fun setupNavigationDrawer(activity: Activity) {
     val btn2 = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_register)
     val btn3 = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_settings)
 
+    //hide the textview test if no on is logged in
+
+
+
     btn.setOnClickListener() {
         val intent = Intent(activity, MainActivity::class.java)
         activity.startActivity(intent)
     }
 
     btn2.setOnClickListener() {
-        val intent = Intent(activity, UserLoginActivity::class.java)
-        activity.startActivity(intent)
+        if(FirebaseAuth.getInstance().currentUser != null) {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(activity, MainActivity::class.java)
+            activity.startActivity(intent)
+        } else {
+            val intent = Intent(activity, UserLoginActivity::class.java)
+            activity.startActivity(intent)
+        }
+
     }
 
     btn3.setOnClickListener() {
         val intent = Intent(activity, UserProfileShowActivity::class.java)
         activity.startActivity(intent)
     }
+
 
     navView.setNavigationItemSelectedListener {
         when (it.itemId) {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -36,6 +37,15 @@ class UserLoginActivity : AppCompatActivity() {
         //TEST BURGER MENU
 
         // Do any additional setup for your activity here
+
+        val btn = findViewById<TextView>(R.id.tv_register_here)
+
+        btn.setOnClickListener() {
+            val intent = Intent(this, UserRegisterActivity::class.java)
+            startActivity(intent)
+        }
+
+
         // Variablen zuweisen
         val emailTextView = findViewById<TextView>(R.id.etv_login_email)
         val passwordTextView = findViewById<TextView>(R.id.etv_login_password)
@@ -65,13 +75,12 @@ class UserLoginActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
-                            println("signInWithEmail:success")
-                            val user = auth.currentUser
-                            val intent = Intent(this, tmpActivity::class.java)
+
+                            val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
                         } else {
                             // If sign in fails, display a message to the user.
-                            println("signInWithEmail:failure")
+
                             println(task.exception)
                         }
                     }
