@@ -1,7 +1,6 @@
 package com.mikuw.coupler.data
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mikuw.coupler.model.Event
 import com.mikuw.coupler.model.Petsitter
 
 class Datasource_Firebase_Petsitter {

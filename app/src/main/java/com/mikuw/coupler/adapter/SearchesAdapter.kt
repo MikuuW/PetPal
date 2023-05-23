@@ -5,14 +5,20 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mikuw.coupler.R
-import com.mikuw.coupler.model.Event
+import com.mikuw.coupler.model.Search
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class EventsAdapter(
+class SearchesAdapter(
     private val context: Context,
-    private val dataset: List<Event>
-) : RecyclerView.Adapter<EventsAdapter.ItemViewHolder>() {
+    var dataset: List<Search>
+) : RecyclerView.Adapter<SearchesAdapter.ItemViewHolder>() {
+
+    private var itemClickListener: OnItemClickListener? = null
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        itemClickListener = listener
+    }
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val tv_title: TextView = view.findViewById(R.id.tv_search_title)
@@ -28,17 +34,19 @@ class EventsAdapter(
         return ItemViewHolder(adapterLayout)
     }
 
-
     override fun getItemCount(): Int {
         return dataset.size
     }
-
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
         holder.tv_title.text = item.name
         holder.tv_date.text = item.formattedDate(item.from!!) + " - " + item.formattedDate(item.to!!) + " (" + calculateDaysBetweenDates(item.from!!, item.to!!) + " day(s))"
         holder.tv_location.text = item.location
+
+        holder.itemView.setOnClickListener {
+            itemClickListener?.onItemClick(item)
+        }
     }
 
     private fun calculateDaysBetweenDates(fromDate: Date, toDate: Date): Long {
@@ -46,4 +54,7 @@ class EventsAdapter(
         return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS)
     }
 
+    interface OnItemClickListener {
+        fun onItemClick(event: Search)
+    }
 }

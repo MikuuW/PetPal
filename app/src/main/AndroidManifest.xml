@@ -29,6 +29,7 @@
         <activity android:name=".MyPetsActivity" />
         <activity android:name=".AddPetsActivity" />
         <activity android:name=".PetProfileActivity" />
+        <activity android:name=".SearchDetailsActivity" />
     </application>
 
 </manifest>

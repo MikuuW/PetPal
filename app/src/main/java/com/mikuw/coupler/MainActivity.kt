@@ -1,7 +1,8 @@
 package com.mikuw.coupler
 
-import EventsAdapter
+import SearchesAdapter
 import PetsitterAdapter
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -10,8 +11,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.mikuw.coupler.data.Datasource_Firebase_Events
+import com.mikuw.coupler.data.Datasource_Firebase_Searches
 import com.mikuw.coupler.data.Datasource_Firebase_Petsitter
+import com.mikuw.coupler.model.Search as Event
 
 
 //TODO:
@@ -24,7 +26,6 @@ import com.mikuw.coupler.data.Datasource_Firebase_Petsitter
 // - Design
 // - Buttons im BurgerMenu anpassen
 // - Profilbild wenn BurgerMenu aufklappt
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -53,8 +54,6 @@ class MainActivity : AppCompatActivity() {
         actionBar?.title = "Main"
 
 
-
-
         //SWITCH
         loadSearches()
         val switch = findViewById<SwitchMaterial>(R.id.switch_petsitter)
@@ -72,12 +71,8 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        //SWITCH
-
-
-
-
     }
+
     private fun loadPetsitters() {
         // Initialize data.
         val datasourceFirebasePetsitters = Datasource_Firebase_Petsitter()
@@ -91,19 +86,42 @@ class MainActivity : AppCompatActivity() {
             recyclerView.setHasFixedSize(true)
         }
     }
+
     private fun loadSearches() {
         // Initialize data.
-        val datasourceFirebaseEvents = Datasource_Firebase_Events()
+        val datasourceFirebaseEvents = Datasource_Firebase_Searches()
 
+        val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
+        val eventsAdapter = SearchesAdapter(this, emptyList()) // Create an empty adapter initially
+        recyclerView.adapter = eventsAdapter
+
+        // Set the item click listener for the events adapter
         datasourceFirebaseEvents.loadEvents { events ->
             val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
-            recyclerView.adapter = EventsAdapter(this, events)
+            recyclerView.adapter = SearchesAdapter(this, events).apply {
+                setOnItemClickListener(object : SearchesAdapter.OnItemClickListener {
+                    override fun onItemClick(event: Event) {
+                        val intent = Intent(this@MainActivity, SearchDetailsActivity::class.java)
+                        intent.putExtra("event", event)
+                        startActivity(intent)
 
-            // Use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
+                    }
+                })
+            }
+
             recyclerView.setHasFixedSize(true)
         }
+
+        datasourceFirebaseEvents.loadEvents { events ->
+            eventsAdapter.dataset = events // Update the dataset in the adapter
+            eventsAdapter.notifyDataSetChanged() // Notify the adapter that the data has changed
+        }
+
+        // Use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        recyclerView.setHasFixedSize(true)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
@@ -112,6 +130,5 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    // SWITCH
 
 }

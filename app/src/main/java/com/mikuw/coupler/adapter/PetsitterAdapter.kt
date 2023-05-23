@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mikuw.coupler.R
-import com.mikuw.coupler.model.Event
 import com.mikuw.coupler.model.Petsitter
 import java.util.*
 import java.util.concurrent.TimeUnit
