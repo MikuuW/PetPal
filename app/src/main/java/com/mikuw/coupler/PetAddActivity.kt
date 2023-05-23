@@ -108,7 +108,7 @@ class PetAddActivity : AppCompatActivity() {
     }
 
 
-    private fun openImagePicker() {
+     fun openImagePicker() {
         val REQUEST_IMAGE_CAPTURE = 1
         val REQUEST_PICK_IMAGE = 2
 

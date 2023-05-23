@@ -50,6 +50,13 @@ class PetProfileShowActivity : AppCompatActivity() {
 
         displayImage(name)
 
+        val btn = findViewById<Button>(R.id.btn_pet_edit_button)
+        btn.setOnClickListener() {
+            val intent = intent
+            intent.setClass(this, PetProfileEditActivity::class.java)
+            intent.putExtra("pet", pet)
+            startActivity(intent)
+        }
     }
 
     private fun displayImage(name: String?) {
@@ -58,15 +65,16 @@ class PetProfileShowActivity : AppCompatActivity() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         val dbRef = FirebaseStorage.getInstance().reference.child("images_pet/$userId/$name.jpg")
 
-        if(dbRef != null) {
-            val localFile = File.createTempFile("tmpImage", "jpg")
-            dbRef.getFile(localFile).addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                iv_petProfile_image.setImageBitmap(bitmap)
-            }
-        } else {
-            iv_petProfile_image.setImageResource(R.drawable.baseline_hide_image_24)
+
+        val localFile = File.createTempFile("tmpImage", "jpg")
+        dbRef.getFile(localFile).addOnSuccessListener {
+            val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+            iv_petProfile_image.setImageBitmap(bitmap)
         }
+            .addOnFailureListener() {
+                iv_petProfile_image.setImageResource(R.drawable.baseline_hide_image_24)
+            }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
