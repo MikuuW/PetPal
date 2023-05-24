@@ -75,12 +75,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadPetsitters() {
         // Initialize data.
+        println("loadPetsitters")
         val datasourceFirebasePetsitters = Datasource_Firebase_Petsitter()
 
         datasourceFirebasePetsitters.loadPetsitter { petsitter ->
             val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
             recyclerView.adapter = PetsitterAdapter(this, petsitter)
-
             // Use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
             recyclerView.setHasFixedSize(true)

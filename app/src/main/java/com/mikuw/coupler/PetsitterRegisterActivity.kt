@@ -1,5 +1,6 @@
 package com.mikuw.coupler
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
@@ -39,9 +40,6 @@ class PetsitterRegisterActivity : AppCompatActivity() {
         btn.setOnClickListener() {
             createPetsitterInFirestore()
         }
-        val intent = intent
-        intent.setClass(this, MainActivity::class.java)
-        startActivity(intent)
 
     }
 
@@ -56,26 +54,32 @@ class PetsitterRegisterActivity : AppCompatActivity() {
                         val email = document.data?.get("email").toString()
                         val firstname = document.data?.get("firstname").toString()
                         val lastname = document.data?.get("lastname").toString()
-                        val image_url = document.data?.get("image_url").toString()
+                        val imageUri = document.data?.get("imageUri").toString()
                         val postalcode = document.data?.get("postalcode").toString()
                         val street = document.data?.get("street").toString()
-                        val streetnr = document.data?.get("streetnr").toString()
+                        val streetnr = document.data?.get("streetNr").toString()
                         val petsitter = hashMapOf(
                             "city" to city,
                             "email" to email,
                             "firstname" to firstname,
                             "lastname" to lastname,
-                            "image_url" to image_url,
+                            "imageUri" to imageUri,
                             "postalcode" to postalcode,
                             "street" to street,
-                            "streetnr" to streetnr
+                            "streetNr" to streetnr
                         )
                         db.collection("petsitters").document(uid).set(petsitter)
+                            .addOnSuccessListener {
+                                // Upload to petsitters successful
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                                finish() // Optional, to close the current activity
+                            }
                     }
                 }
         }
-
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {

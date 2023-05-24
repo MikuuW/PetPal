@@ -7,8 +7,13 @@ import java.util.*
 }*/
 
 data class Petsitter(
-    val name: String,
-    val location: String,
-    val imageUrl: String? = ""
+    val firstname: String,
+    val lastname: String,
+    val email: String,
+    val imageUri: String?,
+    val postalcode: String?,
+    val street: String?,
+    val streetNr: String?,
+    val city: String?
 ) {
 }
