@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.mikuw.coupler.data.Datasource_Firebase_Petsitter
+import com.mikuw.coupler.model.Petsitter
 import com.mikuw.coupler.model.Search
 
 
@@ -74,16 +75,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadPetsitters() {
-        // Initialize data.
-        println("loadPetsitters")
-        val datasourceFirebasePetsitters = Datasource_Firebase_Petsitter()
+       val datasourceFirebasePetsitter = Datasource_Firebase_Petsitter()
 
-        datasourceFirebasePetsitters.loadPetsitter { petsitter ->
+        val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
+        val petsitterAdapter = PetsitterAdapter(this, emptyList())
+
+        recyclerView.adapter = petsitterAdapter
+
+        datasourceFirebasePetsitter.loadPetsitter { petsitters ->
             val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
-            recyclerView.adapter = PetsitterAdapter(this, petsitter)
-            // Use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
+            recyclerView.adapter = PetsitterAdapter(this, petsitters).apply {
+                setOnItemClickListener(object : PetsitterAdapter.OnItemClickListener {
+                    override fun onItemClick(petsitter: Petsitter) {
+                        val intent = Intent(this@MainActivity, PetsitterDetailsActivity::class.java)
+                        intent.putExtra("petsitter", petsitter)
+                        startActivity(intent)
+                    }
+                })
+            }
             recyclerView.setHasFixedSize(true)
+        }
+
+        datasourceFirebasePetsitter.loadPetsitter { petsitters ->
+            petsitterAdapter.dataset = petsitters // Update the dataset in the adapter
+            petsitterAdapter.notifyDataSetChanged() // Notify the adapter that the data has changed
         }
     }
 
@@ -109,7 +124,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
             }
-
             recyclerView.setHasFixedSize(true)
         }
 

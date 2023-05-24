@@ -14,7 +14,7 @@ class PetsitterDetailsActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_details)
+        setContentView(R.layout.activity_petsitter_details)
         val petsitter = intent.getSerializableExtra("petsitter") as? Petsitter
 
         val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)

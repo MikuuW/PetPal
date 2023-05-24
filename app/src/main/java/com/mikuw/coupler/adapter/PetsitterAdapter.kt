@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 
 class PetsitterAdapter(
     private val context: Context,
-    private val dataset: List<Petsitter>
+    var dataset: List<Petsitter>
 ) : RecyclerView.Adapter<PetsitterAdapter.ItemViewHolder>() {
 
     private var itemClickListener: OnItemClickListener? = null
@@ -48,12 +48,15 @@ class PetsitterAdapter(
         holder.tv_name.text = fullname
         holder.tv_city.text = item.city
 
-        // TODO: Funzt noch nicht
         Picasso.get()
             .load(item.imageUri)
             .resize(200, 200)
             .centerCrop()
             .into(holder.iv_image)
+
+        holder.itemView.setOnClickListener {
+            itemClickListener?.onItemClick(item)
+        }
     }
     interface OnItemClickListener {
         fun onItemClick(petsitter: Petsitter)
