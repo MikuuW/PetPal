@@ -2,14 +2,15 @@ package com.mikuw.coupler
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
@@ -18,8 +19,13 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 class UserRegisterActivity : AppCompatActivity() {
+    private val REQUEST_IMAGE_CAPTURE = 1
+    private val REQUEST_PICK_IMAGE = 2
+    private lateinit var iv_register_image: ImageView
+    private lateinit var imageUri: Uri
     lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +37,8 @@ class UserRegisterActivity : AppCompatActivity() {
         actionBar?.title = "Register"
 
         //TEST BURGER MENU
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        imageUri = Uri.EMPTY
+        val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
         val navView: NavigationView = findViewById(R.id.nav_view)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
@@ -42,7 +49,13 @@ class UserRegisterActivity : AppCompatActivity() {
 
         setupNavigationDrawer(this)
         //TEST BURGER MENU
-        // Do any additional setup for your activity here
+
+        //TEST IMAGE PICKER
+        iv_register_image = findViewById<ImageView>(R.id.iv_register_image)
+        iv_register_image.setOnClickListener {
+            openImagePicker()
+        }
+
         // Variablen zuweisen
         val email = findViewById<TextView>(R.id.etv_register_email)
         val firstname = findViewById<TextView>(R.id.etv_register_firstname)
@@ -169,7 +182,9 @@ class UserRegisterActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 
         // Create a new user object with the given email
+        uploadImageToFirebaseStorage(firstname, lastname) { imageUri ->
         val user = hashMapOf(
+            "imageUri" to imageUri,
             "firstname" to firstname,
             "lastname" to lastname,
             "street" to street,
@@ -178,17 +193,19 @@ class UserRegisterActivity : AppCompatActivity() {
             "city" to city,
             "email" to email
         )
+            db.collection("users")
+                .document(userId)
+                .set(user)
+                .addOnSuccessListener { documentReference ->
+                    Log.d(TAG, "DocumentSnapshot added with ID: $userId")
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
+                }
+    }
 
         // Set the user object to a new document in the "users" collection with the user ID as the document ID
-        db.collection("users")
-            .document(userId)
-            .set(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(TAG, "DocumentSnapshot added with ID: $userId")
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-            }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -198,4 +215,77 @@ class UserRegisterActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+
+    fun openImagePicker() {
+        val REQUEST_IMAGE_CAPTURE = 1
+        val REQUEST_PICK_IMAGE = 2
+
+        val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Add Photo")
+        builder.setItems(options) { dialog, item ->
+            when {
+                options[item] == "Take Photo" -> {
+                    Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                        takePictureIntent.resolveActivity(packageManager)?.also {
+                            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                        }
+                    }
+                }
+                options[item] == "Choose from Gallery" -> {
+                    Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    ).also { pickPhotoIntent ->
+                        startActivityForResult(pickPhotoIntent, REQUEST_PICK_IMAGE)
+                    }
+                }
+                options[item] == "Cancel" -> {
+                    dialog.dismiss()
+                }
+            }
+        }
+        builder.show()
+    }
+    private fun setImageFromPicker(data: Intent?) {
+        data?.data?.let { imageUri ->
+            iv_register_image.setImageURI(imageUri)
+            this.imageUri = imageUri
+            println("In SetImageFromPicker: $imageUri")
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                REQUEST_IMAGE_CAPTURE -> {
+                    setImageFromCamera(data)
+                }
+                REQUEST_PICK_IMAGE -> {
+                    setImageFromPicker(data)
+                }
+            }
+        }
+    }
+    private fun setImageFromCamera(data: Intent?) {
+        data?.extras?.get("data")?.let { imageBitmap ->
+            iv_register_image.setImageBitmap(imageBitmap as Bitmap)
+        }
+    }
+    private fun uploadImageToFirebaseStorage(firstname: String, lastname: String, callback: (Uri?) -> Unit) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val storageRef = FirebaseStorage.getInstance().reference.child("images_user/")
+        val imageName = "$firstname-$lastname.jpg"
+        val imageRef = storageRef.child(imageName)
+
+        val uploadTask = imageRef.putFile(imageUri)
+        uploadTask.addOnSuccessListener {
+            imageRef.downloadUrl.addOnSuccessListener { uri ->
+                callback(uri)
+            }
+        }.addOnFailureListener { exception ->
+            callback(null)
+        }
+    }
 } //end

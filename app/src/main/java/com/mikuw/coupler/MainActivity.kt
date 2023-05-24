@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //TEST BURGER MENU
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
         val navView: NavigationView = findViewById(R.id.nav_view)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)

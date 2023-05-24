@@ -9,10 +9,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -42,7 +39,7 @@ class PetAddActivity : AppCompatActivity() {
 
         //TEST BURGER MENU
         imageUri = Uri.EMPTY
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
         val navView: NavigationView = findViewById(R.id.nav_view)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
@@ -82,7 +79,7 @@ class PetAddActivity : AppCompatActivity() {
     }
 
 
-     fun openImagePicker() {
+      fun openImagePicker() {
         val REQUEST_IMAGE_CAPTURE = 1
         val REQUEST_PICK_IMAGE = 2
 
@@ -112,8 +109,6 @@ class PetAddActivity : AppCompatActivity() {
             }
         }
         builder.show()
-
-
     }
 
     private fun setImageFromPicker(data: Intent?) {

@@ -21,7 +21,7 @@ class PetsitterRegisterActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.title = "Become a Petsitter"
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
         val navView: NavigationView = findViewById(R.id.nav_view)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)

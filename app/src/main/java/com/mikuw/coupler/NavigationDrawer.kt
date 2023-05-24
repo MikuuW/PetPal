@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 fun setupNavigationDrawer(activity: Activity) {
-    val drawerLayout: DrawerLayout = activity.findViewById(R.id.drawer_layout)
+    val drawerLayout: DrawerLayout = activity.findViewById(R.id.tv_edit_image)
     val navView: NavigationView = activity.findViewById(R.id.nav_view)
 
     val toggle = ActionBarDrawerToggle(activity, drawerLayout, R.string.open, R.string.close)

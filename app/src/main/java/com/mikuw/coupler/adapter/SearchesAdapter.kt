@@ -23,6 +23,7 @@ class SearchesAdapter(
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val tv_title: TextView = view.findViewById(R.id.tv_search_title)
         val tv_date: TextView = view.findViewById(R.id.tv_search_date)
+        val tv_date_days: TextView = view.findViewById(R.id.tv_search_date_days)
         val tv_location: TextView = view.findViewById(R.id.tv_search_city)
     }
 
@@ -41,8 +42,10 @@ class SearchesAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
         holder.tv_title.text = item.title
-        holder.tv_date.text = item.formattedDate(item.from!!) + " - " + item.formattedDate(item.to!!) + " (" + calculateDaysBetweenDates(item.from!!, item.to!!) + " day(s))"
+        holder.tv_date.text = item.formattedDate(item.from!!) + " - " + item.formattedDate(item.to!!)
+        holder.tv_date_days.text = calculateDaysBetweenDates(item.from!!, item.to!!).toString() + " days"
         holder.tv_location.text = item.location
+
 
         holder.itemView.setOnClickListener {
             itemClickListener?.onItemClick(item)

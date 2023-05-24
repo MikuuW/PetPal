@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.picasso.Picasso
 
 class UserProfileShowActivity : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
@@ -26,7 +28,7 @@ class UserProfileShowActivity : AppCompatActivity() {
         actionBar?.title = "Your Profile"
 
         //TEST BURGER MENU
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
         val navView: NavigationView = findViewById(R.id.nav_view)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
@@ -46,6 +48,12 @@ class UserProfileShowActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val btn_change_password = findViewById<TextView>(R.id.btn_change_password)
+        btn_change_password.setOnClickListener() {
+            val intent = Intent(this, ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun getProfileInformation() {
@@ -58,6 +66,7 @@ class UserProfileShowActivity : AppCompatActivity() {
         val userRef = db.collection("users").document(currentUser!!.uid)
         var tv_show_firstname = findViewById<TextView>(R.id.tv_show_profile_firstname)
         var tv_show_lastname = findViewById<TextView>(R.id.tv_show_profile_lastname)
+        var iv_profile_show_image = findViewById<ImageView>(R.id.iv_profile_show_image)
         var tv_show_street = findViewById<TextView>(R.id.tv_show_profile_street)
         var tv_show_street_nr = findViewById<TextView>(R.id.tv_show_profile_street_nr)
         var tv_show_postalcode = findViewById<TextView>(R.id.tv_show_profile_postalcode)
@@ -69,6 +78,7 @@ class UserProfileShowActivity : AppCompatActivity() {
                 // retrieve the user's data
                 val firstname = document.getString("firstname")
                 val lastname = document.getString("lastname")
+                val imageUri = document.getString("imageUri")
                 var street = document.getString("street")
                 var streetNr = document.getString("streetNr")
                 var postalcode = document.getString("postalcode")
@@ -84,6 +94,14 @@ class UserProfileShowActivity : AppCompatActivity() {
                 tv_show_postalcode.text = postalcode
                 tv_show_city.text = city
                 tv_show_email.text = email
+
+                if (!imageUri.isNullOrEmpty()) {
+                    Picasso.get()
+                        .load(imageUri)
+                        .resize(200, 200)
+                        .centerCrop()
+                        .into(iv_profile_show_image)
+                }
             } else {
                 // handle the case when the document does not exist
                 println("No such document")
