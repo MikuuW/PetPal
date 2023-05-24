@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.R
 import com.mikuw.coupler.model.Petsitter
 import com.squareup.picasso.Picasso
@@ -39,8 +40,23 @@ class PetsitterAdapter(
         val item = dataset[position]
         holder.tv_name.text = item.name
         holder.tv_city.text = item.location
+
+        holder.iv_image.layoutParams.width = 200
+        holder.iv_image.layoutParams.height = 200
         // TODO: Funzt noch nicht
-        Picasso.get().load(item.imageUrl).resize(40,40).into(holder.iv_image)
-        println(item.imageUrl)
+        Picasso.get()
+            .load(item.imageUrl)
+            .resize(200, 200)
+            .centerCrop()
+            .into(holder.iv_image)
+        println("HERE: " + item.imageUrl)
+
+        //url holen
+        val db = FirebaseStorage.getInstance()
+        val storageRef = db.reference.child("images_pet/og7wAO7u0JTIHTKhix0N6Nbuhfi1/Brownie.jpg")
+        storageRef.downloadUrl.addOnSuccessListener { uri ->
+            println("NEW ONE: " + uri)
+            Picasso.get().load(uri).resize(400, 400).centerCrop().into(holder.iv_image)
+        }
     }
 }

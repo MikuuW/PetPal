@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.data.Datasource_Animal_Types
+import com.squareup.picasso.Picasso
 
 class PetAddActivity : AppCompatActivity() {
 
@@ -90,8 +91,7 @@ class PetAddActivity : AppCompatActivity() {
             createPetInFirestore(
                 tv_pet_name.text.toString(),
                 tv_pet_desc.text.toString(),
-                selectedItem,
-                imageUri
+                selectedItem
             )
 
 
@@ -171,33 +171,26 @@ class PetAddActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImageToFirebaseStorage(name: String) {
+    private fun uploadImageToFirebaseStorage(name: String, callback: (Uri?) -> Unit) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val storageRef = FirebaseStorage.getInstance().reference.child("images_pet/$userId/")
         val imageName = "$name.jpg"
         val imageRef = storageRef.child(imageName)
 
         val uploadTask = imageRef.putFile(imageUri)
-
         uploadTask.addOnSuccessListener {
-            // Image upload successful
-
-            // Get the URL of the uploaded image
             imageRef.downloadUrl.addOnSuccessListener { uri ->
-                val imageUrl = uri.toString()
-
-                // Do something with the image URL, such as storing it in Firestore
+                callback(uri)
             }
         }.addOnFailureListener { exception ->
-            // Image upload failed
+            callback(null)
         }
     }
 
 
-    private fun createPetInFirestore(name: String, desc: String, type: String, imageUri: Uri?) {
+    private fun createPetInFirestore(name: String, desc: String, type: String) {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-
         // Check if the name, desc, and type are not empty before creating the pet
         if (name.isNotEmpty() && desc.isNotEmpty() && type != "Select a type...") {
             checkIfPetAlreadyExists(name, userId) { petExists ->
@@ -205,24 +198,25 @@ class PetAddActivity : AppCompatActivity() {
                     Toast.makeText(this, "Pet with name $name already exists", Toast.LENGTH_SHORT)
                         .show()
                 } else {
-                    val pet = hashMapOf(
-                        "owner" to userId,
-                        "name" to name,
-                        "type" to type,
-                        "desc" to desc,
-                        "imageUri" to imageUri
-                    )
-                    uploadImageToFirebaseStorage(name)
-                    db.collection("pets")
-                        .add(pet)
-                        .addOnSuccessListener { documentReference ->
-                            Toast.makeText(this, "$name saved", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this, PetsShowActivity::class.java)
-                            startActivity(intent)
-                        }
-                        .addOnFailureListener { e ->
-                            Log.w(ContentValues.TAG, "Error adding document", e)
-                        }
+                    uploadImageToFirebaseStorage(name) { imageUri ->
+                        val pet = hashMapOf(
+                            "owner" to userId,
+                            "name" to name,
+                            "type" to type,
+                            "desc" to desc,
+                            "imageUri" to imageUri
+                        )
+                        db.collection("pets")
+                            .add(pet)
+                            .addOnSuccessListener { documentReference ->
+                                Toast.makeText(this, "$name saved", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, PetsShowActivity::class.java)
+                                startActivity(intent)
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(ContentValues.TAG, "Error adding document", e)
+                            }
+                    }
                 }
             }
         } else {
