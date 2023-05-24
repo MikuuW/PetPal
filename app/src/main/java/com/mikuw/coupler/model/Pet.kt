@@ -6,6 +6,5 @@ data class Pet(
     val name: String = "",
     val desc: String = "",
     val ownerId: String = "",
-    val type: String = "",
     val imageUrl: String = ""
     ) : Serializable

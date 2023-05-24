@@ -45,14 +45,12 @@ class ShowPetsAdapter(
         holder.tv_title.text = item.name
 
         // Load image with Picasso
-        if (item.imageUrl.isNotEmpty()) {
-            val storageRef =
-                FirebaseStorage.getInstance().reference.child("images_pet/${item.ownerId}/${item.name}.jpg")
-            storageRef.downloadUrl.addOnSuccessListener { uri ->
-                Picasso.get().load(uri).resize(400, 400).centerCrop().into(holder.iv_image)
-            }
-        } else {
-            holder.iv_image.setImageResource(R.drawable.baseline_hide_image_24)
+        if(item.imageUrl.isNotEmpty()){
+            Picasso.get()
+                .load(item.imageUrl)
+                .resize(200, 200)
+                .centerCrop()
+                .into(holder.iv_image)
         }
 
         holder.itemView.setOnClickListener {

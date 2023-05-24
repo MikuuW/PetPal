@@ -22,12 +22,9 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.mikuw.coupler.data.Datasource_Animal_Types
-import com.squareup.picasso.Picasso
 
 class PetAddActivity : AppCompatActivity() {
 
-    private lateinit var selectedItem: String
     private val REQUEST_IMAGE_CAPTURE = 1
     private val REQUEST_PICK_IMAGE = 2
     private lateinit var iv_pet_add_image: ImageView
@@ -60,38 +57,15 @@ class PetAddActivity : AppCompatActivity() {
         val tv_pet_name = findViewById<android.widget.EditText>(R.id.et_pet_name)
         val tv_pet_desc = findViewById<android.widget.EditText>(R.id.et_pet_desc)
 
-        // Dropdown Menu
-        val spinner_animal_types: Spinner = findViewById<Spinner>(R.id.spinner_animal_types)
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            Datasource_Animal_Types().options
-        )
-        spinner_animal_types.adapter = adapter
 
-        spinner_animal_types.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                selectedItem = Datasource_Animal_Types().options[position]
-                // do something with selected item
-                println(selectedItem)
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // do something when nothing is selected    private var imageUri: Uri? = null // Declare imageUri as a member variable
-            }
-        }
+
 
         val btn_pet_submit = findViewById<View>(R.id.btn_pet_submit)
         btn_pet_submit.setOnClickListener {
             createPetInFirestore(
                 tv_pet_name.text.toString(),
                 tv_pet_desc.text.toString(),
-                selectedItem
             )
 
 
@@ -188,11 +162,11 @@ class PetAddActivity : AppCompatActivity() {
     }
 
 
-    private fun createPetInFirestore(name: String, desc: String, type: String) {
+    private fun createPetInFirestore(name: String, desc: String) {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        // Check if the name, desc, and type are not empty before creating the pet
-        if (name.isNotEmpty() && desc.isNotEmpty() && type != "Select a type...") {
+        // Check if the name or desc are not empty before creating the pet
+        if (name.isNotEmpty() && desc.isNotEmpty()) {
             checkIfPetAlreadyExists(name, userId) { petExists ->
                 if (petExists) {
                     Toast.makeText(this, "Pet with name $name already exists", Toast.LENGTH_SHORT)
@@ -202,7 +176,6 @@ class PetAddActivity : AppCompatActivity() {
                         val pet = hashMapOf(
                             "owner" to userId,
                             "name" to name,
-                            "type" to type,
                             "desc" to desc,
                             "imageUri" to imageUri
                         )
@@ -225,7 +198,7 @@ class PetAddActivity : AppCompatActivity() {
             startActivity(intent)
             Toast.makeText(
                 this,
-                "Pet name, description, or type cannot be empty",
+                "Pet name or description cannot be empty",
                 Toast.LENGTH_SHORT
             ).show()
         }

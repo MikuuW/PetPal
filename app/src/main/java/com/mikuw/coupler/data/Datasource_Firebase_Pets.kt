@@ -19,9 +19,8 @@ class Datasource_Firebase_Pets {
                     val name = document.getString("name") ?: continue
                     val desc = document.getString("desc") ?: continue
                     val owner = document.getString("owner") ?: continue
-                    val type = document.getString("type") ?: continue
                     val imageUri = document.getString("imageUri") ?: continue
-                    val pet = Pet(name, desc, owner, type, imageUri)
+                    val pet = Pet(name, desc, owner, imageUri)
                     pets.add(pet)
                 }
                 callback(pets)
@@ -43,11 +42,10 @@ class Datasource_Firebase_Pets {
                             val imageUrl = petMap["imageUrl"] as? String
                             val name = petMap["name"] as? String
                             val ownerId = petMap["ownerId"] as? String
-                            val type = petMap["type"] as? String
 
 
-                            if (desc != null && imageUrl != null && name != null && ownerId != null && type != null) {
-                                Pet(name, desc, ownerId, type, imageUrl)
+                            if (desc != null && imageUrl != null && name != null && ownerId != null) {
+                                Pet(name, desc, ownerId, imageUrl)
                             } else {
                                 null
                             }
