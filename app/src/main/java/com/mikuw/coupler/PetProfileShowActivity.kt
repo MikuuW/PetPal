@@ -3,6 +3,7 @@ package com.mikuw.coupler
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,8 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.model.Pet
+import com.squareup.picasso.Picasso
 import java.io.File
 
 class PetProfileShowActivity : AppCompatActivity() {
@@ -36,6 +39,7 @@ class PetProfileShowActivity : AppCompatActivity() {
         val pet = intent.getSerializableExtra("pet") as? Pet
         val name = pet?.name
         val desc = pet?.desc
+        val imageUri = pet?.imageUrl
 
         // Actionbar
         val actionBar = supportActionBar
@@ -48,9 +52,13 @@ class PetProfileShowActivity : AppCompatActivity() {
         tv_pet_desc.text = desc
 
 
-        displayImage(name)
+        displayImage(imageUri)
 
         val btn = findViewById<Button>(R.id.btn_pet_edit_button)
+        if (FirebaseAuth.getInstance().currentUser?.uid ?: "" != pet?.ownerId) {
+            btn.visibility = View.INVISIBLE
+        }
+
         btn.setOnClickListener() {
             val intent = intent
             intent.setClass(this, PetProfileEditActivity::class.java)
@@ -59,22 +67,14 @@ class PetProfileShowActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayImage(name: String?) {
+    private fun displayImage(uri: String?) {
         val iv_petProfile_image = findViewById<ImageView>(R.id.iv_petProfile_image)
 
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        val dbRef = FirebaseStorage.getInstance().reference.child("images_pet/$userId/$name.jpg")
-
-
-        val localFile = File.createTempFile("tmpImage", "jpg")
-        dbRef.getFile(localFile).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-            iv_petProfile_image.setImageBitmap(bitmap)
-        }
-            .addOnFailureListener() {
-                iv_petProfile_image.setImageResource(R.drawable.baseline_hide_image_24)
-            }
-
+        Picasso.get()
+            .load(uri)
+            .resize(400,400)
+            .centerCrop()
+            .into(iv_petProfile_image)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
