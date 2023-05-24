@@ -8,7 +8,7 @@ data class Petsitter(
     val firstname: String,
     val lastname: String,
     val email: String,
-    val imageUri: String?,
+    val imageUri: String? = "",
     val postalcode: String?,
     val street: String?,
     val streetNr: String?,

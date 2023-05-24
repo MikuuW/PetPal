@@ -17,6 +17,15 @@ class PetsitterDetailsActivity : AppCompatActivity(){
         setContentView(R.layout.activity_petsitter_details)
         val petsitter = intent.getSerializableExtra("petsitter") as? Petsitter
 
+        val firstname = petsitter?.firstname
+        val lastname = petsitter?.lastname
+        val postalcode = petsitter?.postalcode
+        val city = petsitter?.city
+        val street = petsitter?.street
+        val streetNr = petsitter?.streetNr
+        val imageUri = petsitter?.imageUri
+
+
         val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
         val navView: NavigationView = findViewById(R.id.nav_view)
 
