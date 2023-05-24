@@ -28,8 +28,8 @@
         android:id="@+id/nav_become_petsitter"
         android:title="Become a Petsitter" />
     <item
-        android:id="@+id/nav_tmp"
-        android:title="TMP" />
+        android:id="@+id/nav_my_searches"
+        android:title="My Searches" />
 
 
 </menu><!--<menu>

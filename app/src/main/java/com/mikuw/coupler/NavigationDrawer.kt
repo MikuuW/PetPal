@@ -75,8 +75,8 @@ fun setupNavigationDrawer(activity: Activity) {
                 val intent = Intent(activity, PetsitterRegisterActivity::class.java)
                 activity.startActivity(intent)
             }
-            R.id.nav_tmp -> {
-                val intent = Intent(activity, tmpActivity::class.java)
+            R.id.nav_my_searches -> {
+                val intent = Intent(activity, MySearchesActivity::class.java)
                 activity.startActivity(intent)
             }
         }
