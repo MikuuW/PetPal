@@ -7,38 +7,43 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/etv_edit_profile_email"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+        <EditText
+            android:id="@+id/tv_profile_edit_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:hint="Email Adress"
-            android:inputType="textEmailAddress"
-            android:textAlignment="center"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:textAlignment="textStart"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_profile_edit_image" />
+            app:layout_constraintTop_toBottomOf="@+id/etv_edit_profile_city" />
+
 
         <EditText
             android:id="@+id/etv_edit_profile_firstname"
             android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:ems="10"
             android:hint="Firstname"
             android:inputType="textNoSuggestions"
             android:textAlignment="viewStart"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etv_edit_profile_email" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_edit_image_button" />
 
         <EditText
             android:id="@+id/etv_edit_profile_street"
@@ -70,14 +75,14 @@
             android:id="@+id/etv_edit_profile_lastname"
             android:layout_width="180dp"
             android:layout_height="50dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
             android:hint="Lastname"
             android:inputType="textNoSuggestions"
             android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etv_edit_profile_email" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_edit_image_button" />
 
         <EditText
             android:id="@+id/etv_edit_profile_street_nr"
@@ -109,13 +114,13 @@
             android:id="@+id/btn_edit_profile_submit"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="Save Changes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etv_edit_profile_city" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_edit_desc" />
 
         <ImageView
             android:id="@+id/iv_profile_edit_image"
@@ -123,6 +128,7 @@
             android:layout_height="200dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
@@ -139,6 +145,8 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_profile_edit_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

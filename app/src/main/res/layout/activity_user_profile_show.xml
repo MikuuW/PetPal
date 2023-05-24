@@ -7,158 +7,149 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_show_profile_email"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:hint="Email Adress"
-            android:inputType="textEmailAddress"
-            android:padding="10dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_profile_show_image" />
 
-        <TextView
-            android:id="@+id/tv_show_profile_firstname"
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:ems="10"
-            android:hint="Firstname"
-            android:inputType="textNoSuggestions"
-            android:padding="10dp"
-            android:textAlignment="viewStart"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_email" />
+            <TextView
+                android:id="@+id/tv_show_profile_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="Email Adress"
+                android:inputType="textEmailAddress"
+                android:padding="2dp"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_profile_show_image" />
 
-        <TextView
-            android:id="@+id/tv_show_profile_street"
-            android:layout_width="280dp"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:hint="Street"
-            android:inputType="textNoSuggestions"
-            android:padding="10dp"
-            android:textAlignment="viewStart"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_firstname" />
+            <TextView
+                android:id="@+id/tv_show_profile_firstname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:ems="10"
+                android:hint="Firstname"
+                android:inputType="textNoSuggestions"
+                android:padding="2dp"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_email" />
 
-        <TextView
-            android:id="@+id/tv_show_profile_postalcode"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:hint="Postalcode"
-            android:inputType="number"
-            android:padding="10dp"
-            android:textAlignment="viewStart"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_street" />
+            <TextView
+                android:id="@+id/tv_show_profile_street"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:ems="10"
+                android:hint="Street"
+                android:inputType="textNoSuggestions"
+                android:padding="2dp"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_firstname" />
 
-        <TextView
-            android:id="@+id/tv_show_profile_lastname"
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:hint="Lastname"
-            android:inputType="textNoSuggestions"
-            android:padding="10dp"
-            android:textAlignment="viewStart"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_email" />
+            <TextView
+                android:id="@+id/tv_show_profile_postalcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:ems="10"
+                android:hint="Postalcode"
+                android:inputType="number"
+                android:padding="2dp"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_street" />
 
-        <TextView
-            android:id="@+id/tv_show_profile_street_nr"
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:hint="Nr"
-            android:inputType="number"
-            android:padding="10dp"
-            android:textAlignment="viewStart"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_lastname" />
+            <TextView
+                android:id="@+id/tv_show_profile_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:ems="10"
+                android:hint="Description"
+                android:inputType="textMultiLine"
+                android:padding="2dp"
+                android:textAlignment="textStart"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_about_you" />
 
-        <TextView
-            android:id="@+id/tv_show_profile_city"
-            android:layout_width="260dp"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:hint="City"
-            android:inputType="textNoSuggestions"
-            android:padding="10dp"
-            android:textAlignment="viewStart"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_street" />
+            <TextView
+                android:id="@+id/tv_show_profile_about_you"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="32dp"
+                android:ems="10"
+                android:inputType="number"
+                android:padding="2dp"
+                android:text="About You"
+                android:textAlignment="textStart"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_postalcode" />
 
-        <Button
-            android:id="@+id/btn_edit_profile"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="24dp"
-            android:text="Edit Profile"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_city" />
+            <Button
+                android:id="@+id/btn_edit_profile"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="24dp"
+                android:text="Edit Profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_desc" />
 
-        <ImageView
-            android:id="@+id/iv_profile_show_image"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="32dp"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/iv_profile_show_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="4dp"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
-        <Button
-            android:id="@+id/btn_change_password"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:text="Change Password"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_city" />
+            <Button
+                android:id="@+id/btn_change_password"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:text="Change Password"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_show_profile_desc" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

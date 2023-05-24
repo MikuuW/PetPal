@@ -12,6 +12,7 @@ data class Petsitter(
     val postalcode: String?,
     val street: String?,
     val streetNr: String?,
-    val city: String?
+    val city: String?,
+    val desc: String
 ) : Serializable {
 }

@@ -65,13 +65,11 @@ class UserProfileShowActivity : AppCompatActivity() {
         }
         val userRef = db.collection("users").document(currentUser!!.uid)
         var tv_show_firstname = findViewById<TextView>(R.id.tv_show_profile_firstname)
-        var tv_show_lastname = findViewById<TextView>(R.id.tv_show_profile_lastname)
         var iv_profile_show_image = findViewById<ImageView>(R.id.iv_profile_show_image)
         var tv_show_street = findViewById<TextView>(R.id.tv_show_profile_street)
-        var tv_show_street_nr = findViewById<TextView>(R.id.tv_show_profile_street_nr)
         var tv_show_postalcode = findViewById<TextView>(R.id.tv_show_profile_postalcode)
-        var tv_show_city = findViewById<TextView>(R.id.tv_show_profile_city)
         var tv_show_email = findViewById<TextView>(R.id.tv_show_profile_email)
+        var tv_show_desc = findViewById<TextView>(R.id.tv_show_profile_desc)
 
         userRef.get().addOnSuccessListener { document ->
             if (document != null && document.exists()) {
@@ -84,16 +82,14 @@ class UserProfileShowActivity : AppCompatActivity() {
                 var postalcode = document.getString("postalcode")
                 var city = document.getString("city")
                 val email = document.getString("email")
+                val desc = document.getString("desc")
 
                 // do something with the retrieved data
-                //tv_show_email.setText(name)
-                tv_show_firstname.text = firstname
-                tv_show_lastname.text = lastname
-                tv_show_street.text = street
-                tv_show_street_nr.text = streetNr
-                tv_show_postalcode.text = postalcode
-                tv_show_city.text = city
+                tv_show_firstname.text = firstname + " " + lastname
+                tv_show_street.text = street + " " + streetNr
+                tv_show_postalcode.text = postalcode + " " + city
                 tv_show_email.text = email
+                tv_show_desc.text = desc
 
                 if (!imageUri.isNullOrEmpty()) {
                     Picasso.get()
@@ -102,6 +98,7 @@ class UserProfileShowActivity : AppCompatActivity() {
                         .centerCrop()
                         .into(iv_profile_show_image)
                 }
+
             } else {
                 // handle the case when the document does not exist
                 println("No such document")

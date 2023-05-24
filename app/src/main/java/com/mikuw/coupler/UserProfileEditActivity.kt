@@ -1,6 +1,7 @@
 package com.mikuw.coupler
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -10,6 +11,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -81,7 +83,6 @@ class UserProfileEditActivity : AppCompatActivity() {
         val userRef = db.collection("users").document(currentUser.uid)
 
 
-        var etv_edit_email = findViewById<TextView>(R.id.etv_edit_profile_email)
         var etv_edit_firstname = findViewById<TextView>(R.id.etv_edit_profile_firstname)
         var etv_edit_lastname = findViewById<TextView>(R.id.etv_edit_profile_lastname)
         var iv_profile_edit_image = findViewById<ImageView>(R.id.iv_profile_edit_image)
@@ -89,12 +90,12 @@ class UserProfileEditActivity : AppCompatActivity() {
         var etv_edit_street_nr = findViewById<TextView>(R.id.etv_edit_profile_street_nr)
         var etv_edit_postalcode = findViewById<TextView>(R.id.etv_edit_profile_postalcode)
         var etv_edit_city = findViewById<TextView>(R.id.etv_edit_profile_city)
+        var etv_edit_desc = findViewById<TextView>(R.id.tv_profile_edit_desc)
 
 
         userRef.get().addOnSuccessListener { document ->
             if (document != null && document.exists()) {
-                // retrieve the user's data
-                val email = document.getString("email")
+                // Werte holen
                 val firstname = document.getString("firstname")
                 val lastname = document.getString("lastname")
                 val imageUrl = document.getString("imageUri")
@@ -102,23 +103,25 @@ class UserProfileEditActivity : AppCompatActivity() {
                 val street_nr = document.getString("streetNr")
                 val postalcode = document.getString("postalcode")
                 val city = document.getString("city")
-                // do something with the retrieved data
+                val desc = document.getString("desc")
 
-
-                etv_edit_email.text = email
+                // Werte setzen
                 etv_edit_firstname.text = firstname
                 etv_edit_lastname.text = lastname
                 etv_edit_street.text = street
                 etv_edit_street_nr.text = street_nr
                 etv_edit_postalcode.text = postalcode
                 etv_edit_city.text = city
+                etv_edit_desc.text = desc
 
-                Picasso.get()
-                    .load(imageUrl)
-                    .resize(200, 200)
-                    .centerCrop()
-                    .into(iv_profile_edit_image)
-
+                // Bild setzen wenn vorhanden
+                if (!imageUrl.isNullOrEmpty()) {
+                    Picasso.get()
+                        .load(imageUrl)
+                        .resize(200, 200)
+                        .centerCrop()
+                        .into(iv_profile_edit_image)
+                }
             } else {
                 // handle the case when the document does not exist
                 println("No such document")
@@ -127,12 +130,10 @@ class UserProfileEditActivity : AppCompatActivity() {
             // handle any exceptions that occur
             println("Error getting documents: $exception")
         }
-
-
     }
 
     private fun updateUserOnSubmit() {
-        val email = findViewById<TextView>(R.id.etv_edit_profile_email).text.toString()
+        // Werte holen
         val firstname =
             findViewById<TextView>(R.id.etv_edit_profile_firstname).text.toString().trim()
         val lastname = findViewById<TextView>(R.id.etv_edit_profile_lastname).text.toString().trim()
@@ -142,11 +143,13 @@ class UserProfileEditActivity : AppCompatActivity() {
         val postalcode =
             findViewById<TextView>(R.id.etv_edit_profile_postalcode).text.toString().trim()
         val city = findViewById<TextView>(R.id.etv_edit_profile_city).text.toString().trim()
+        val desc = findViewById<TextView>(R.id.tv_profile_edit_desc).text.toString().trim()
 
-        // Access a Cloud Firestore instance from your Activity
+        // Instanziieren
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
+        // Werte setzen
         val userUpdates = hashMapOf<String, Any>()
 
         if (firstname.isNotBlank()) {
@@ -167,21 +170,59 @@ class UserProfileEditActivity : AppCompatActivity() {
         if (city.isNotBlank()) {
             userUpdates["city"] = city
         }
-        if (email.isNotBlank()) {
-            userUpdates["email"] = email
+        if (desc.isNotBlank()) {
+            userUpdates["desc"] = desc
         }
 
+        // Update User in Firestore
         if (userUpdates.isNotEmpty()) {
             db.collection("users")
                 .document(userId)
                 .update(userUpdates)
                 .addOnSuccessListener { documentReference ->
+                    updatePetsitter(userId, userUpdates)
                     Log.d(ContentValues.TAG, "DocumentSnapshot updated with ID: $userId")
+                    Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                 }
                 .addOnFailureListener { e ->
+                    Toast.makeText(this, "Profile update failed", Toast.LENGTH_SHORT).show()
                     Log.w(ContentValues.TAG, "Error updating document", e)
                 }
         }
+    }
+
+    private fun updatePetsitter(userId: String, userUpdates: HashMap<String, Any>) {
+        val db = FirebaseFirestore.getInstance()
+        checkIfPetsitter(userId) { isPetsitter ->
+            if (isPetsitter) {
+                // User is a petsitter
+                if (userUpdates.isNotEmpty()) {
+                    db.collection("petsitters")
+                        .document(userId)
+                        .update(userUpdates)
+                }
+            }
+        }
+    }
+
+    private fun checkIfPetsitter(userId: String, callback: (Boolean) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val userRef = db.collection("users").document(userId)
+
+        userRef
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                val isPetsitter = documentSnapshot.getBoolean("isPetsitter") ?: false
+                callback(isPetsitter)
+            }
+            .addOnFailureListener { e ->
+                // Error occurred
+                println("Error checking isPetsitter field for user with ID: $userId")
+                e.printStackTrace()
+                callback(false)
+            }
     }
 
     fun openImagePicker() {
@@ -209,11 +250,8 @@ class UserProfileEditActivity : AppCompatActivity() {
                     }
                 }
                 options[item] == "Delete" -> {
-                    Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-                        takePictureIntent.resolveActivity(packageManager)?.also {
-                            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-                        }
-                    }
+                    updateImageUriInFirestore("users", "") // Update Firestore with an empty string
+                    updateImageUriInFirestore("petsitters", "") // Update Firestore with an empty string
                 }
                 options[item] == "Cancel" -> {
                     dialog.dismiss()
@@ -221,6 +259,22 @@ class UserProfileEditActivity : AppCompatActivity() {
             }
         }
         builder.show()
+    }
+
+
+    private fun updateImageUriInFirestore(collection: String, imageUri: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+        val userUpdates = hashMapOf<String, Any>("imageUri" to imageUri)
+
+        db.collection(collection).document(userId)
+            .update(userUpdates)
+            .addOnSuccessListener {
+                Log.d(TAG, "ImageUri field updated with an empty string.")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error updating ImageUri field", e)
+            }
     }
 
     private fun setImageFromPicker(data: Intent?) {
@@ -252,30 +306,14 @@ class UserProfileEditActivity : AppCompatActivity() {
     }
 
     private fun uploadToStorageAndUpdateFirestore() {
-        // Access a Cloud Firestore instance from your Activity
-        val db = FirebaseFirestore.getInstance()
-        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-
-        val userUpdates = hashMapOf<String, Any>()
-
         val firstname =
             findViewById<TextView>(R.id.etv_edit_profile_firstname).text.toString().trim()
         val lastname = findViewById<TextView>(R.id.etv_edit_profile_lastname).text.toString().trim()
 
         uploadImageToFirebaseStorage(firstname, lastname) { uri ->
-            if (uri != null) {
-                userUpdates["imageUri"] = uri
-                if (userUpdates.isNotEmpty()) {
-                    db.collection("users")
-                        .document(userId)
-                        .update(userUpdates)
-                        .addOnSuccessListener { documentReference ->
-                            Log.d(ContentValues.TAG, "DocumentSnapshot updated with ID: $userId")
-                        }
-                        .addOnFailureListener { e ->
-                            Log.w(ContentValues.TAG, "Error updating document", e)
-                        }
-                }
+            if (uri != null && uri.toString().isNotEmpty() && uri.toString().isNotBlank()) {
+                updateImageUriInFirestore("users", uri.toString())
+                updateImageUriInFirestore("petsitters", uri.toString())
             }
         }
     }

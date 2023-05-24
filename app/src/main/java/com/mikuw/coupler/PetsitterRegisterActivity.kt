@@ -58,6 +58,7 @@ class PetsitterRegisterActivity : AppCompatActivity() {
                         val postalcode = document.data?.get("postalcode").toString()
                         val street = document.data?.get("street").toString()
                         val streetnr = document.data?.get("streetNr").toString()
+                        val desc = document.data?.get("desc").toString()
                         val petsitter = hashMapOf(
                             "city" to city,
                             "email" to email,
@@ -66,11 +67,13 @@ class PetsitterRegisterActivity : AppCompatActivity() {
                             "imageUri" to imageUri,
                             "postalcode" to postalcode,
                             "street" to street,
-                            "streetNr" to streetnr
+                            "streetNr" to streetnr,
+                            "desc" to desc
                         )
                         db.collection("petsitters").document(uid).set(petsitter)
                             .addOnSuccessListener {
                                 // Upload to petsitters successful
+                                setAsPetsitter(uid)
                                 val intent = Intent(this, MainActivity::class.java)
                                 startActivity(intent)
                                 finish() // Optional, to close the current activity
@@ -78,6 +81,21 @@ class PetsitterRegisterActivity : AppCompatActivity() {
                     }
                 }
         }
+    }
+
+    private fun setAsPetsitter(userId: String) {
+        val db = FirebaseFirestore.getInstance()
+        val userRef = db.collection("users").document(userId)
+
+        userRef
+            .update("isPetsitter", true)
+            .addOnSuccessListener {
+                // Update successful
+            }
+            .addOnFailureListener { e ->
+                // Error occurred
+                e.printStackTrace()
+            }
     }
 
 

@@ -191,7 +191,8 @@ class UserRegisterActivity : AppCompatActivity() {
             "streetNr" to streetNr,
             "postalcode" to postalcode,
             "city" to city,
-            "email" to email
+            "email" to email,
+            "isPetsitter" to false
         )
             db.collection("users")
                 .document(userId)
