@@ -55,7 +55,7 @@ class PetProfileShowActivity : AppCompatActivity() {
         displayImage(imageUri)
 
         val btn = findViewById<Button>(R.id.btn_pet_edit_button)
-        if (FirebaseAuth.getInstance().currentUser?.uid ?: "" != pet?.ownerId) {
+        if ((FirebaseAuth.getInstance().currentUser?.uid ?: "") != pet?.ownerId) {
             btn.visibility = View.INVISIBLE
         }
 
