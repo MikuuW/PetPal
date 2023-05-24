@@ -102,7 +102,7 @@ class SearchDetailsActivity : AppCompatActivity() {
                                 val intent =
                                     Intent(
                                         this@SearchDetailsActivity,
-                                        PetProfileEditActivity::class.java
+                                        PetProfileShowActivity::class.java
                                     )
                                 intent.putExtra("pet", pet)
                                 startActivity(intent)
@@ -174,15 +174,16 @@ class SearchDetailsActivity : AppCompatActivity() {
     }
 
     private fun getCreatorNameAndImage(creatorUid: String?) {
+        println("CreatorUid: " + creatorUid)
         val db = FirebaseFirestore.getInstance()
-        val userRef = db.collection("users").document("creatorUid")
+        val userRef = db.collection("users").document(creatorUid ?: "")
 
         userRef.get().addOnSuccessListener { documentSnapshot ->
             if (documentSnapshot.exists()) {
-                val image = documentSnapshot.getString("image")
+                val image = documentSnapshot.getString("imageUri")
                 if (image != null) {
                     val imageView = findViewById<ImageView>(R.id.iv_search_details_profile_image)
-                    Picasso.get().load(image).into(imageView)
+                    Picasso.get().load(image).resize(40,40).centerCrop().into(imageView)
                 }
             }
         }

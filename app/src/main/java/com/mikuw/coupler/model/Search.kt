@@ -13,7 +13,8 @@ data class Search(
     val from: Date? = null,
     val to: Date? = null,
     val creator: String? = null,
-    val desc: String? = null
+    val desc: String? = null,
+    val pets: List<Pet>? = null
 ) : Serializable {
     fun formattedDate(date: Date): String? {
         val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())

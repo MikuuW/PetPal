@@ -1,5 +1,6 @@
 package com.mikuw.coupler
 
+import Datasource_Firebase_Searches
 import SearchesAdapter
 import PetsitterAdapter
 import android.content.Intent
@@ -11,7 +12,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.mikuw.coupler.data.Datasource_Firebase_Searches
 import com.mikuw.coupler.data.Datasource_Firebase_Petsitter
 import com.mikuw.coupler.model.Search
 
