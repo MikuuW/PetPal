@@ -1,10 +1,8 @@
 package com.mikuw.coupler.model
 
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
-
-/*data class Affirmation(val stringResourceId: Int) {
-}*/
 
 data class Petsitter(
     val firstname: String,
@@ -15,5 +13,5 @@ data class Petsitter(
     val street: String?,
     val streetNr: String?,
     val city: String?
-) {
+) : Serializable {
 }

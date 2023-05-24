@@ -34,6 +34,7 @@
         <activity android:name=".PetProfileShowActivity" />
         <activity android:name=".SearchDetailsActivity" />
         <activity android:name=".PetsitterRegisterActivity" />
+        <activity android:name=".PetsitterDetailsActivity" />
         <activity android:name=".ChangePasswordActivity" />
     </application>
 

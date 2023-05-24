@@ -4,9 +4,6 @@ import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
-/*data class Affirmation(val stringResourceId: Int) {
-}*/
-
 data class Search(
     val title: String,
     val location: String? = null,

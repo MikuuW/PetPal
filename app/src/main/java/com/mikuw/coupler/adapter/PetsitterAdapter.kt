@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.R
 import com.mikuw.coupler.model.Petsitter
+import com.mikuw.coupler.model.Search
 import com.squareup.picasso.Picasso
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -17,6 +18,11 @@ class PetsitterAdapter(
     private val dataset: List<Petsitter>
 ) : RecyclerView.Adapter<PetsitterAdapter.ItemViewHolder>() {
 
+    private var itemClickListener: OnItemClickListener? = null
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        itemClickListener = listener
+    }
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val tv_name: TextView = view.findViewById(R.id.tv_petsitter_name)
         val tv_city: TextView = view.findViewById(R.id.tv_petsitter_city)
@@ -48,6 +54,8 @@ class PetsitterAdapter(
             .resize(200, 200)
             .centerCrop()
             .into(holder.iv_image)
-
+    }
+    interface OnItemClickListener {
+        fun onItemClick(petsitter: Petsitter)
     }
 }
