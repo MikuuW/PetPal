@@ -76,7 +76,7 @@ fun setupNavigationDrawer(activity: Activity) {
                 activity.startActivity(intent)
             }
             R.id.nav_my_searches -> {
-                val intent = Intent(activity, MySearchesActivity::class.java)
+                val intent = Intent(activity, SearchesListActivity::class.java)
                 activity.startActivity(intent)
             }
         }

@@ -36,7 +36,7 @@
         <activity android:name=".PetsitterRegisterActivity" />
         <activity android:name=".PetsitterDetailsActivity" />
         <activity android:name=".ChangePasswordActivity" />
-        <activity android:name=".MySearchesActivity" />
+        <activity android:name=".SearchesListActivity" />
     </application>
 
 </manifest>
