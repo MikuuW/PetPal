@@ -28,8 +28,10 @@ class Datasource_Firebase_Searches {
                         Pet(name, desc, owner, imageUri)
                     }
                     val search = Search(title, location, from, to, creator, desc, petList)
-                    searches.add(search)
-                }
+                    val isDone = document.getBoolean("isDone") ?: false
+                    if(!isDone) {
+                        searches.add(search)
+                    }                }
                 callback(searches)
             }
     }
