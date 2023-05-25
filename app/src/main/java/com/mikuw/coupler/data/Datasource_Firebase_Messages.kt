@@ -7,7 +7,7 @@ import com.mikuw.coupler.model.Message
 class Datasource_Firebase_Messages {
     private val db = FirebaseFirestore.getInstance()
 
-    fun loadMesssages(callback: (List<Message>) -> Unit) {
+    fun loadMessages(callback: (List<Message>) -> Unit) {
         val currentUser = FirebaseAuth.getInstance().currentUser
 
         db.collection("messages")
@@ -22,8 +22,10 @@ class Datasource_Firebase_Messages {
                     val timestamp = document.getLong("timestamp") ?: continue
                     val msg = Message(sender, receiver, content, timestamp)
                     messages.add(msg)
+                    println("loadMessages: " + messages)
                 }
                 callback(messages)
+                println("callack(messages) called" + messages)
             }
     }
     fun getSampleMessages(): List<Message> {

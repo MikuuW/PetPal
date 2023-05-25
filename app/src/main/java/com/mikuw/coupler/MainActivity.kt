@@ -113,7 +113,6 @@ class MainActivity : AppCompatActivity() {
 
         // Set the item click listener for the events adapter
         datasourceFirebaseSearches.loadSearches { searches ->
-            val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
             recyclerView.adapter = SearchesAdapter(this, searches).apply {
                 setOnItemClickListener(object : SearchesAdapter.OnItemClickListener {
                     override fun onItemClick(search: Search) {

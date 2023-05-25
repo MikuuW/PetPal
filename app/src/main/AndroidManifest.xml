@@ -38,6 +38,7 @@
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".SearchesListActivity" />
         <activity android:name=".MessagesActivity" />
+        <activity android:name=".MessageDetailsActivity" />
     </application>
 
 </manifest>
