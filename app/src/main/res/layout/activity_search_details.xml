@@ -78,7 +78,7 @@
             app:layout_constraintTop_toBottomOf="@+id/rv_search_details_pets" />
 
     <Button
-        android:id="@+id/btn_search_details_contact"
+        android:id="@+id/btn_search_details_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"

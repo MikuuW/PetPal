@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -14,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mikuw.coupler.model.Pet
 import java.text.SimpleDateFormat
@@ -118,11 +121,11 @@ class SearchDetailsActivity : AppCompatActivity() {
         // TEST ENDE
     }
 
-    private fun getDocId(uid: String?, title: String?, callback: (String) -> Unit) {
-        if (uid != null) {
+    private fun getDocId(creatorUid: String?, title: String?, callback: (String) -> Unit) {
+        if (creatorUid != null) {
             val db = FirebaseFirestore.getInstance()
             val searchesRef = db.collection("searches")
-                .whereEqualTo("creator", uid)
+                .whereEqualTo("creator", creatorUid)
                 .whereEqualTo("title", title)
                 .limit(1)
             searchesRef.get().addOnSuccessListener { querySnapshot ->
@@ -130,7 +133,6 @@ class SearchDetailsActivity : AppCompatActivity() {
                     val document = querySnapshot.documents[0]
                     val searchId = document.id
                     callback(searchId) // Invoke the callback with the document ID
-                    println("in function: $searchId")
                 } else {
                     Log.d(TAG, "No matching documents found")
                     callback("") // Invoke the callback with an empty string
@@ -142,8 +144,62 @@ class SearchDetailsActivity : AppCompatActivity() {
         } else {
             callback("") // Invoke the callback with an empty string if the UID is null
         }
+        creatorOptions(creatorUid, title)
     }
 
+    private fun creatorOptions(creatorUid: String?, title: String?) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (creatorUid == userId) {
+            val button = findViewById<Button>(R.id.btn_search_details_button)
+            button.text = "Mark as done"
+            button.setOnClickListener {
+                MaterialAlertDialogBuilder(this)
+                    .setTitle("Confirmation")
+                    .setMessage("Are you sure you want to mark this search as done? This cannot be undone.")
+                    .setPositiveButton("Confirm") { _, _ ->
+                        // Perform the mark as done action
+                        markSearchAsDone(creatorUid, title)
+                    }
+                    .setNegativeButton("Cancel", null)
+                    .show()
+        }
+    }}
+
+    private fun markSearchAsDone(creatorUid : String?, title: String?) {
+        val db = FirebaseFirestore.getInstance()
+        val searchesRef = db.collection("searches")
+            .whereEqualTo("creator", creatorUid)
+            .whereEqualTo("title", title)
+            .limit(1)
+
+        searchesRef.get().addOnSuccessListener { querySnapshot ->
+            if (!querySnapshot.isEmpty) {
+                val documentSnapshot = querySnapshot.documents[0]
+                val searchId = documentSnapshot.id
+
+                // Update the document field
+                db.collection("searches")
+                    .document(searchId)
+                    .update("isDone", true)
+                    .addOnSuccessListener {
+                        // Update successful
+                        Log.d(TAG, "Search marked as done in Firestore")
+                        val intent = Intent(this, SearchesListActivity::class.java)
+                        startActivity(intent)
+                    }
+                    .addOnFailureListener { e ->
+                        // Handle failure
+                        Log.e(TAG, "Error marking search as done in Firestore", e)
+                    }
+            } else {
+                Log.d(TAG, "Search document not found")
+            }
+        }
+            .addOnFailureListener { e ->
+                // Handle failure
+                Log.e(TAG, "Error searching for search document in Firestore", e)
+            }
+    }
 
     private fun getCreatorName(
         userId: String,
