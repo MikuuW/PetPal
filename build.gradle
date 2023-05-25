@@ -2,6 +2,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://dl.cloudsmith.io/public/cometchat/cometchat-pro-android/maven/"
+        }
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.3.15'
