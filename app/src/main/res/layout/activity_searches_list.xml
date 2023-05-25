@@ -32,10 +32,10 @@
                 android:id="@+id/my_searches_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Searches"
-                android:textSize="16sp"
+                android:layout_marginStart="16dp"
+                android:text="My current Searches"
                 android:textColor="@color/black"
-                android:layout_marginStart="16dp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 

@@ -111,7 +111,7 @@ class SearchesListActivity : AppCompatActivity() {
             searchesAdapter.dataset = searches // Update the dataset in the adapter
             searchesAdapter.notifyDataSetChanged() // Notify the adapter that the data has changed
             val my_searches_title = findViewById<TextView>(R.id.my_searches_title)
-            my_searches_title.text = "My Searches (${searches.size})"
+            my_searches_title.text = "My current Searches (${searches.size})"
         }
     }
 
