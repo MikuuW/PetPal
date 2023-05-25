@@ -49,16 +49,13 @@ class SelectPetsAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
         holder.tv_title.text = item.name
-
+        val uri = item.imageUrl
         // Load image with Picasso
-        val storageRef = FirebaseStorage.getInstance().reference.child("images_pet/${item.ownerId}/${item.name}.jpg")
-        storageRef.downloadUrl.addOnSuccessListener { uri ->
             Picasso.get()
                 .load(uri)
                 .resize(400, 400)
                 .centerCrop()
                 .into(holder.iv_image)
-        }
 
         holder.itemView.setOnClickListener {
             listener?.onItemClick(item)
