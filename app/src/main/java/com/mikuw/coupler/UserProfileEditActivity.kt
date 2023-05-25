@@ -54,7 +54,12 @@ class UserProfileEditActivity : AppCompatActivity() {
         getProfileInformation()
 
         iv_profile_edit_image = findViewById(R.id.iv_profile_edit_image)
+        val btn_edit_image = findViewById<TextView>(R.id.tv_edit_image_button)
+
         iv_profile_edit_image.setOnClickListener {
+            openImagePicker()
+        }
+        btn_edit_image.setOnClickListener {
             openImagePicker()
         }
 
@@ -64,10 +69,7 @@ class UserProfileEditActivity : AppCompatActivity() {
             uploadToStorageAndUpdateFirestore()
         }
 
-        val btn_edit_image = findViewById<TextView>(R.id.tv_edit_image_button)
-        btn_edit_image.setOnClickListener {
-            openImagePicker()
-        }
+
 
 
     }

@@ -1,14 +1,19 @@
 package com.mikuw.coupler
 
 import android.content.ContentValues.TAG
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
@@ -16,10 +21,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.model.Pet
+import com.squareup.picasso.Picasso
 import java.io.File
 
 class PetProfileEditActivity : AppCompatActivity() {
-
+    private val REQUEST_IMAGE_CAPTURE = 1
+    private val REQUEST_PICK_IMAGE = 2
+    private lateinit var iv_petProfile_image: ImageView
+    private lateinit var imageUri: Uri
     lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +47,7 @@ class PetProfileEditActivity : AppCompatActivity() {
         val pet = intent.getSerializableExtra("pet") as? Pet
         val name = pet?.name
         val desc = pet?.desc
+        val imageUri = pet?.imageUrl
 
         // Actionbar
         val actionBar = supportActionBar
@@ -47,16 +57,108 @@ class PetProfileEditActivity : AppCompatActivity() {
         tv_pet_desc.text = desc
 
         // Display Image
-        displayImage(name)
+        displayImage(imageUri)
+
+        iv_petProfile_image = findViewById(R.id.iv_petProfile_image)
+        val btn_edit_image = findViewById<TextView>(R.id.tv_PetProfile_edit_image_button)
+
+        iv_petProfile_image.setOnClickListener {
+            openImagePicker()
+        }
+        btn_edit_image.setOnClickListener {
+            openImagePicker()
+        }
 
         val btn = findViewById<Button>(R.id.btn_pet_submit)
 
         btn.setOnClickListener() {
             val newDesc = tv_pet_desc.text.toString()
             updatePetInFirestore(name, newDesc)
+            uploadImageToFirebaseStorage(name)
             val intent = intent
-            intent.setClass(this, PetsShowActivity::class.java)
+            intent.setClass(this, MainActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun uploadImageToFirebaseStorage(
+        name: String?,
+    ) {
+        val timestamp = System.currentTimeMillis()
+        val storageRef = FirebaseStorage.getInstance().reference.child("images_pets/")
+        val imageName = "$name-$timestamp.jpg"
+        val imageRef = storageRef.child(imageName)
+
+        val uploadTask = imageRef.putFile(imageUri)
+        uploadTask.addOnSuccessListener {
+            imageRef.downloadUrl.addOnSuccessListener { uri ->
+                updateUriInFirestore(name, uri.toString())
+            }
+        }.addOnFailureListener { exception ->
+        }
+    }
+
+
+    fun openImagePicker() {
+        val REQUEST_IMAGE_CAPTURE = 1
+        val REQUEST_PICK_IMAGE = 2
+
+        val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Delete", "Cancel")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Add Photo")
+        builder.setItems(options) { dialog, item ->
+            when {
+                options[item] == "Take Photo" -> {
+                    Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                        takePictureIntent.resolveActivity(packageManager)?.also {
+                            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                        }
+                    }
+                }
+                options[item] == "Choose from Gallery" -> {
+                    Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    ).also { pickPhotoIntent ->
+                        startActivityForResult(pickPhotoIntent, REQUEST_PICK_IMAGE)
+                    }
+                }
+                options[item] == "Delete" -> {
+                    // TODO: Implement delete
+                }
+                options[item] == "Cancel" -> {
+                    dialog.dismiss()
+                }
+            }
+        }
+        builder.show()
+    }
+
+    private fun setImageFromPicker(data: Intent?) {
+        data?.data?.let { imageUri ->
+            iv_petProfile_image.setImageURI(imageUri)
+            this.imageUri = imageUri
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                REQUEST_IMAGE_CAPTURE -> {
+                    setImageFromCamera(data)
+                }
+                REQUEST_PICK_IMAGE -> {
+                    setImageFromPicker(data)
+                }
+            }
+        }
+    }
+
+    private fun setImageFromCamera(data: Intent?) {
+        data?.extras?.get("data")?.let { imageBitmap ->
+            iv_petProfile_image.setImageBitmap(imageBitmap as Bitmap)
         }
     }
 
@@ -92,27 +194,46 @@ class PetProfileEditActivity : AppCompatActivity() {
             }
     }
 
-
-
-
-    private fun displayImage(name: String?) {
-        val iv_petProfile_image = findViewById<ImageView>(R.id.iv_petProfile_image)
-
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        val dbRef = FirebaseStorage.getInstance().reference.child("images_pet/$userId/$name.jpg")
-
-
-        val localFile = File.createTempFile("tmpImage", "jpg")
-        dbRef.getFile(localFile).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-            iv_petProfile_image.setImageBitmap(bitmap)
-        }
-            .addOnFailureListener() {
-                iv_petProfile_image.setImageResource(R.drawable.baseline_hide_image_24)
+    private fun updateUriInFirestore(name: String?, uri: String?) {
+        val owner = FirebaseAuth.getInstance().currentUser?.uid
+        val db = FirebaseFirestore.getInstance()
+        db.collection("pets")
+            .whereEqualTo("owner", owner)
+            .whereEqualTo("name", name)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val documentSnapshot = querySnapshot.documents[0]
+                    val petId = documentSnapshot.id
+                    db.collection("pets")
+                        .document(petId)
+                        .update("imageUri", uri)
+                        .addOnSuccessListener {
+                            // Update successful
+                            Log.d(TAG, "Pet updated in Firestore")
+                        }
+                        .addOnFailureListener { e ->
+                            // Handle failure
+                            Log.e(TAG, "Error updating pet in Firestore", e)
+                        }
+                } else {
+                    Log.d(TAG, "Pet document not found")
+                }
             }
-
+            .addOnFailureListener { e ->
+                // Handle failure
+                Log.e(TAG, "Error searching for pet document in Firestore", e)
+            }
     }
 
+    private fun displayImage(uri: String?) {
+        val iv_petProfile_image = findViewById<ImageView>(R.id.iv_petProfile_image)
+       Picasso.get()
+           .load(uri)
+           .resize(200, 200)
+           .centerCrop()
+              .into(iv_petProfile_image)
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
