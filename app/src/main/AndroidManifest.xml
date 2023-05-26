@@ -38,7 +38,7 @@
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".SearchesListActivity" />
         <activity android:name=".MessagesListActivity" />
-        <activity android:name=".MessageReadActivity" />
+        <activity android:name=".MessageDetailsActivity" />
         <activity android:name=".MessageWriteActivity" />
     </application>
 

@@ -1,5 +1,6 @@
 package com.mikuw.coupler
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
@@ -8,13 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mikuw.coupler.model.Message
+import java.text.SimpleDateFormat
+import java.util.*
 
-class MessageReadActivity : AppCompatActivity() {
+class MessageDetailsActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_message_read)
+        setContentView(R.layout.activity_message_details)
 
         // Retrieve the ActionBar object
         val actionBar = supportActionBar
@@ -38,9 +41,25 @@ class MessageReadActivity : AppCompatActivity() {
             displayMessage(message)
         }
 
+        if (message != null) {
+            handleAnswerButton(message)
+        }
 
 
     }
+
+    private fun handleAnswerButton(message: Message) {
+        val btn_answer = findViewById<TextView>(R.id.btn_message_details)
+        btn_answer.setOnClickListener {
+            val intent = Intent(this, MessageWriteActivity::class.java)
+            intent.putExtra("receiverUid", message.sender)
+            intent.putExtra("title", "AW: ${message.title}")
+            startActivity(intent)
+        }
+
+        }
+
+
 
     private fun displayMessage(message: Message) {
         //views holen
@@ -59,7 +78,7 @@ class MessageReadActivity : AppCompatActivity() {
 
                     // Use the firstname and lastname values
                     // e.g., display them in a TextView
-                    tv_sender.text = "$firstname $lastname"
+                    tv_sender.text = "Message from $firstname $lastname"
                 } else {
                     // Handle the case where the document does not exist
                 }
@@ -68,8 +87,17 @@ class MessageReadActivity : AppCompatActivity() {
                 // Handle any errors that occurred during the retrieval
             }
 
+        val timestamp = message.timestamp
+        val dateFormat = SimpleDateFormat("EEE, MMM d, yyyy", Locale.getDefault())
+        val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
 
-        tv_time.text = message.timestamp.toString()
+        val date = Date(timestamp)
+        val formattedDate = dateFormat.format(date)
+        val formattedTime = timeFormat.format(date)
+
+        val formattedTimestamp = "$formattedDate at $formattedTime"
+        tv_time.text = formattedTimestamp
+
         tv_content.text = message.content
     }
 

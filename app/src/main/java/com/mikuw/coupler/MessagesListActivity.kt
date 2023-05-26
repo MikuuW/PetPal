@@ -16,7 +16,7 @@ class MessagesListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_messages)
+        setContentView(R.layout.activity_message_list)
 
         // Retrieve the ActionBar object
         val actionBar = supportActionBar
@@ -56,7 +56,7 @@ class MessagesListActivity : AppCompatActivity() {
         // Set the item click listener for the events adapter
         messagesAdapter.setOnItemClickListener(object : MessageAdapter.OnItemClickListener {
             override fun onItemClick(message: Message) {
-                val intent = Intent(this@MessagesListActivity, MessageReadActivity::class.java)
+                val intent = Intent(this@MessagesListActivity, MessageDetailsActivity::class.java)
                 intent.putExtra("message", message)
                 startActivity(intent)
             }
