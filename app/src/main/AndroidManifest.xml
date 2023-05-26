@@ -37,7 +37,7 @@
         <activity android:name=".PetsitterDetailsActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".SearchesListActivity" />
-        <activity android:name=".MessagesActivity" />
+        <activity android:name=".MessagesListActivity" />
         <activity android:name=".MessageReadActivity" />
         <activity android:name=".MessageWriteActivity" />
     </application>

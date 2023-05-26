@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadPetsitters() {
-       val datasourceFirebasePetsitter = Datasource_Firebase_Petsitter()
+        val datasourceFirebasePetsitter = Datasource_Firebase_Petsitter()
 
         val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
         val petsitterAdapter = PetsitterAdapter(this, emptyList())
@@ -96,10 +96,7 @@ class MainActivity : AppCompatActivity() {
             recyclerView.setHasFixedSize(true)
         }
 
-        datasourceFirebasePetsitter.loadPetsitter { petsitters ->
-            petsitterAdapter.dataset = petsitters // Update the dataset in the adapter
-            petsitterAdapter.notifyDataSetChanged() // Notify the adapter that the data has changed
-        }
+
     }
 
     private fun loadSearches() {
@@ -108,28 +105,23 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
         val searchesAdapter = SearchesAdapter(this, emptyList())
-        // Create an empty adapter initially
         recyclerView.adapter = searchesAdapter
 
-        // Set the item click listener for the events adapter
+        // Load the searches from the data source
         datasourceFirebaseSearches.loadSearches { searches ->
-            recyclerView.adapter = SearchesAdapter(this, searches).apply {
-                setOnItemClickListener(object : SearchesAdapter.OnItemClickListener {
-                    override fun onItemClick(search: Search) {
-                        val intent = Intent(this@MainActivity, SearchDetailsActivity::class.java)
-                        intent.putExtra("search", search)
-                        startActivity(intent)
+            val sortedSearches = searches.sortedBy { it.from }
+            searchesAdapter.dataset = sortedSearches
+            searchesAdapter.notifyDataSetChanged()
+        }
 
-                    }
-                })
+        // Set the item click listener for the searches adapter
+        searchesAdapter.setOnItemClickListener(object : SearchesAdapter.OnItemClickListener {
+            override fun onItemClick(search: Search) {
+                val intent = Intent(this@MainActivity, SearchDetailsActivity::class.java)
+                intent.putExtra("search", search)
+                startActivity(intent)
             }
-            recyclerView.setHasFixedSize(true)
-        }
-
-        datasourceFirebaseSearches.loadSearches { searches ->
-            searchesAdapter.dataset = searches // Update the dataset in the adapter
-            searchesAdapter.notifyDataSetChanged() // Notify the adapter that the data has changed
-        }
+        })
 
         // Use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView

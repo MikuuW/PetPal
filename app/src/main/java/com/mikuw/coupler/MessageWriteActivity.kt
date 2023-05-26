@@ -33,20 +33,21 @@ class MessageWriteActivity : AppCompatActivity() {
 
         //WEITER
         val receiverUid = intent.getStringExtra("receiverUid")
+        val title = intent.getStringExtra("title")
         val button_send_message = findViewById<Button>(R.id.btn_send_message)
-
         button_send_message.setOnClickListener() {
-            sendMessage(receiverUid)
+            sendMessage(receiverUid, title)
         }
     }
 
-    private fun sendMessage(receiverUid: String?) {
+    private fun sendMessage(receiverUid: String?, title: String?) {
         val db = FirebaseFirestore.getInstance()
         val userID = FirebaseAuth.getInstance().currentUser?.uid
         val tv_content = findViewById<EditText>(R.id.et_msg_write_content)
 
 
         val message = hashMapOf(
+            "title" to title,
             "sender" to userID,
             "receiver" to receiverUid,
             "content" to tv_content.text.toString(),

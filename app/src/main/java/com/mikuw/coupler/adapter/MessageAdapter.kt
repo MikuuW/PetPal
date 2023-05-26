@@ -25,6 +25,7 @@ class MessageAdapter(
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val tv_sender: TextView = view.findViewById(R.id.textViewSender)
         val tv_time: TextView = view.findViewById(R.id.textViewTimestamp)
+        val tv_title: TextView = view.findViewById(R.id.textViewTitle)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -42,6 +43,9 @@ class MessageAdapter(
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
+
+        holder.tv_title.text = item.title
+
 
         val timestamp = item.timestamp
         val dateFormat = SimpleDateFormat("EEE, MMM d, yyyy", Locale.getDefault())

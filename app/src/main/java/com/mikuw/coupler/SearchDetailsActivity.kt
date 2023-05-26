@@ -177,6 +177,7 @@ class SearchDetailsActivity : AppCompatActivity() {
                     // ES gibt MessageWriteActivity und MessageAnswerActivity und MessageReadActivity
                     val intent = Intent(this, MessageWriteActivity::class.java)
                     intent.putExtra("receiverUid", creatorUid)
+                    intent.putExtra("title", title)
                     startActivity(intent)
                 }
             }
