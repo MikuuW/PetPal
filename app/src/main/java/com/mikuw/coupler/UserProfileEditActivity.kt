@@ -63,13 +63,33 @@ class UserProfileEditActivity : AppCompatActivity() {
             openImagePicker()
         }
 
+
         val btn_edit_submit = findViewById<TextView>(R.id.btn_edit_profile_submit)
         btn_edit_submit.setOnClickListener {
-            updateUserOnSubmit()
-            uploadToStorageAndUpdateFirestore()
+            updateUserOnSubmit { success ->
+                if (success) {
+                    uploadToStorageAndUpdateFirestore { uri ->
+                        if (uri != null) {
+                            // Upload and update completed successfully
+                            val intent = Intent(this, UserProfileShowActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            // Error occurred during upload and update
+                            Toast.makeText(
+                                this,
+                                "Error occurred during upload and update",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                } else {
+                    // Error occurred during user update
+                    Toast.makeText(this, "Error occurred during user update", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
         }
-
-
 
 
     }
@@ -134,7 +154,7 @@ class UserProfileEditActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateUserOnSubmit() {
+    private fun updateUserOnSubmit(callback: (Boolean) -> Unit) {
         // Werte holen
         val firstname =
             findViewById<TextView>(R.id.etv_edit_profile_firstname).text.toString().trim()
@@ -184,14 +204,15 @@ class UserProfileEditActivity : AppCompatActivity() {
                 .addOnSuccessListener { documentReference ->
                     updatePetsitter(userId, userUpdates)
                     Log.d(ContentValues.TAG, "DocumentSnapshot updated with ID: $userId")
-                    Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+                    callback(true) // User update success
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Profile update failed", Toast.LENGTH_SHORT).show()
                     Log.w(ContentValues.TAG, "Error updating document", e)
+                    callback(false) // User update failed
                 }
+        } else {
+            callback(true) // No updates needed, consider it a success
         }
     }
 
@@ -253,7 +274,10 @@ class UserProfileEditActivity : AppCompatActivity() {
                 }
                 options[item] == "Delete" -> {
                     updateImageUriInFirestore("users", "") // Update Firestore with an empty string
-                    updateImageUriInFirestore("petsitters", "") // Update Firestore with an empty string
+                    updateImageUriInFirestore(
+                        "petsitters",
+                        ""
+                    ) // Update Firestore with an empty string
                 }
                 options[item] == "Cancel" -> {
                     dialog.dismiss()
@@ -307,18 +331,21 @@ class UserProfileEditActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadToStorageAndUpdateFirestore() {
-        val firstname =
-            findViewById<TextView>(R.id.etv_edit_profile_firstname).text.toString().trim()
+    private fun uploadToStorageAndUpdateFirestore(callback: (Uri?) -> Unit) {
+        val firstname = findViewById<TextView>(R.id.etv_edit_profile_firstname).text.toString().trim()
         val lastname = findViewById<TextView>(R.id.etv_edit_profile_lastname).text.toString().trim()
 
         uploadImageToFirebaseStorage(firstname, lastname) { uri ->
             if (uri != null && uri.toString().isNotEmpty() && uri.toString().isNotBlank()) {
                 updateImageUriInFirestore("users", uri.toString())
                 updateImageUriInFirestore("petsitters", uri.toString())
+                callback(uri)
+            } else {
+                callback(null) // Error occurred during image upload
             }
         }
     }
+
 
     private fun uploadImageToFirebaseStorage(
         firstname: String,
