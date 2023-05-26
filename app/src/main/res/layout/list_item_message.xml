@@ -9,9 +9,10 @@
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="2dp"
         android:hint="Title"
-        android:textSize="16sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewSender"
@@ -19,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="Sender"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/textViewTimestamp"

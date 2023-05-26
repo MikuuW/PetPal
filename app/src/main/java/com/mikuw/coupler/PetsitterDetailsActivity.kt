@@ -1,5 +1,6 @@
 package com.mikuw.coupler
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
@@ -8,11 +9,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mikuw.coupler.model.Petsitter
 import com.mikuw.coupler.model.Search
 import com.squareup.picasso.Picasso
 
-class PetsitterDetailsActivity : AppCompatActivity(){
+class PetsitterDetailsActivity : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +31,7 @@ class PetsitterDetailsActivity : AppCompatActivity(){
         val streetNr = petsitter?.streetNr
         val imageUri = petsitter?.imageUri
         val desc = petsitter?.desc
+        val email = petsitter?.email
 
         val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -48,6 +51,45 @@ class PetsitterDetailsActivity : AppCompatActivity(){
         // Call functions
         setValues(name, adress, desc)
         displayImage(imageUri.toString())
+        handleButtonClick(email)
+    }
+
+    private fun handleButtonClick(email: String?) {
+        val btn = findViewById<TextView>(R.id.btn_petsitter_details)
+
+        getPetsitterDocIdByEmail(email) { docId ->
+            if (docId != null) {
+                btn.setOnClickListener {
+                    val intent = Intent(this, MessageWriteActivity::class.java)
+                    intent.putExtra("receiverUid", docId)
+                    intent.putExtra("title", "Contact Request")
+                    startActivity(intent)
+                }
+            } else {
+                // Petsitter document not found or error occurred
+                // Handle the case accordingly
+            }
+        }
+    }
+
+    fun getPetsitterDocIdByEmail(email: String?, callback: (String?) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val petsitterCollection = db.collection("petsitters")
+        val query = petsitterCollection.whereEqualTo("email", email)
+
+        query.get().addOnSuccessListener { querySnapshot ->
+            if (!querySnapshot.isEmpty) {
+                val documentSnapshot = querySnapshot.documents[0]
+                val docId = documentSnapshot.id
+                callback(docId)
+            } else {
+                // No petsitter document found with the given email
+                callback(null)
+            }
+        }.addOnFailureListener { exception ->
+            // Error occurred while retrieving the petsitter document
+            callback(null)
+        }
     }
 
     private fun displayImage(uri: String) {
@@ -55,12 +97,12 @@ class PetsitterDetailsActivity : AppCompatActivity(){
 
         Picasso.get()
             .load(uri)
-            .resize(400,400)
+            .resize(400, 400)
             .centerCrop()
             .into(iv_image)
     }
 
-    private fun setValues(name : String, adress : String, desc : String?) {
+    private fun setValues(name: String, adress: String, desc: String?) {
         val tv_name = findViewById<TextView>(R.id.tv_petsitter_details_name)
         val tv_adress = findViewById<TextView>(R.id.tv_petsitter_details_adress)
         val tv_desc = findViewById<TextView>(R.id.tv_petsitter_details_desc)

@@ -1,32 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     <item
         android:id="@+id/nav_my_searches"
         android:icon="@drawable/baseline_search_24"
         android:title="My Searches" />
     <item
         android:id="@+id/nav_create_mission"
-        android:title="Create new search" />
+        android:title="Create new search"
+        android:icon="@drawable/menu_search"
+        />
     <item
         android:id="@+id/nav_pets"
         android:icon="@drawable/baseline_pets_24"
         android:title="My Pets" />
     <item
         android:id="@+id/nav_add_pets"
+        android:icon="@drawable/menu_pets"
         android:title="Add new pet" />
 
     <item

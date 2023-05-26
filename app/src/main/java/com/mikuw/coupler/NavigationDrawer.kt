@@ -25,20 +25,23 @@ fun setupNavigationDrawer(activity: Activity) {
     activity.actionBar?.setDisplayHomeAsUpEnabled(true)
 
 
-    val btn = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_home)
-    val btn2 = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_register)
-    val btn3 = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_settings)
+    val btn_home = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_home)
+    val btn_register = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_register)
+    val btn_settings = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_settings)
 
     //hide the textview test if no on is logged in
+    val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
+    if(isLoggedIn) {
+        btn_register.setImageResource(R.drawable.baseline_logout_24)
+    }
 
 
-
-    btn.setOnClickListener() {
+    btn_home.setOnClickListener() {
         val intent = Intent(activity, MainActivity::class.java)
         activity.startActivity(intent)
     }
 
-    btn2.setOnClickListener() {
+    btn_register.setOnClickListener() {
         if(FirebaseAuth.getInstance().currentUser != null) {
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(activity, MainActivity::class.java)
@@ -50,7 +53,7 @@ fun setupNavigationDrawer(activity: Activity) {
 
     }
 
-    btn3.setOnClickListener() {
+    btn_settings.setOnClickListener() {
         val intent = Intent(activity, UserProfileShowActivity::class.java)
         activity.startActivity(intent)
     }
@@ -93,16 +96,18 @@ fun setupNavigationDrawer(activity: Activity) {
 fun getUserNameAndEmail(navView: NavigationView) {
     val db = FirebaseFirestore.getInstance()
     val currentUser = FirebaseAuth.getInstance().currentUser
-    if (currentUser == null) {
-        Log.d(ContentValues.TAG, "No user is logged in")
-        return
-    }
-    val userRef = db.collection("users").document(currentUser.uid)
+
+    val userRef = currentUser?.let { db.collection("users").document(it.uid) }
 
     val tv_show_email = navView.getHeaderView(0).findViewById<TextView>(R.id.nav_header_email)
     val tv_show_name = navView.getHeaderView(0).findViewById<TextView>(R.id.nav_header_name)
 
-    userRef.get().addOnSuccessListener { document ->
+    if (currentUser == null) {
+        tv_show_name.text = "PetPal"
+        tv_show_name.textSize = 30F
+    }
+
+    userRef?.get()?.addOnSuccessListener { document ->
         if (document != null && document.exists()) {
             // retrieve the user's data
             val email = document.getString("email")
@@ -116,7 +121,7 @@ fun getUserNameAndEmail(navView: NavigationView) {
             // handle the case when the document does not exist
             println("No such document")
         }
-    }.addOnFailureListener { exception ->
+    }?.addOnFailureListener { exception ->
         // handle any exceptions that occur
         println("Error getting documents: $exception")
     }
