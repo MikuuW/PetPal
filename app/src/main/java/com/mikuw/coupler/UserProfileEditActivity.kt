@@ -70,6 +70,8 @@ class UserProfileEditActivity : AppCompatActivity() {
                 if (success) {
                     uploadToStorageAndUpdateFirestore { uri ->
                         if (uri != null) {
+                            Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT)
+                                .show()
                             // Upload and update completed successfully
                             val intent = Intent(this, UserProfileShowActivity::class.java)
                             startActivity(intent)

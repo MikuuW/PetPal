@@ -150,8 +150,10 @@ class UserRegisterActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error creating user account", e)
-            Toast.makeText(this, "An error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
+            Toast.makeText(
+                baseContext, "Error! Try again.",
+                Toast.LENGTH_SHORT
+            ).show()        }
     }
 
     private fun createUserInFirestore(

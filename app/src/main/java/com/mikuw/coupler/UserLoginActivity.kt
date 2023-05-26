@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -73,14 +74,20 @@ class UserLoginActivity : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
+                            Toast.makeText(
+                                baseContext, "Logged in successfully.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             // Sign in success, update UI with the signed-in user's information
                             val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {
                             // If sign in fails, display a message to the user.
-
-                            println(task.exception)
+                            Toast.makeText(
+                                baseContext, "Username or Password is incorrect",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
             } else {

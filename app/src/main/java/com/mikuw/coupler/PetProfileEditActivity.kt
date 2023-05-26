@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -83,6 +84,7 @@ class PetProfileEditActivity : AppCompatActivity() {
                         if (uploadImageSuccess) {
                             // Image upload was successful
                             Log.d(TAG, "Image uploaded to Firebase Storage")
+                            Toast.makeText(this, "Pet profile updated", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@PetProfileEditActivity, PetsListActivity::class.java)
                             startActivity(intent)
                             finish()
