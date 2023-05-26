@@ -11,7 +11,8 @@ import com.mikuw.coupler.model.Pet
 import com.squareup.picasso.Picasso
 
 class ShowPetsAdapter(
-    private val context: Context, private val dataset: List<Pet>
+    private val context: Context,
+    private val dataset: List<Pet>
 ) : RecyclerView.Adapter<ShowPetsAdapter.ItemViewHolder>() {
 
     private var listener: OnItemClickListener? = null
@@ -45,7 +46,7 @@ class ShowPetsAdapter(
         holder.tv_title.text = item.name
 
         // Load image with Picasso
-        if(item.imageUrl.isNotEmpty()){
+        if (item.imageUrl.isNotEmpty()) {
             Picasso.get()
                 .load(item.imageUrl)
                 .resize(200, 200)

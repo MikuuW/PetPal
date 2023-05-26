@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.mikuw.coupler.model.Pet
 
-class PetsShowActivity : AppCompatActivity() {
+class PetsListActivity : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var petsAdapter: ShowPetsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pets_show)
+        setContentView(R.layout.activity_pets_list)
 
         // Retrieve the ActionBar object
         val actionBar = supportActionBar
@@ -43,7 +45,7 @@ class PetsShowActivity : AppCompatActivity() {
             recyclerView.adapter = ShowPetsAdapter(this, pets).apply {
                 setOnItemClickListener(object : ShowPetsAdapter.OnItemClickListener {
                     override fun onItemClick(pet: Pet) {
-                        val intent = Intent(this@PetsShowActivity, PetProfileShowActivity::class.java)
+                        val intent = Intent(this@PetsListActivity, PetProfileShowActivity::class.java)
                         intent.putExtra("pet", pet)
                         startActivity(intent)
                     }
@@ -53,6 +55,7 @@ class PetsShowActivity : AppCompatActivity() {
             recyclerView.setHasFixedSize(true)
         }
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {

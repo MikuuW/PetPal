@@ -60,7 +60,7 @@ fun setupNavigationDrawer(activity: Activity) {
         when (it.itemId) {
 
             R.id.nav_pets -> {
-                val intent = Intent(activity, PetsShowActivity::class.java)
+                val intent = Intent(activity, PetsListActivity::class.java)
                 activity.startActivity(intent)
             }
             R.id.nav_add_pets -> {

@@ -43,7 +43,7 @@ class PetProfileEditActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupNavigationDrawer(this)
-
+        imageUri = Uri.EMPTY
         val pet = intent.getSerializableExtra("pet") as? Pet
         val name = pet?.name
         val desc = pet?.desc
@@ -73,29 +73,103 @@ class PetProfileEditActivity : AppCompatActivity() {
 
         btn.setOnClickListener() {
             val newDesc = tv_pet_desc.text.toString()
-            updatePetInFirestore(name, newDesc)
-            uploadImageToFirebaseStorage(name)
-            val intent = intent
-            intent.setClass(this, MainActivity::class.java)
-            startActivity(intent)
+
+            updatePetInFirestore(name, newDesc) { updatePetSuccess ->
+                if (updatePetSuccess) {
+                    // Pet update was successful
+                    Log.d(TAG, "Pet updated in Firestore")
+
+                    uploadImageToFirebaseStorage(name) { uploadImageSuccess ->
+                        if (uploadImageSuccess) {
+                            // Image upload was successful
+                            Log.d(TAG, "Image uploaded to Firebase Storage")
+                            val intent = Intent(this@PetProfileEditActivity, PetsListActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            // Image upload failed
+                            Log.e(TAG, "Error uploading image to Firebase Storage")
+                            // Handle the error or show an error message
+                        }
+                    }
+                } else {
+                    // Pet update failed
+                    Log.e(TAG, "Error updating pet in Firestore")
+                    // Handle the error or show an error message
+                }
+            }
         }
+
     }
 
-    private fun uploadImageToFirebaseStorage(
-        name: String?,
-    ) {
+
+    private fun uploadImageToFirebaseStorage(name: String?, callback: (Boolean) -> Unit) {
         val timestamp = System.currentTimeMillis()
         val storageRef = FirebaseStorage.getInstance().reference.child("images_pets/")
         val imageName = "$name-$timestamp.jpg"
         val imageRef = storageRef.child(imageName)
 
-        val uploadTask = imageRef.putFile(imageUri)
-        uploadTask.addOnSuccessListener {
-            imageRef.downloadUrl.addOnSuccessListener { uri ->
-                updateUriInFirestore(name, uri.toString())
+        if (imageUri != Uri.EMPTY) {
+            val uploadTask = imageRef.putFile(imageUri)
+            uploadTask.addOnSuccessListener { uploadTaskSnapshot ->
+                imageRef.downloadUrl.addOnSuccessListener { uri ->
+                    updateUriInFirestore(name, uri.toString()) { uriUpdateSuccess ->
+                        if (uriUpdateSuccess) {
+                            // Image URI update completed successfully
+                            Log.d(TAG, "Image URI updated in Firestore")
+                            callback(true)
+                        } else {
+                            // Image URI update failed
+                            Log.e(TAG, "Error updating image URI in Firestore")
+                            callback(false)
+                        }
+                    }
+                }
+            }.addOnFailureListener { exception ->
+                // Image upload failed
+                Log.e(TAG, "Error uploading image to Firebase Storage")
+                callback(false)
             }
-        }.addOnFailureListener { exception ->
+        } else {
+            // Image URI is empty
+            callback(true) // No image to upload, consider it as success
         }
+    }
+
+
+    private fun updatePetInFirestore(name: String?, desc: String?, callback: (Boolean) -> Unit) {
+        val owner = FirebaseAuth.getInstance().currentUser?.uid
+        val db = FirebaseFirestore.getInstance()
+        db.collection("pets")
+            .whereEqualTo("owner", owner)
+            .whereEqualTo("name", name)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val documentSnapshot = querySnapshot.documents[0]
+                    val petId = documentSnapshot.id
+                    db.collection("pets")
+                        .document(petId)
+                        .update("desc", desc)
+                        .addOnSuccessListener {
+                            // Update successful
+                            Log.d(TAG, "Pet updated in Firestore")
+                            callback(true)
+                        }
+                        .addOnFailureListener { e ->
+                            // Handle failure
+                            Log.e(TAG, "Error updating pet in Firestore", e)
+                            callback(false)
+                        }
+                } else {
+                    Log.d(TAG, "Pet document not found")
+                    callback(false)
+                }
+            }
+            .addOnFailureListener { e ->
+                // Handle failure
+                Log.e(TAG, "Error searching for pet document in Firestore", e)
+                callback(false)
+            }
     }
 
 
@@ -162,39 +236,9 @@ class PetProfileEditActivity : AppCompatActivity() {
         }
     }
 
-    private fun updatePetInFirestore(name: String?, desc: String?) {
-        val owner = FirebaseAuth.getInstance().currentUser?.uid
-        val db = FirebaseFirestore.getInstance()
-        db.collection("pets")
-            .whereEqualTo("owner", owner)
-            .whereEqualTo("name", name)
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                if (!querySnapshot.isEmpty) {
-                    val documentSnapshot = querySnapshot.documents[0]
-                    val petId = documentSnapshot.id
-                    db.collection("pets")
-                        .document(petId)
-                        .update("desc", desc)
-                        .addOnSuccessListener {
-                            // Update successful
-                            Log.d(TAG, "Pet updated in Firestore")
-                        }
-                        .addOnFailureListener { e ->
-                            // Handle failure
-                            Log.e(TAG, "Error updating pet in Firestore", e)
-                        }
-                } else {
-                    Log.d(TAG, "Pet document not found")
-                }
-            }
-            .addOnFailureListener { e ->
-                // Handle failure
-                Log.e(TAG, "Error searching for pet document in Firestore", e)
-            }
-    }
 
-    private fun updateUriInFirestore(name: String?, uri: String?) {
+
+    private fun updateUriInFirestore(name: String?, uri: String?, callback: (Boolean) -> Unit) {
         val owner = FirebaseAuth.getInstance().currentUser?.uid
         val db = FirebaseFirestore.getInstance()
         db.collection("pets")
@@ -210,29 +254,31 @@ class PetProfileEditActivity : AppCompatActivity() {
                         .update("imageUri", uri)
                         .addOnSuccessListener {
                             // Update successful
-                            Log.d(TAG, "Pet updated in Firestore")
+                            callback(true)
                         }
                         .addOnFailureListener { e ->
                             // Handle failure
-                            Log.e(TAG, "Error updating pet in Firestore", e)
+                            callback(false)
                         }
                 } else {
                     Log.d(TAG, "Pet document not found")
+                    callback(false)
                 }
             }
             .addOnFailureListener { e ->
                 // Handle failure
-                Log.e(TAG, "Error searching for pet document in Firestore", e)
+                callback(false)
             }
     }
 
+
     private fun displayImage(uri: String?) {
         val iv_petProfile_image = findViewById<ImageView>(R.id.iv_petProfile_image)
-       Picasso.get()
-           .load(uri)
-           .resize(200, 200)
-           .centerCrop()
-              .into(iv_petProfile_image)
+        Picasso.get()
+            .load(uri)
+            .resize(200, 200)
+            .centerCrop()
+            .into(iv_petProfile_image)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

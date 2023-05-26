@@ -28,7 +28,7 @@
         <activity android:name=".UserProfileEditActivity" />
         <activity android:name=".UserProfileShowActivity" />
         <activity android:name=".SearchCreateActivity" />
-        <activity android:name=".PetsShowActivity" />
+        <activity android:name=".PetsListActivity" />
         <activity android:name=".PetAddActivity" />
         <activity android:name=".PetProfileEditActivity" />
         <activity android:name=".PetProfileShowActivity" />

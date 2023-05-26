@@ -97,7 +97,7 @@ class tmpActivity : AppCompatActivity() {
         // MyPets Activity
         val tv_my_pets = findViewById<TextView>(R.id.tv_my_pets)
         tv_my_pets.setOnClickListener {
-            val intent = Intent(this, PetsShowActivity::class.java)
+            val intent = Intent(this, PetsListActivity::class.java)
             startActivity(intent)
         }
 

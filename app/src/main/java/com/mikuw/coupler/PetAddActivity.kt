@@ -178,7 +178,7 @@ class PetAddActivity : AppCompatActivity() {
                             .add(pet)
                             .addOnSuccessListener { documentReference ->
                                 Toast.makeText(this, "$name saved", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this, PetsShowActivity::class.java)
+                                val intent = Intent(this, PetsListActivity::class.java)
                                 startActivity(intent)
                             }
                             .addOnFailureListener { e ->
