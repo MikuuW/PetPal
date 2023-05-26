@@ -53,7 +53,7 @@ class MessageDetailsActivity : AppCompatActivity() {
         btn_answer.setOnClickListener {
             val intent = Intent(this, MessageWriteActivity::class.java)
             intent.putExtra("receiverUid", message.sender)
-            intent.putExtra("title", "AW: ${message.title}")
+            intent.putExtra("title", message.title)
             startActivity(intent)
         }
 
