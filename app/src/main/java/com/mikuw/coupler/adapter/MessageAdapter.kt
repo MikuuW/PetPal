@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mikuw.coupler.R
 import com.mikuw.coupler.model.Message
 import java.text.SimpleDateFormat
@@ -51,9 +52,29 @@ class MessageAdapter(
         val formattedTime = timeFormat.format(date)
 
         val formattedTimestamp = "$formattedDate at $formattedTime"
-
-        holder.tv_sender.text = item.sender
         holder.tv_time.text = formattedTimestamp
+
+        // get the field firstname and lastname from the document in firestore where document id is equal to the sender
+        val db = FirebaseFirestore.getInstance()
+        db.collection("users")
+            .document(item.sender)
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val firstname = documentSnapshot.getString("firstname")
+                    val lastname = documentSnapshot.getString("lastname")
+
+                    // Use the firstname and lastname values
+                    // e.g., display them in a TextView
+                    holder.tv_sender.text = "$firstname $lastname"
+                } else {
+                    // Handle the case where the document does not exist
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Handle any errors that occurred during the retrieval
+            }
+
 
 
 

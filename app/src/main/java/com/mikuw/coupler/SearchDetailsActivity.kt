@@ -58,7 +58,6 @@ class SearchDetailsActivity : AppCompatActivity() {
         val et_desc = findViewById<TextView>(R.id.et_search_details_desc)
 
 
-
         // Get the name of the Creator
         if (creatorUid != null) {
             getCreatorName(creatorUid,
@@ -145,13 +144,14 @@ class SearchDetailsActivity : AppCompatActivity() {
         } else {
             callback("") // Invoke the callback with an empty string if the UID is null
         }
-        creatorOptions(creatorUid, title)
+        handleButtonClick(creatorUid, title)
     }
 
-    private fun creatorOptions(creatorUid: String?, title: String?) {
+    private fun handleButtonClick(creatorUid: String?, title: String?) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         val button = findViewById<Button>(R.id.btn_search_details_button)
-
+        val db = FirebaseFirestore.getInstance()
+        val userRef = db.collection("users").document(creatorUid!!)
         if (creatorUid == userId) {
             button.text = "Mark as done"
             button.setOnClickListener {
@@ -164,12 +164,26 @@ class SearchDetailsActivity : AppCompatActivity() {
                     }
                     .setNegativeButton("Cancel", null)
                     .show()
-        }
-    } else{
-        button.text = "Contact $"
-    }}
+            }
+        } else {
+            userRef.get().addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val firstname = documentSnapshot.getString("firstname")
+                    val lastname = documentSnapshot.getString("lastname")
+                    button.text = "Contact $firstname $lastname"
+                }
 
-    private fun markSearchAsDone(creatorUid : String?, title: String?) {
+                button.setOnClickListener {
+                    // ES gibt MessageWriteActivity und MessageAnswerActivity und MessageReadActivity
+                    val intent = Intent(this, MessageWriteActivity::class.java)
+                    intent.putExtra("receiverUid", creatorUid)
+                    startActivity(intent)
+                }
+            }
+        }
+    }
+
+    private fun markSearchAsDone(creatorUid: String?, title: String?) {
         val db = FirebaseFirestore.getInstance()
         val searchesRef = db.collection("searches")
             .whereEqualTo("creator", creatorUid)
@@ -212,7 +226,6 @@ class SearchDetailsActivity : AppCompatActivity() {
     ) {
         val db = FirebaseFirestore.getInstance()
         val userRef = db.collection("users").document(userId)
-        val button = findViewById<Button>(R.id.btn_search_details_button)
 
         userRef.get().addOnSuccessListener { documentSnapshot ->
             if (documentSnapshot.exists()) {
@@ -221,7 +234,6 @@ class SearchDetailsActivity : AppCompatActivity() {
 
                 if (firstname != null && lastname != null) {
                     val fullName = "$firstname $lastname"
-                    button.text = "Contact $fullName"
                     onSuccess(fullName)
                 } else {
                     onFailure(Exception("Firstname or lastname is null"))
@@ -244,7 +256,7 @@ class SearchDetailsActivity : AppCompatActivity() {
                 val image = documentSnapshot.getString("imageUri")
                 if (image != null) {
                     val imageView = findViewById<ImageView>(R.id.iv_search_details_profile_image)
-                    Picasso.get().load(image).resize(40,40).centerCrop().into(imageView)
+                    Picasso.get().load(image).resize(40, 40).centerCrop().into(imageView)
                 }
             }
         }

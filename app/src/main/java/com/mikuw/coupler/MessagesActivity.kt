@@ -6,7 +6,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mikuw.coupler.adapter.MessageAdapter
 import com.mikuw.coupler.data.Datasource_Firebase_Messages
@@ -57,7 +56,7 @@ class MessagesActivity : AppCompatActivity() {
             recyclerView.adapter = MessageAdapter(this, messages).apply {
                 setOnItemClickListener(object : MessageAdapter.OnItemClickListener {
                     override fun onItemClick(message: Message) {
-                        val intent = Intent(this@MessagesActivity, MessageDetailsActivity::class.java)
+                        val intent = Intent(this@MessagesActivity, MessageReadActivity::class.java)
                         intent.putExtra("message", message)
                         startActivity(intent)
                     }
