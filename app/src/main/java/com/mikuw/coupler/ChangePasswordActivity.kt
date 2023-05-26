@@ -15,7 +15,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.acivity_change_password)
+        setContentView(R.layout.activity_change_password)
 
         // Retrieve the ActionBar object
         val actionBar = supportActionBar
