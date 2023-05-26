@@ -60,7 +60,6 @@ class MessagesActivity : AppCompatActivity() {
                         val intent = Intent(this@MessagesActivity, MessageDetailsActivity::class.java)
                         intent.putExtra("message", message)
                         startActivity(intent)
-
                     }
                 })
             }

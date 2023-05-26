@@ -58,6 +58,7 @@ class SearchDetailsActivity : AppCompatActivity() {
         val et_desc = findViewById<TextView>(R.id.et_search_details_desc)
 
 
+
         // Get the name of the Creator
         if (creatorUid != null) {
             getCreatorName(creatorUid,
@@ -84,7 +85,7 @@ class SearchDetailsActivity : AppCompatActivity() {
         et_desc.text = desc
 
         // get docId of the Search
-        getCreatorNameAndImage(creatorUid)
+        getCreatorImage(creatorUid)
         // TEST
         val recyclerView = findViewById<RecyclerView>(R.id.rv_search_details_pets)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -149,8 +150,9 @@ class SearchDetailsActivity : AppCompatActivity() {
 
     private fun creatorOptions(creatorUid: String?, title: String?) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val button = findViewById<Button>(R.id.btn_search_details_button)
+
         if (creatorUid == userId) {
-            val button = findViewById<Button>(R.id.btn_search_details_button)
             button.text = "Mark as done"
             button.setOnClickListener {
                 MaterialAlertDialogBuilder(this)
@@ -163,6 +165,8 @@ class SearchDetailsActivity : AppCompatActivity() {
                     .setNegativeButton("Cancel", null)
                     .show()
         }
+    } else{
+        button.text = "Contact $"
     }}
 
     private fun markSearchAsDone(creatorUid : String?, title: String?) {
@@ -208,6 +212,7 @@ class SearchDetailsActivity : AppCompatActivity() {
     ) {
         val db = FirebaseFirestore.getInstance()
         val userRef = db.collection("users").document(userId)
+        val button = findViewById<Button>(R.id.btn_search_details_button)
 
         userRef.get().addOnSuccessListener { documentSnapshot ->
             if (documentSnapshot.exists()) {
@@ -216,7 +221,7 @@ class SearchDetailsActivity : AppCompatActivity() {
 
                 if (firstname != null && lastname != null) {
                     val fullName = "$firstname $lastname"
-
+                    button.text = "Contact $fullName"
                     onSuccess(fullName)
                 } else {
                     onFailure(Exception("Firstname or lastname is null"))
@@ -229,7 +234,7 @@ class SearchDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCreatorNameAndImage(creatorUid: String?) {
+    private fun getCreatorImage(creatorUid: String?) {
         println("CreatorUid: " + creatorUid)
         val db = FirebaseFirestore.getInstance()
         val userRef = db.collection("users").document(creatorUid ?: "")

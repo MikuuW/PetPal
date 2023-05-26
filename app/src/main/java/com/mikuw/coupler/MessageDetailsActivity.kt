@@ -32,18 +32,27 @@ class MessageDetailsActivity : AppCompatActivity() {
         setupNavigationDrawer(this)
         // WEITER
         val message = intent.getSerializableExtra("message") as? Message
-        val sender = message?.sender
-        val time = message?.timestamp
-        val content = message?.content
 
+
+        if (message != null) {
+            displayMessage(message)
+        }
+
+
+
+    }
+
+    private fun displayMessage(message: Message) {
         //views holen
         val tv_sender = findViewById<TextView>(R.id.tv_msg_details_sender)
         val tv_time = findViewById<TextView>(R.id.tv_msg_details_time)
         val tv_content = findViewById<TextView>(R.id.tv_msg_details_content)
 
-
-
+        tv_sender.text = message.sender
+        tv_time.text = message.timestamp.toString()
+        tv_content.text = message.content
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
             return true
