@@ -57,29 +57,11 @@ class UserRegisterActivity : AppCompatActivity() {
         }
 
         // Variablen zuweisen
-        val email = findViewById<TextView>(R.id.etv_register_email)
-        val firstname = findViewById<TextView>(R.id.etv_register_firstname)
-        val lastname = findViewById<TextView>(R.id.etv_register_lastname)
-        val street = findViewById<TextView>(R.id.etv_register_street)
-        val streetNr = findViewById<TextView>(R.id.etv_register_street_nr)
-        val postalcode = findViewById<TextView>(R.id.etv_register_postalcode)
-        val city = findViewById<TextView>(R.id.etv_register_city)
-        val password = findViewById<TextView>(R.id.etv_register_password)
-        val passwordConfirmation =
-            findViewById<TextView>(R.id.etv_register_passwordConfirmation)
-        val registerButton = findViewById<Button>(R.id.button_register)
 
+        val registerButton = findViewById<Button>(R.id.button_register)
         registerButton.setOnClickListener {
             registerUser(
-                firstname.text.toString(),
-                lastname.text.toString(),
-                street.text.toString(),
-                streetNr.text.toString(),
-                postalcode.text.toString(),
-                city.text.toString(),
-                email.text.toString(),
-                password.text.toString(),
-                passwordConfirmation.text.toString()
+
             )
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -88,16 +70,19 @@ class UserRegisterActivity : AppCompatActivity() {
     }
 
     private fun registerUser(
-        firstname: String,
-        lastname: String,
-        street: String?,
-        streetNr: String?,
-        postalcode: String?,
-        city: String?,
-        email: String,
-        password: String,
-        passwordConfirmation: String
+
     ) {
+        val email = findViewById<TextView>(R.id.etv_register_email).text.toString()
+        val firstname = findViewById<TextView>(R.id.etv_register_firstname).text.toString()
+        val lastname = findViewById<TextView>(R.id.etv_register_lastname).text.toString()
+        val street = findViewById<TextView>(R.id.etv_register_street).text.toString()
+        val streetNr = findViewById<TextView>(R.id.etv_register_street_nr).text.toString()
+        val postalcode = findViewById<TextView>(R.id.etv_register_postalcode).text.toString()
+        val city = findViewById<TextView>(R.id.etv_register_city).text.toString()
+        val password = findViewById<TextView>(R.id.etv_register_password).text.toString()
+        val passwordConfirmation =
+            findViewById<TextView>(R.id.etv_register_passwordConfirmation).text.toString()
+
         val auth = FirebaseAuth.getInstance()
 
         // Wenn ein Feld leer ist oder Passwörter nicht übereinstimmen
@@ -184,17 +169,17 @@ class UserRegisterActivity : AppCompatActivity() {
 
         // Create a new user object with the given email
         uploadImageToFirebaseStorage(firstname, lastname) { imageUri ->
-        val user = hashMapOf(
-            "imageUri" to imageUri,
-            "firstname" to firstname,
-            "lastname" to lastname,
-            "street" to street,
-            "streetNr" to streetNr,
-            "postalcode" to postalcode,
-            "city" to city,
-            "email" to email,
-            "isPetsitter" to false
-        )
+            val user = hashMapOf(
+                "imageUri" to imageUri,
+                "firstname" to firstname,
+                "lastname" to lastname,
+                "street" to street,
+                "streetNr" to streetNr,
+                "postalcode" to postalcode,
+                "city" to city,
+                "email" to email,
+                "isPetsitter" to false
+            )
             db.collection("users")
                 .document(userId)
                 .set(user)
@@ -204,7 +189,7 @@ class UserRegisterActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
                 }
-    }
+        }
 
         // Set the user object to a new document in the "users" collection with the user ID as the document ID
 
@@ -249,6 +234,7 @@ class UserRegisterActivity : AppCompatActivity() {
         }
         builder.show()
     }
+
     private fun setImageFromPicker(data: Intent?) {
         data?.data?.let { imageUri ->
             iv_register_image.setImageURI(imageUri)
@@ -256,6 +242,7 @@ class UserRegisterActivity : AppCompatActivity() {
             println("In SetImageFromPicker: $imageUri")
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -270,12 +257,18 @@ class UserRegisterActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun setImageFromCamera(data: Intent?) {
         data?.extras?.get("data")?.let { imageBitmap ->
             iv_register_image.setImageBitmap(imageBitmap as Bitmap)
         }
     }
-    private fun uploadImageToFirebaseStorage(firstname: String, lastname: String, callback: (Uri?) -> Unit) {
+
+    private fun uploadImageToFirebaseStorage(
+        firstname: String,
+        lastname: String,
+        callback: (Uri?) -> Unit
+    ) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val storageRef = FirebaseStorage.getInstance().reference.child("images_user/")
         val imageName = "$firstname-$lastname.jpg"
