@@ -76,7 +76,7 @@ class PetsitterRegisterActivity : AppCompatActivity() {
                                 setAsPetsitter(uid)
                                 val intent = Intent(this, MainActivity::class.java)
                                 startActivity(intent)
-                                finish() // Optional, to close the current activity
+                                finish()
                             }
                     }
                 }

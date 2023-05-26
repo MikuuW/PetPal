@@ -85,6 +85,7 @@ class PetProfileEditActivity : AppCompatActivity() {
                             Log.d(TAG, "Image uploaded to Firebase Storage")
                             val intent = Intent(this@PetProfileEditActivity, PetsListActivity::class.java)
                             startActivity(intent)
+                            finish()
                         } else {
                             // Image upload failed
                             Log.e(TAG, "Error uploading image to Firebase Storage")

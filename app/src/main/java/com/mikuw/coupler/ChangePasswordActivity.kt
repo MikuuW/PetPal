@@ -69,6 +69,9 @@ class ChangePasswordActivity : AppCompatActivity() {
                     user.updatePassword(tv_password_new)
                         .addOnCompleteListener { passwordUpdateTask ->
                             if (passwordUpdateTask.isSuccessful) {
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
                                 // Password updated successfully
                                 Toast.makeText(
                                     this,

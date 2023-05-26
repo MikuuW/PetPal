@@ -180,6 +180,7 @@ class PetAddActivity : AppCompatActivity() {
                                 Toast.makeText(this, "$name saved", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this, PetsListActivity::class.java)
                                 startActivity(intent)
+                                finish()
                             }
                             .addOnFailureListener { e ->
                                 Log.w(ContentValues.TAG, "Error adding document", e)
@@ -188,9 +189,6 @@ class PetAddActivity : AppCompatActivity() {
                 }
             }
         } else {
-
-            val intent = Intent(this, PetAddActivity::class.java)
-            startActivity(intent)
             Toast.makeText(
                 this,
                 "Pet name or description cannot be empty",

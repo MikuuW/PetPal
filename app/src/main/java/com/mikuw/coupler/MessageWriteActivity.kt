@@ -59,6 +59,7 @@ class MessageWriteActivity : AppCompatActivity() {
             Toast.makeText(this, "Message sent!", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Error sending message!", Toast.LENGTH_SHORT).show()
