@@ -3,8 +3,10 @@ package com.mikuw.coupler
 import Datasource_Firebase_Searches
 import SearchesAdapter
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -15,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.mikuw.coupler.model.Search
 
 class SearchesListActivity : AppCompatActivity() {
@@ -57,10 +60,37 @@ class SearchesListActivity : AppCompatActivity() {
             findViewById(R.id.past_searches_row_header),
             findViewById(R.id.past_searches_icon)
         )
-        // TODO:
-        //  - My Searches
-        //  - Past Searches
-        //  - Solved Pet Sittings
+        handleNotLoggedInUser()
+    }
+
+    private fun handleNotLoggedInUser() {
+        // make visible
+        val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
+        val textView = findViewById<TextView>(R.id.tv_searches_list_not_logged_in)
+        val button = findViewById<TextView>(R.id.btn_searches_list_not_logged_in)
+
+        //make gone
+
+        val title1 = findViewById<TextView>(R.id.my_searches_title)
+        val title2 = findViewById<TextView>(R.id.past_searches_title)
+        val button1 = findViewById<ImageView>(R.id.my_searches_icon)
+        val button2 = findViewById<ImageView>(R.id.past_searches_icon)
+        val layout = findViewById<DrawerLayout>(R.id.tv_edit_image)
+
+
+        if (!isLoggedIn) {
+            layout.setBackgroundColor(Color.parseColor("#b1a7a6"))
+            title1.visibility = TextView.GONE
+            title2.visibility = TextView.GONE
+            button1.visibility = TextView.GONE
+            button2.visibility = TextView.GONE
+            textView.visibility = TextView.VISIBLE
+            button.visibility = TextView.VISIBLE
+            button.setOnClickListener {
+                val intent = Intent(this, UserLoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun setView(recyclerView: RecyclerView, title: LinearLayout, icon: ImageView) {

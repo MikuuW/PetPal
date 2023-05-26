@@ -2,6 +2,7 @@ package com.mikuw.coupler
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -54,6 +55,50 @@ class UserProfileShowActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        handleNotLoggedInUser()
+
+
+    }
+    private fun handleNotLoggedInUser() {
+        // make visible
+        val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
+
+        val textView = findViewById<TextView>(R.id.tv_user_profile_show_not_logged_in)
+        val button = findViewById<Button>(R.id.btn_user_profile_show_not_logged_in)
+
+        val tv_email = findViewById<TextView>(R.id.tv_show_profile_email)
+        val tv_name = findViewById<TextView>(R.id.tv_show_profile_firstname)
+        val tv_street = findViewById<TextView>(R.id.tv_show_profile_street)
+        val tv_city = findViewById<TextView>(R.id.tv_show_profile_postalcode)
+        val tv_desc = findViewById<TextView>(R.id.tv_show_profile_desc)
+        val tv_about_you = findViewById<TextView>(R.id.tv_show_profile_about_you)
+        val btn_edit_profile = findViewById<Button>(R.id.btn_edit_profile)
+        val btn_change_pw = findViewById<Button>(R.id.btn_change_password)
+        val iv_image = findViewById<ImageView>(R.id.iv_profile_show_image)
+        val layout = findViewById<DrawerLayout>(R.id.tv_edit_image)
+
+
+
+        if (!isLoggedIn) {
+            layout.setBackgroundColor(Color.parseColor("#b1a7a6"))
+
+            tv_email.visibility = TextView.GONE
+            tv_name.visibility = TextView.GONE
+            tv_street.visibility = TextView.GONE
+            tv_city.visibility = TextView.GONE
+            tv_desc.visibility = TextView.GONE
+            tv_about_you.visibility = TextView.GONE
+            btn_edit_profile.visibility = TextView.GONE
+            btn_change_pw.visibility = TextView.GONE
+            iv_image.visibility = TextView.GONE
+
+            textView.visibility = TextView.VISIBLE
+            button.visibility = TextView.VISIBLE
+            button.setOnClickListener {
+                val intent = Intent(this, UserLoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun getProfileInformation() {

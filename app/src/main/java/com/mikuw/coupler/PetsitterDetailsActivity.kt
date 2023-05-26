@@ -3,12 +3,14 @@ package com.mikuw.coupler
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mikuw.coupler.model.Petsitter
 import com.mikuw.coupler.model.Search
@@ -52,6 +54,14 @@ class PetsitterDetailsActivity : AppCompatActivity() {
         setValues(name, adress, desc)
         displayImage(imageUri.toString())
         handleButtonClick(email)
+        handleUserNotLoggedIn()
+    }
+
+    private fun handleUserNotLoggedIn() {
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            val btn = findViewById<Button>(R.id.btn_petsitter_details)
+            btn.visibility = Button.GONE
+        }
     }
 
     private fun handleButtonClick(email: String?) {

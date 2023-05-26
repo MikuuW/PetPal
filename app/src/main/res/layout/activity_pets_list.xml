@@ -5,13 +5,12 @@
     android:id="@+id/tv_edit_image"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
-    <FrameLayout
-
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutDescription="@xml/activity_main_scene"
         tools:context=".MainActivity">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -20,9 +19,39 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:scrollbars="vertical"
-            app:layoutManager="LinearLayoutManager"
-            />
-    </FrameLayout>
+            app:layoutManager="LinearLayoutManager" />
+
+        <TextView
+            android:id="@+id/tv_pet_list_not_logged_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="5dp"
+            android:text="In order to access your pets you have to log in"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <Button
+            android:id="@+id/btn_pet_list_not_logged_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Login"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pet_list_not_logged_in" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

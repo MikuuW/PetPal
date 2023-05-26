@@ -3,13 +3,17 @@ package com.mikuw.coupler
 import Datasource_Firebase_Pets
 import ShowPetsAdapter
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.mikuw.coupler.model.Pet
 
 class PetsListActivity : AppCompatActivity() {
@@ -54,8 +58,29 @@ class PetsListActivity : AppCompatActivity() {
 
             recyclerView.setHasFixedSize(true)
         }
+        handleNotLoggedInUser()
     }
 
+    private fun handleNotLoggedInUser() {
+        // make visible
+        val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
+        val textView = findViewById<TextView>(R.id.tv_pet_list_not_logged_in)
+        val button = findViewById<TextView>(R.id.btn_pet_list_not_logged_in)
+        val layout = findViewById<DrawerLayout>(R.id.tv_edit_image)
+
+
+
+        if (!isLoggedIn) {
+            layout.setBackgroundColor(Color.parseColor("#b1a7a6"))
+
+            textView.visibility = TextView.VISIBLE
+            button.visibility = TextView.VISIBLE
+            button.setOnClickListener {
+                val intent = Intent(this, UserLoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {

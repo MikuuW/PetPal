@@ -19,6 +19,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.mikuw.coupler.model.Pet
 import java.text.SimpleDateFormat
 import java.util.*
@@ -119,6 +120,13 @@ class SearchDetailsActivity : AppCompatActivity() {
         }
 
         // TEST ENDE
+        handleUserNotLoggedIn()
+    }
+    private fun handleUserNotLoggedIn() {
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            val btn = findViewById<Button>(R.id.btn_search_details_button)
+            btn.visibility = Button.GONE
+        }
     }
 
     private fun getDocId(creatorUid: String?, title: String?, callback: (String) -> Unit) {
