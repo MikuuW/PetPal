@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -39,7 +40,6 @@ class SearchDetailsActivity : AppCompatActivity() {
         val fromDate = search?.from
         val toDate = search?.to
         val creatorUid = search?.creator
-        val location = search?.location
         val desc = search?.desc
         //TEST BURGER MENU
         val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
@@ -54,24 +54,9 @@ class SearchDetailsActivity : AppCompatActivity() {
         // assign views
         val tv_title = findViewById<TextView>(R.id.tv_search_details_title)
         val tv_date = findViewById<TextView>(R.id.tv_search_details_date)
-        val tv_name = findViewById<TextView>(R.id.iv_search_details_name)
-        val tv_location = findViewById<TextView>(R.id.iv_search_details_location)
+
         val et_desc = findViewById<TextView>(R.id.et_search_details_desc)
 
-
-        // Get the name of the Creator
-        if (creatorUid != null) {
-            getCreatorName(creatorUid,
-                onSuccess = { fullName ->
-                    // Handle successful retrieval of full name
-                    tv_name.text = fullName
-                },
-                onFailure = { exception ->
-                    // Handle failure case
-                    println("Error retrieving user data: ${exception.message}")
-                }
-            )
-        }
 
         // Count Days
         val days = if (fromDate != null && toDate != null) calculateDaysBetweenDates(
@@ -81,7 +66,6 @@ class SearchDetailsActivity : AppCompatActivity() {
         // assign text
         tv_title.text = title
         tv_date.text = formattedDate(fromDate) + " - " + formattedDate(toDate) + " \n$days day(s)"
-        tv_location.text = location
         et_desc.text = desc
 
         // get docId of the Search
@@ -119,9 +103,39 @@ class SearchDetailsActivity : AppCompatActivity() {
             }
         }
 
+        // handleClickOnPetsitter
+        handleSearchCreator(search)
         // TEST ENDE
         handleUserNotLoggedIn()
     }
+
+    private fun handleSearchCreator(search: Search?) {
+        val tv_petsitter_name = findViewById<TextView>(R.id.iv_search_details_name)
+        val tv_petsitter_location = findViewById<TextView>(R.id.iv_search_details_location)
+
+        //Set views
+        tv_petsitter_location.text = search?.location
+
+        // Get the name of the Creator
+        val db = FirebaseFirestore.getInstance()
+        val usersRef = db.collection("users").document(search?.creator.toString())
+
+        usersRef.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists()) {
+                val firstname = documentSnapshot.getString("firstname")
+                val lastname = documentSnapshot.getString("lastname")
+
+                // Use the firstname and lastname variables as needed
+                // For example, you can set the text of a TextView using these values
+                tv_petsitter_name.text = "$firstname $lastname"
+            }
+        }.addOnFailureListener { exception ->
+            // Handle any exceptions that occur
+            Log.e(TAG, "Error getting user document", exception)
+        }
+    }
+
+
     private fun handleUserNotLoggedIn() {
         if (FirebaseAuth.getInstance().currentUser == null) {
             val btn = findViewById<Button>(R.id.btn_search_details_button)
@@ -226,33 +240,6 @@ class SearchDetailsActivity : AppCompatActivity() {
                 // Handle failure
                 Log.e(TAG, "Error searching for search document in Firestore", e)
             }
-    }
-
-    private fun getCreatorName(
-        userId: String,
-        onSuccess: (String) -> Unit,
-        onFailure: (Exception) -> Unit
-    ) {
-        val db = FirebaseFirestore.getInstance()
-        val userRef = db.collection("users").document(userId)
-
-        userRef.get().addOnSuccessListener { documentSnapshot ->
-            if (documentSnapshot.exists()) {
-                val firstname = documentSnapshot.getString("firstname")
-                val lastname = documentSnapshot.getString("lastname")
-
-                if (firstname != null && lastname != null) {
-                    val fullName = "$firstname $lastname"
-                    onSuccess(fullName)
-                } else {
-                    onFailure(Exception("Firstname or lastname is null"))
-                }
-            } else {
-                onFailure(Exception("User document does not exist"))
-            }
-        }.addOnFailureListener { exception ->
-            onFailure(exception)
-        }
     }
 
     private fun getCreatorImage(creatorUid: String?) {

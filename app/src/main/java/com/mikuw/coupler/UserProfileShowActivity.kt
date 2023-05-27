@@ -28,6 +28,7 @@ class UserProfileShowActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.title = "Your Profile"
 
+
         //TEST BURGER MENU
         val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
         val navView: NavigationView = findViewById(R.id.nav_view)
