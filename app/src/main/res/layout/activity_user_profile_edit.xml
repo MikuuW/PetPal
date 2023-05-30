@@ -25,6 +25,7 @@
             android:hint="Description"
             android:inputType="textMultiLine"
             android:textAlignment="textStart"
+            android:textColor="#000000"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -42,6 +43,7 @@
             android:hint="Firstname"
             android:inputType="textNoSuggestions"
             android:textAlignment="viewStart"
+            android:textColor="#000000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_edit_image_button" />
 
@@ -55,6 +57,7 @@
             android:hint="Street"
             android:inputType="textNoSuggestions"
             android:textAlignment="viewStart"
+            android:textColor="#000000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etv_edit_profile_firstname" />
 
@@ -68,6 +71,7 @@
             android:hint="Postalcode"
             android:inputType="number"
             android:textAlignment="viewStart"
+            android:textColor="#000000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etv_edit_profile_street" />
 
@@ -81,6 +85,7 @@
             android:hint="Lastname"
             android:inputType="textNoSuggestions"
             android:textAlignment="viewStart"
+            android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_edit_image_button" />
 
@@ -95,7 +100,8 @@
             android:inputType="number"
             android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etv_edit_profile_lastname" />
+            app:layout_constraintTop_toBottomOf="@+id/etv_edit_profile_lastname"
+            android:textColor="#000000" />
 
         <EditText
             android:id="@+id/etv_edit_profile_city"
@@ -107,6 +113,7 @@
             android:hint="City"
             android:inputType="textNoSuggestions"
             android:textAlignment="viewStart"
+            android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etv_edit_profile_street" />
 
@@ -139,6 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Edit Image"
+            android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
