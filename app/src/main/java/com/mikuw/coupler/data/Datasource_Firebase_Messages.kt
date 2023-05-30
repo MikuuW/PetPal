@@ -21,7 +21,8 @@ class Datasource_Firebase_Messages {
                     val receiver = document.getString("receiver") ?: continue
                     val content = document.getString("content") ?: continue
                     val timestamp = document.getLong("timestamp") ?: continue
-                    val msg = Message(title, sender, receiver, content, timestamp)
+                    val isRead = document.getBoolean("isRead") ?: continue
+                    val msg = Message(title, sender, receiver, content, timestamp, isRead)
                     messages.add(msg)
                 }
                 callback(messages)

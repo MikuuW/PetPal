@@ -1,6 +1,7 @@
 package com.mikuw.coupler.adapter
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,8 +45,10 @@ class MessageAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
 
+        if(!item.isRead) {
+            holder.tv_title.setTypeface(null, Typeface.BOLD)
+        }
         holder.tv_title.text = item.title
-
 
         val timestamp = item.timestamp
         val dateFormat = SimpleDateFormat("EEE, MMM d, yyyy", Locale.getDefault())
@@ -70,6 +73,7 @@ class MessageAdapter(
 
                     // Use the firstname and lastname values
                     // e.g., display them in a TextView
+
                     holder.tv_sender.text = "$firstname $lastname"
                 } else {
                     // Handle the case where the document does not exist
@@ -86,6 +90,7 @@ class MessageAdapter(
             itemClickListener?.onItemClick(item)
         }
     }
+
     interface OnItemClickListener {
         fun onItemClick(message: Message)
     }

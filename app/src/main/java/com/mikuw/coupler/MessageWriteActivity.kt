@@ -51,7 +51,8 @@ class MessageWriteActivity : AppCompatActivity() {
             "sender" to userID,
             "receiver" to receiverUid,
             "content" to tv_content.text.toString(),
-            "timestamp" to System.currentTimeMillis()
+            "timestamp" to System.currentTimeMillis(),
+            "isRead" to false
         )
         db.collection("messages")
             .add(message)

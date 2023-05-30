@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:hint="Title"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textViewSender"
