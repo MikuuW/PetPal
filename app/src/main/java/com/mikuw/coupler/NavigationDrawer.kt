@@ -86,7 +86,10 @@ fun setupNavigationDrawer(activity: Activity) {
             R.id.nav_messages -> {
                 val intent = Intent(activity, MessagesListActivity::class.java)
                 activity.startActivity(intent)
-
+            }
+            R.id.nav_imprint -> {
+                val intent = Intent(activity, ImprintActivity::class.java)
+                activity.startActivity(intent)
             }
         }
         true

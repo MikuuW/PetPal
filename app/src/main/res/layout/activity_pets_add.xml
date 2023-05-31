@@ -47,7 +47,7 @@
             android:layout_marginRight="10dp"
             android:ems="10"
             android:gravity="top|start"
-            android:hint="Tell us something about your petTell us something about your petTell us something about your petTell us something about your petTell us something about your petTell us something about your pet          "
+            android:hint="Tell us something about your pet"
             android:padding="10dp"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"

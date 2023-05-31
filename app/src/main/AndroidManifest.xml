@@ -40,6 +40,7 @@
         <activity android:name=".MessagesListActivity" />
         <activity android:name=".MessageDetailsActivity" />
         <activity android:name=".MessageWriteActivity" />
+        <activity android:name=".ImprintActivity" />
     </application>
 
 </manifest>

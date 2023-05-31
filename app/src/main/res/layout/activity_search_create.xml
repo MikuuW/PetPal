@@ -134,7 +134,7 @@
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:gravity="start|top"
-                android:hint="Tell us more about yourr absence and what you are looking for"
+                android:hint="Tell us more about your absence and what you are looking for"
                 android:inputType="textMultiLine"
                 android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"

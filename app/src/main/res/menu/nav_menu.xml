@@ -28,6 +28,11 @@
         android:id="@+id/nav_messages"
         android:title="Messages" />
 
+    <item
+        android:icon="@drawable/baseline_info_24"
+        android:id="@+id/nav_imprint"
+        android:title="Imprint" />
+
 
 </menu>
 

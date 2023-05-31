@@ -1,20 +1,33 @@
 <resources>
     <string name="app_name">PetPal</string>
-    <string name="affirmation1">I am strong.</string>
-    <string name="affirmation2">I believe in myself.</string>
-    <string name="affirmation3">Each day is a new opportunity to grow and be a better version of myself.</string>
-    <string name="affirmation4">Every challenge in my life is an opportunity to learn from.</string>
-    <string name="affirmation5">I have so much to be grateful for.</string>
-    <string name="affirmation6">Good things are always coming into my life.</string>
-    <string name="affirmation7">New opportunities await me at every turn.</string>
-    <string name="affirmation8">I have the courage to follow my heart.</string>
-    <string name="affirmation9">Things will unfold at precisely the right time.</string>
-    <string name="affirmation10">I will be present in all the moments that this day brings.</string>
-    <string name="affirmation11">I WILL BUILD THIS FUCKING APP AMK</string>
     <string name="open">Open</string>
     <string name="close">Closed</string>
+    <string name="imprint_text">
+<b>PetPal Imprint</b>\n\nThis imprint provides information about the collection and use of personal information in the PetPal app.\n\n Please read this document
+carefully to understand how your personal information is handled.\n\n<b>Data Controller</b>\n The data controller for the PetPal app is Example Company.
+You can contact us at support@example.com for any inquiries or concerns regarding the handling of your personal information.\n\n
+<b>Collection of Personal Information</b>\n
+In the PetPal app, we collect and store the following personal information:\n
+- <b>User Registration</b>: When you register for an account, we collect your email address, name, and any additional information you provide voluntarily.\n
+- <b>User Profile</b>: You have the option to provide additional personal information in your user profile, such as your profile picture, contact details, and a short bio.\n
+\n<b>Use of Personal Information</b>\n
+We use the collected personal information for the following purposes:\n
+- <b>User Authentication</b>: Your email address and password are used for authentication to access your account.\n
+- <b>Account Management</b>: We use your personal information to manage your account, provide personalized features, and communicate with you regarding your account.\n
+- <b>App Functionality</b>: Your personal information may be used to enable certain app features, such as displaying your name or profile picture in the app interface.\n
+\n<b>Data Security</b>\n
+We take appropriate measures to ensure the security and confidentiality of your personal information. This includes implementing industry-standard security practices to protect against unauthorized access, disclosure, or alteration of your personal data.\n
+\n<b>Data Sharing</b>\n
+We do not share your personal information with any third parties without your consent, except as required by law or as necessary to provide the app services.\n
+\n<b>Data Retention</b>\n
+We retain your personal information for as long as necessary to fulfill the purposes outlined in this imprint, unless a longer retention period is required or permitted by law.\n
+\n<b>Your Rights</b>\n
+You have certain rights regarding your personal information, including the right to access, correct, or delete your data. If you wish to exercise any of these rights or have any concerns about the handling of your personal information, please contact us using the contact information provided in this imprint.\n
+    </string>
     <string name="become_petsitter_header1">Who are Petsitters?</string>
     <string name="become_petsitter_text1">Well, Petsitter love Animals and have the opportunity to take care of other peoples pets (e.g. a big and beatiful garden and a lot of time), during their vacation for example.</string>
     <string name="become_petsitter_header2">You feel like you are the perfect petsitter?</string>
     <string name="become_petsitter_text2">Then feel free to register as one here!\n Other people gonna see your profile among other Petsitter! So try to describe yourself as best and precise as possible! Also do not forget to upload an image of yourself</string>
+
+
 </resources>
