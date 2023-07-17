@@ -17,16 +17,6 @@ import com.mikuw.coupler.model.Petsitter
 import com.mikuw.coupler.model.Search
 
 
-//TODO:
-// - Bewertungen für Tiere und Petsitter
-// - Nachrichten schicken / Chat
-// - Searches clickbar mit mehr Infos
-// - Petsitter clickbar mi mehr Infos
-// - Überlegen ob Basis Account und dann ggf.
-//   die Möglichkeit ein Petsitter zu werden
-// - Design
-// - Buttons im BurgerMenu anpassen
-// - Profilbild wenn BurgerMenu aufklappt
 
 
 class MainActivity : AppCompatActivity() {
