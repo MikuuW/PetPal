@@ -20,6 +20,7 @@ import com.mikuw.coupler.model.Search
 // TODO: Doku ins Directory
 // TODO: Video ins Directory
 // TODO: README.md erstellen
+// TODO: 2. Account erstellen und testen und in die Doku+Readme packen, damit man auch Testen kann, sich Nacahrichten zu schicken
 
 class MainActivity : AppCompatActivity() {
 
