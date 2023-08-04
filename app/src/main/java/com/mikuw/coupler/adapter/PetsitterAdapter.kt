@@ -23,6 +23,7 @@ class PetsitterAdapter(
     fun setOnItemClickListener(listener: OnItemClickListener) {
         itemClickListener = listener
     }
+
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val tv_name: TextView = view.findViewById(R.id.tv_petsitter_name)
         val tv_city: TextView = view.findViewById(R.id.tv_petsitter_city)
@@ -58,6 +59,7 @@ class PetsitterAdapter(
             itemClickListener?.onItemClick(item)
         }
     }
+
     interface OnItemClickListener {
         fun onItemClick(petsitter: Petsitter)
     }

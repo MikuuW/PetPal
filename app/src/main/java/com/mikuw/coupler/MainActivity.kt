@@ -17,8 +17,6 @@ import com.mikuw.coupler.model.Petsitter
 import com.mikuw.coupler.model.Search
 
 
-
-
 class MainActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle

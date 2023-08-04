@@ -28,7 +28,6 @@ class PetAddActivity : AppCompatActivity() {
     private lateinit var imageUri: Uri
     lateinit var toggle: ActionBarDrawerToggle
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pets_add)
@@ -55,9 +54,6 @@ class PetAddActivity : AppCompatActivity() {
         val tv_pet_desc = findViewById<android.widget.EditText>(R.id.et_pet_desc)
 
 
-
-
-
         val btn_pet_submit = findViewById<View>(R.id.btn_pet_submit)
         btn_pet_submit.setOnClickListener {
             createPetInFirestore(
@@ -79,7 +75,7 @@ class PetAddActivity : AppCompatActivity() {
     }
 
 
-      fun openImagePicker() {
+    fun openImagePicker() {
         val REQUEST_IMAGE_CAPTURE = 1
         val REQUEST_PICK_IMAGE = 2
 

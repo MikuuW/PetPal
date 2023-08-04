@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
-    android:backgroundTint="#20004b23"
-
     android:background="@drawable/border"
+    android:backgroundTint="#20004b23"
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
 
@@ -29,7 +28,6 @@
         android:layout_height="72dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
-
 
 
 </RelativeLayout>

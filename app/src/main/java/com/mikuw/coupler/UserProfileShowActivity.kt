@@ -60,6 +60,7 @@ class UserProfileShowActivity : AppCompatActivity() {
 
 
     }
+
     private fun handleNotLoggedInUser() {
         // make visible
         val isLoggedIn = FirebaseAuth.getInstance().currentUser != null

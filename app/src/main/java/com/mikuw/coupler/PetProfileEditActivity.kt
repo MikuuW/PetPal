@@ -85,7 +85,8 @@ class PetProfileEditActivity : AppCompatActivity() {
                             // Image upload was successful
                             Log.d(TAG, "Image uploaded to Firebase Storage")
                             Toast.makeText(this, "Pet profile updated", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this@PetProfileEditActivity, PetsListActivity::class.java)
+                            val intent =
+                                Intent(this@PetProfileEditActivity, PetsListActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {
@@ -237,7 +238,6 @@ class PetProfileEditActivity : AppCompatActivity() {
             iv_petProfile_image.setImageBitmap(imageBitmap as Bitmap)
         }
     }
-
 
 
     private fun updateUriInFirestore(name: String?, uri: String?, callback: (Boolean) -> Unit) {

@@ -20,7 +20,19 @@ class Datasource_Firebase_Petsitter {
                     val streetNr = document.getString("streetNr") ?: continue
                     val city = document.getString("city") ?: continue
                     val desc = document.getString("desc") ?: continue
-                    petsitters.add(Petsitter(firstname, lastname, email, imageUri, postalcode, street, streetNr, city, desc ))
+                    petsitters.add(
+                        Petsitter(
+                            firstname,
+                            lastname,
+                            email,
+                            imageUri,
+                            postalcode,
+                            street,
+                            streetNr,
+                            city,
+                            desc
+                        )
+                    )
                 }
                 callback(petsitters)
             }

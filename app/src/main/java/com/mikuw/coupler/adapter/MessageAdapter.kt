@@ -23,6 +23,7 @@ class MessageAdapter(
     fun setOnItemClickListener(listener: OnItemClickListener) {
         itemClickListener = listener
     }
+
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val tv_sender: TextView = view.findViewById(R.id.textViewSender)
         val tv_time: TextView = view.findViewById(R.id.textViewTimestamp)
@@ -45,7 +46,7 @@ class MessageAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
 
-        if(!item.isRead) {
+        if (!item.isRead) {
             holder.tv_title.setTypeface(null, Typeface.BOLD)
         }
         holder.tv_title.text = item.title

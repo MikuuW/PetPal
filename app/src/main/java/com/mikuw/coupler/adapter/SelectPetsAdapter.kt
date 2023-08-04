@@ -51,11 +51,11 @@ class SelectPetsAdapter(
         holder.tv_title.text = item.name
         val uri = item.imageUrl
         // Load image with Picasso
-            Picasso.get()
-                .load(uri)
-                .resize(400, 400)
-                .centerCrop()
-                .into(holder.iv_image)
+        Picasso.get()
+            .load(uri)
+            .resize(400, 400)
+            .centerCrop()
+            .into(holder.iv_image)
 
         holder.itemView.setOnClickListener {
             listener?.onItemClick(item)

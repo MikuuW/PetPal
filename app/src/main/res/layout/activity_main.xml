@@ -1,5 +1,4 @@
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tv_edit_image"
@@ -17,12 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:titleTextColor="@android:color/white"
-            app:title="@string/app_name"
-            app:titleMarginStart="16dp"
-            app:titleMarginEnd="16dp"
-            app:subtitleTextColor="@android:color/white"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:layout_scrollFlags="scroll|enterAlways">
+            app:subtitleTextColor="@android:color/white"
+            app:title="@string/app_name"
+            app:titleMarginEnd="16dp"
+            app:titleMarginStart="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,9 +33,8 @@
                     android:id="@+id/switch_petsitter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Searching for Pet Sitter"
                     android:checked="false"
- />
+                    android:text="Searching for Pet Sitter" />
             </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>

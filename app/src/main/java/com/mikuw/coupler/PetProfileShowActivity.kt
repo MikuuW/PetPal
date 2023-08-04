@@ -72,7 +72,7 @@ class PetProfileShowActivity : AppCompatActivity() {
 
         Picasso.get()
             .load(uri)
-            .resize(400,400)
+            .resize(400, 400)
             .centerCrop()
             .into(iv_petProfile_image)
     }

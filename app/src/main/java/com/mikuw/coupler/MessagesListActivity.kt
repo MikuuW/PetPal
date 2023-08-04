@@ -96,7 +96,7 @@ class MessagesListActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
     }
 
-    fun markMessageAsRead( messageContent: String) {
+    fun markMessageAsRead(messageContent: String) {
         val db = FirebaseFirestore.getInstance()
         val collectionRef = db.collection("messages")
         val uid = FirebaseAuth.getInstance().currentUser?.uid
@@ -130,7 +130,6 @@ class MessagesListActivity : AppCompatActivity() {
                 Log.e(TAG, "Error querying messages", e)
             }
     }
-
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

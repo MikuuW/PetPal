@@ -26,14 +26,11 @@ fun setupNavigationDrawer(activity: Activity) {
 
     activity.actionBar?.setDisplayHomeAsUpEnabled(true)
 
-
     val btn_home = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_home)
     val btn_register = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_register)
     val btn_settings = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_settings)
 
     //hide the textview test if no on is logged in
-
-
 
 
     btn_home.setOnClickListener() {
@@ -42,7 +39,7 @@ fun setupNavigationDrawer(activity: Activity) {
     }
 
     btn_register.setOnClickListener() {
-        if(FirebaseAuth.getInstance().currentUser != null) {
+        if (FirebaseAuth.getInstance().currentUser != null) {
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(activity, MainActivity::class.java)
             activity.startActivity(intent)
@@ -103,13 +100,12 @@ fun handleNotLoggedInUser(navView: NavigationView) {
     val tv_show_name = navView.getHeaderView(0).findViewById<TextView>(R.id.nav_header_name)
 
 
-
     val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
-    if(isLoggedIn) {
+    if (isLoggedIn) {
         btn_register.setImageResource(R.drawable.baseline_logout_24)
     } else {
-            tv_show_name.text = "PetPal"
-            tv_show_name.textSize = 30F
+        tv_show_name.text = "PetPal"
+        tv_show_name.textSize = 30F
 
         val navCreatePet = navView.menu.findItem(R.id.nav_add_pets)
         navCreatePet?.isVisible = false

@@ -333,7 +333,8 @@ class UserProfileEditActivity : AppCompatActivity() {
     }
 
     private fun uploadToStorageAndUpdateFirestore(callback: (Uri?) -> Unit) {
-        val firstname = findViewById<TextView>(R.id.etv_edit_profile_firstname).text.toString().trim()
+        val firstname =
+            findViewById<TextView>(R.id.etv_edit_profile_firstname).text.toString().trim()
         val lastname = findViewById<TextView>(R.id.etv_edit_profile_lastname).text.toString().trim()
 
         uploadImageToFirebaseStorage(firstname, lastname) { uri ->

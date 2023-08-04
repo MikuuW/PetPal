@@ -42,8 +42,10 @@ class SearchesAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
         holder.tv_title.text = item.title
-        holder.tv_date.text = item.formattedDate(item.from!!) + " - " + item.formattedDate(item.to!!)
-        holder.tv_date_days.text = calculateDaysBetweenDates(item.from!!, item.to!!).toString() + " days"
+        holder.tv_date.text =
+            item.formattedDate(item.from!!) + " - " + item.formattedDate(item.to!!)
+        holder.tv_date_days.text =
+            calculateDaysBetweenDates(item.from!!, item.to!!).toString() + " days"
         holder.tv_location.text = item.location
 
 

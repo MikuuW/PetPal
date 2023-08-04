@@ -88,7 +88,6 @@ class UserRegisterActivity : AppCompatActivity() {
     }
 
 
-
     private fun registerUser() {
         val email = findViewById<TextView>(R.id.etv_register_email).text.toString()
         val firstname = findViewById<TextView>(R.id.etv_register_firstname).text.toString()
@@ -104,8 +103,18 @@ class UserRegisterActivity : AppCompatActivity() {
         // Get reference to the AGB checkbox
         val agbCheckBox = findViewById<CheckBox>(R.id.cb_agb)
 
-        if (!isRegistrationDataValid(email, password, passwordConfirmation, agbCheckBox.isChecked)) {
-            Toast.makeText(this, "Please fill all the fields and make sure passwords match and AGBs are accepted.", Toast.LENGTH_SHORT).show()
+        if (!isRegistrationDataValid(
+                email,
+                password,
+                passwordConfirmation,
+                agbCheckBox.isChecked
+            )
+        ) {
+            Toast.makeText(
+                this,
+                "Please fill all the fields and make sure passwords match and AGBs are accepted.",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 

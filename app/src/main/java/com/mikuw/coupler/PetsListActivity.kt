@@ -49,7 +49,8 @@ class PetsListActivity : AppCompatActivity() {
             recyclerView.adapter = ShowPetsAdapter(this, pets).apply {
                 setOnItemClickListener(object : ShowPetsAdapter.OnItemClickListener {
                     override fun onItemClick(pet: Pet) {
-                        val intent = Intent(this@PetsListActivity, PetProfileShowActivity::class.java)
+                        val intent =
+                            Intent(this@PetsListActivity, PetProfileShowActivity::class.java)
                         intent.putExtra("pet", pet)
                         startActivity(intent)
                     }

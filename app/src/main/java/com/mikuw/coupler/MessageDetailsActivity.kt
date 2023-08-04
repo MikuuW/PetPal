@@ -57,8 +57,7 @@ class MessageDetailsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        }
-
+    }
 
 
     private fun displayMessage(message: Message) {
