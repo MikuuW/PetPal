@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config>
+        <device id="_device_class_phone" />
+      </config>
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3436679c-b523-43aa-a859-7e12a19bb0ee" name="Changes" comment="refactor: code formatting">
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/mikuw/coupler/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/mikuw/coupler/MainActivity.kt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/home/miku/.android/avd/Pixel_3_API_29.avd]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Data Class" />
+        <option value="Kotlin File" />
+        <option value="Class" />
+        <option value="resourceFile" />
+        <option value="layoutResourceFile" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIEW_PUSH_PROTECTED_ONLY" value="true" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2OdkkcysdybOUgNDDndavdesfLh" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "PROJECT_TRUSTED_KEY": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "last_directory_selection": "/home/miku/AndroidStudioProjects/Coupler/app/src/main/res/drawable",
+    "last_opened_file_path": "/home/miku/AndroidStudioProjects/Coupler/app/src/main/res/drawable",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/drawable-v24" />
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/mikuw/coupler/model" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/menu" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout/list_items" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout/NavigationDrawer" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/menu" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.mikuw.PetPal" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.mikuw.coupler" />
+      <recent name="com.mikuw.coupler.adapter" />
+      <recent name="com.mikuw.coupler.data" />
+      <recent name="com.mikuw.coupler.navigationDrawer" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Android App.app">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="Coupler.app.main" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExampleInstrumentedTest" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="Coupler.app.androidTest" />
+      <option name="TESTING_TYPE" value="2" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="com.mikuw.coupler.ExampleInstrumentedTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_NAME_REGEX" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="RETENTION_ENABLED" value="No" />
+      <option name="RETENTION_MAX_SNAPSHOTS" value="2" />
+      <option name="RETENTION_COMPRESS_SNAPSHOTS" value="false" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserLoginActivityTest (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;UserLoginActivityTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserLoginActivityTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;com.mikuw.coupler.UserLoginActivityTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserRegisterActivityTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;UserRegisterActivityTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.UserRegisterActivityTest" />
+        <item itemvalue="Gradle.UserLoginActivityTest (1)" />
+        <item itemvalue="Gradle.UserLoginActivityTest" />
+        <item itemvalue="Android Instrumented Tests.ExampleInstrumentedTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3436679c-b523-43aa-a859-7e12a19bb0ee" name="Changes" comment="" />
+      <created>1681897991863</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681897991863</updated>
+    </task>
+    <task id="LOCAL-00063" summary="remove animal type">
+      <created>1684911848211</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1684911848211</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Ich kann jetzt in User Edit Profile das Bild updaten und die Werte ohne das irgendwas verloren geht">
+      <created>1684920893399</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1684920893399</updated>
+    </task>
+    <task id="LOCAL-00065" summary="updated petsitter adapter with images">
+      <created>1684924441605</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1684924441606</updated>
+    </task>
+    <task id="LOCAL-00066" summary="updated petsitter adapter with images">
+      <created>1684925206540</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1684925206540</updated>
+    </task>
+    <task id="LOCAL-00067" summary="Button for edit Pet profile only visible when ownerID == currentUserId">
+      <created>1684925727256</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1684925727257</updated>
+    </task>
+    <task id="LOCAL-00068" summary="Button for edit Pet profile only visible when ownerID == currentUserId">
+      <created>1684925757777</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1684925757777</updated>
+    </task>
+    <task id="LOCAL-00069" summary="Safe Point before PetsitterDetailsActivity.kt">
+      <created>1684926588515</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1684926588515</updated>
+    </task>
+    <task id="LOCAL-00070" summary="Clickable Recyclerview  in MainActivity.kt for the Petsitters">
+      <created>1684926932915</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1684926932915</updated>
+    </task>
+    <task id="LOCAL-00071" summary="Safe Point">
+      <created>1684929843466</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1684929843467</updated>
+    </task>
+    <task id="LOCAL-00072" summary="User und Petsitter Update/Edit sollte gleichzeitig funktionieren jetzt">
+      <created>1684937547092</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1684937547092</updated>
+    </task>
+    <task id="LOCAL-00073" summary="Safe Point: Start implementing MySearchesActivity.kt">
+      <created>1684951281746</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1684951281746</updated>
+    </task>
+    <task id="LOCAL-00074" summary="MySearches and PastSearches">
+      <created>1684995398262</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1684995398263</updated>
+    </task>
+    <task id="LOCAL-00075" summary="MySearches and PastSearches">
+      <created>1684995457803</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1684995457803</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Show Dialog if the user really want to mark the search as done">
+      <created>1684996488705</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1684996488705</updated>
+    </task>
+    <task id="LOCAL-00077" summary="Update Pet Image in PetProfileEditActivity.kt">
+      <created>1684999698048</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1684999698048</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Nur Searches in Main die nicht als isDone markiert sind">
+      <created>1684999964473</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1684999964473</updated>
+    </task>
+    <task id="LOCAL-00079" summary="Renamed.. and Safe Point before Chat">
+      <created>1685005163495</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1685005163496</updated>
+    </task>
+    <task id="LOCAL-00080" summary="Renamed.. and Safe Point before Chat">
+      <created>1685005171220</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1685005171220</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Renamed.. and Safe Point before Chat">
+      <created>1685005213155</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1685005213155</updated>
+    </task>
+    <task id="LOCAL-00082" summary="add: Chat - ich bekomme jetzt die Dokumente aus firestore messages in MessageActivity angezeigt">
+      <created>1685008829739</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1685008829739</updated>
+    </task>
+    <task id="LOCAL-00083" summary="add: Chat - ich bekomme jetzt die Dokumente aus firestore messages in MessageActivity angezeigt (fixed) Mit dem selben Code im Adapter wie bei den anderen">
+      <created>1685040650520</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1685040650521</updated>
+    </task>
+    <task id="LOCAL-00084" summary="add: Safe Point - Nachrichten werden im RV angezeigt und sind clickbar (Objekt wird auch übergeben)">
+      <created>1685081341762</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1685081341762</updated>
+    </task>
+    <task id="LOCAL-00085" summary="add: Safe Point - Nachrichten werden verschickt und können auch gelesen werden!">
+      <created>1685084920361</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1685084920361</updated>
+    </task>
+    <task id="LOCAL-00086" summary="add: UserProfileEditActivity.kt - es wird jetzt gewartet bis der upload und das update fertig ist">
+      <created>1685085530973</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1685085530974</updated>
+    </task>
+    <task id="LOCAL-00087" summary="add: Some refactoring">
+      <created>1685087838226</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1685087838226</updated>
+    </task>
+    <task id="LOCAL-00088" summary="add: Some refactoring&#10;- go to next activity after upload PetProfileEditActivity.kt">
+      <created>1685089350281</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1685089350282</updated>
+    </task>
+    <task id="LOCAL-00089" summary="add: Some refactoring">
+      <created>1685089668852</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1685089668852</updated>
+    </task>
+    <task id="LOCAL-00090" summary="add: Some refactoring">
+      <created>1685089917223</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1685089917223</updated>
+    </task>
+    <task id="LOCAL-00091" summary="add: Some refactoring">
+      <created>1685090341969</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1685090341969</updated>
+    </task>
+    <task id="LOCAL-00092" summary="add: Some refactoring">
+      <created>1685092130023</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1685092130023</updated>
+    </task>
+    <task id="LOCAL-00093" summary="add: Contact Request at PetsitterDetailsActivity.kt">
+      <created>1685095312901</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1685095312901</updated>
+    </task>
+    <task id="LOCAL-00094" summary="add: Antwort Möglichkeit amk">
+      <created>1685096084992</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1685096084992</updated>
+    </task>
+    <task id="LOCAL-00095" summary="add: Antwort Möglichkeit amk">
+      <created>1685096113527</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1685096113527</updated>
+    </task>
+    <task id="LOCAL-00096" summary="mal die zugänge so gemacht, dass die buttons verschwinden wenn man nicht eingeloggt ist und manche seiten werden angezeigt aber man wird zum login aufgefordert">
+      <created>1685100442804</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1685100442805</updated>
+    </task>
+    <task id="LOCAL-00097" summary="fix: handleNotLoggedIn User gefixxed auf UserShowProfile">
+      <created>1685173803083</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1685173803083</updated>
+    </task>
+    <task id="LOCAL-00098" summary="fix: Buttons bei UserProfileShow und AnswerButton">
+      <created>1685173892124</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1685173892124</updated>
+    </task>
+    <task id="LOCAL-00099" summary="fix: Buttons bei UserProfileShow und AnswerButton">
+      <created>1685175437863</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1685175437863</updated>
+    </task>
+    <task id="LOCAL-00100" summary="Nachrichten werden jetzt auch als gelesen markiert und sind dann normal, statt bold bei ungelesenen">
+      <created>1685449640862</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1685449640863</updated>
+    </task>
+    <task id="LOCAL-00101" summary="Nachrichten werden jetzt auch als gelesen markiert und sind dann normal, statt bold bei ungelesenen">
+      <created>1685455433106</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1685455433107</updated>
+    </task>
+    <task id="LOCAL-00102" summary="Nachrichten werden jetzt auch als gelesen markiert und sind dann normal, statt bold bei ungelesenen">
+      <created>1685455453442</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1685455453442</updated>
+    </task>
+    <task id="LOCAL-00103" summary="Nachrichten werden jetzt auch als gelesen markiert und sind dann normal, statt bold bei ungelesenen">
+      <created>1685455591888</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1685455591888</updated>
+    </task>
+    <task id="LOCAL-00104" summary="design">
+      <created>1685455752335</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1685455752335</updated>
+    </task>
+    <task id="LOCAL-00105" summary="design (Launcher Icon, Themes, Buttons bei UserProfileEdit und paar Kleinigkeiten)">
+      <created>1685556797852</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1685556797853</updated>
+    </task>
+    <task id="LOCAL-00106" summary="new update: refactoring">
+      <created>1691160444002</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1691160444002</updated>
+    </task>
+    <task id="LOCAL-00107" summary="add: Unit Tests for UserRegisterActivity.kt">
+      <created>1691163263451</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1691163263451</updated>
+    </task>
+    <task id="LOCAL-00108" summary="refactor: code formatting">
+      <created>1691168505551</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1691168505551</updated>
+    </task>
+    <task id="LOCAL-00109" summary="removed: unused navview; refactor: comments">
+      <created>1691168871555</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1691168871555</updated>
+    </task>
+    <task id="LOCAL-00110" summary="refactor: code">
+      <created>1691169537426</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1691169537426</updated>
+    </task>
+    <task id="LOCAL-00111" summary="refactor: code formatting">
+      <created>1691170013304</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1691170013305</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="MySearches and PastSearches" />
+    <MESSAGE value="Show Dialog if the user really want to mark the search as done" />
+    <MESSAGE value="Update Pet Image in PetProfileEditActivity.kt" />
+    <MESSAGE value="Nur Searches in Main die nicht als isDone markiert sind" />
+    <MESSAGE value="Renamed.. and Safe Point before Chat" />
+    <MESSAGE value="add: Chat - ich bekomme jetzt die Dokumente aus firestore messages in MessageActivity angezeigt" />
+    <MESSAGE value="add: Chat - ich bekomme jetzt die Dokumente aus firestore messages in MessageActivity angezeigt (fixed) Mit dem selben Code im Adapter wie bei den anderen" />
+    <MESSAGE value="add: Safe Point - Nachrichten werden im RV angezeigt und sind clickbar (Objekt wird auch übergeben)" />
+    <MESSAGE value="add: Safe Point - Nachrichten werden verschickt und können auch gelesen werden!" />
+    <MESSAGE value="add: UserProfileEditActivity.kt - es wird jetzt gewartet bis der upload und das update fertig ist" />
+    <MESSAGE value="add: Some refactoring&#10;- go to next activity after upload PetProfileEditActivity.kt" />
+    <MESSAGE value="add: Some refactoring" />
+    <MESSAGE value="add: Contact Request at PetsitterDetailsActivity.kt" />
+    <MESSAGE value="add: Antwort Möglichkeit amk" />
+    <MESSAGE value="mal die zugänge so gemacht, dass die buttons verschwinden wenn man nicht eingeloggt ist und manche seiten werden angezeigt aber man wird zum login aufgefordert" />
+    <MESSAGE value="fix: handleNotLoggedIn User gefixxed auf UserShowProfile" />
+    <MESSAGE value="fix: Buttons bei UserProfileShow und AnswerButton" />
+    <MESSAGE value="Nachrichten werden jetzt auch als gelesen markiert und sind dann normal, statt bold bei ungelesenen" />
+    <MESSAGE value="design" />
+    <MESSAGE value="design (Launcher Icon, Themes, Buttons bei UserProfileEdit und paar Kleinigkeiten)" />
+    <MESSAGE value="new update: refactoring" />
+    <MESSAGE value="add: Unit Tests for UserRegisterActivity.kt" />
+    <MESSAGE value="removed: unused navview; refactor: comments" />
+    <MESSAGE value="refactor: code" />
+    <MESSAGE value="refactor: code formatting" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: code formatting" />
+  </component>
+</project>
