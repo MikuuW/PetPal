@@ -16,6 +16,7 @@ import com.mikuw.coupler.model.Petsitter
 import com.mikuw.coupler.model.Search
 
 // TODO: Alle Files durchgehen, und Empty Spaces entfernen und Code+Comments aufräumen
+// TODO: Tests in die Doku packen
 class MainActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
