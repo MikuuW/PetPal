@@ -201,7 +201,6 @@ class PetProfileEditActivity : AppCompatActivity() {
                     }
                 }
                 options[item] == "Delete" -> {
-                    // TODO: Implement delete
                 }
                 options[item] == "Cancel" -> {
                     dialog.dismiss()

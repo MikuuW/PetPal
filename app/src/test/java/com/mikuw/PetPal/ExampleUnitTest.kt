@@ -1,4 +1,4 @@
-package com.mikuw.coupler
+package com.mikuw.PetPal
 
 import org.junit.Test
 

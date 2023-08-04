@@ -1,4 +1,4 @@
-package com.mikuw.coupler
+package com.mikuw.PetPal
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
