@@ -3,7 +3,6 @@ package com.mikuw.coupler
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,13 +16,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.model.Pet
 import com.squareup.picasso.Picasso
-import java.io.File
 
 class PetProfileEditActivity : AppCompatActivity() {
     private val REQUEST_IMAGE_CAPTURE = 1

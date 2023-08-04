@@ -1,13 +1,6 @@
-// NavigationDrawer.kt
-
 package com.mikuw.coupler
-
 import android.app.Activity
-import android.content.ContentValues
 import android.content.Intent
-import android.util.Log
-import android.view.View
-import android.view.View.GONE
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -30,12 +23,12 @@ fun setupNavigationDrawer(activity: Activity) {
     val btn_register = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_register)
     val btn_settings = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_settings)
 
-    btn_home.setOnClickListener() {
+    btn_home.setOnClickListener {
         val intent = Intent(activity, MainActivity::class.java)
         activity.startActivity(intent)
     }
 
-    btn_register.setOnClickListener() {
+    btn_register.setOnClickListener {
         if (FirebaseAuth.getInstance().currentUser != null) {
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(activity, MainActivity::class.java)
@@ -47,7 +40,7 @@ fun setupNavigationDrawer(activity: Activity) {
 
     }
 
-    btn_settings.setOnClickListener() {
+    btn_settings.setOnClickListener {
         val intent = Intent(activity, UserProfileShowActivity::class.java)
         activity.startActivity(intent)
     }
@@ -134,7 +127,7 @@ fun getUserNameAndEmail(navView: NavigationView) {
             val email = document.getString("email")
             val firstname = document.getString("firstname")
             val lastname = document.getString("lastname")
-            val name = firstname + " " + lastname
+            val name = "$firstname $lastname"
             // do something with the retrieved data
             tv_show_name.text = name
             tv_show_email.text = email

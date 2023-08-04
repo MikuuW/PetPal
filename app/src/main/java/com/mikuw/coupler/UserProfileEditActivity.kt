@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,7 +16,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -105,14 +103,14 @@ class UserProfileEditActivity : AppCompatActivity() {
         val userRef = db.collection("users").document(currentUser.uid)
 
 
-        var etv_edit_firstname = findViewById<TextView>(R.id.etv_edit_profile_firstname)
-        var etv_edit_lastname = findViewById<TextView>(R.id.etv_edit_profile_lastname)
-        var iv_profile_edit_image = findViewById<ImageView>(R.id.iv_profile_edit_image)
-        var etv_edit_street = findViewById<TextView>(R.id.etv_edit_profile_street)
-        var etv_edit_street_nr = findViewById<TextView>(R.id.etv_edit_profile_street_nr)
-        var etv_edit_postalcode = findViewById<TextView>(R.id.etv_edit_profile_postalcode)
-        var etv_edit_city = findViewById<TextView>(R.id.etv_edit_profile_city)
-        var etv_edit_desc = findViewById<TextView>(R.id.tv_profile_edit_desc)
+        val etv_edit_firstname = findViewById<TextView>(R.id.etv_edit_profile_firstname)
+        val etv_edit_lastname = findViewById<TextView>(R.id.etv_edit_profile_lastname)
+        val iv_profile_edit_image = findViewById<ImageView>(R.id.iv_profile_edit_image)
+        val etv_edit_street = findViewById<TextView>(R.id.etv_edit_profile_street)
+        val etv_edit_street_nr = findViewById<TextView>(R.id.etv_edit_profile_street_nr)
+        val etv_edit_postalcode = findViewById<TextView>(R.id.etv_edit_profile_postalcode)
+        val etv_edit_city = findViewById<TextView>(R.id.etv_edit_profile_city)
+        val etv_edit_desc = findViewById<TextView>(R.id.tv_profile_edit_desc)
 
 
         userRef.get().addOnSuccessListener { document ->

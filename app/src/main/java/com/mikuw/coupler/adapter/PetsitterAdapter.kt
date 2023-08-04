@@ -5,13 +5,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.R
 import com.mikuw.coupler.model.Petsitter
-import com.mikuw.coupler.model.Search
 import com.squareup.picasso.Picasso
-import java.util.*
-import java.util.concurrent.TimeUnit
 
 class PetsitterAdapter(
     private val context: Context,

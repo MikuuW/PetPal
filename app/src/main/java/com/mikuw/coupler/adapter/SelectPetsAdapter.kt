@@ -6,7 +6,6 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.R
 import com.mikuw.coupler.model.Pet
 import com.squareup.picasso.Picasso

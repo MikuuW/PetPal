@@ -123,15 +123,15 @@ class UserProfileShowActivity : AppCompatActivity() {
                 val firstname = document.getString("firstname")
                 val lastname = document.getString("lastname")
                 val imageUri = document.getString("imageUri")
-                var street = document.getString("street")
-                var streetNr = document.getString("streetNr")
-                var postalcode = document.getString("postalcode")
-                var city = document.getString("city")
+                val street = document.getString("street")
+                val streetNr = document.getString("streetNr")
+                val postalcode = document.getString("postalcode")
+                val city = document.getString("city")
                 val email = document.getString("email")
                 val desc = document.getString("desc")
 
                 // do something with the retrieved data
-                tv_show_firstname.text = firstname + " " + lastname
+                tv_show_firstname.text = "$firstname $lastname"
                 tv_show_street.text = street + " " + streetNr
                 tv_show_postalcode.text = postalcode + " " + city
                 tv_show_email.text = email
