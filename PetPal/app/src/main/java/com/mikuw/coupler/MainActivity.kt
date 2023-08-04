@@ -19,6 +19,7 @@ import com.mikuw.coupler.model.Search
 // TODO: Tests in die Doku packen
 // TODO: Doku ins Directory
 // TODO: Video ins Directory
+// TODO: README.md erstellen
 
 class MainActivity : AppCompatActivity() {
 
