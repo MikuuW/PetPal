@@ -15,7 +15,7 @@ class ImprintActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.title = "Imprint"
 
-        //TEST BURGER MENU
+        // BURGER MENU / NAVIGATION DRAWER
         val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)

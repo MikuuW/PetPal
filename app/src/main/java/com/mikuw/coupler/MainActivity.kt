@@ -25,9 +25,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //TEST BURGER MENU
+        // BURGER MENU / NAVIGATION DRAWER
         val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
-        val navView: NavigationView = findViewById(R.id.nav_view)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
@@ -36,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupNavigationDrawer(this)
-        //TEST BURGER MENU
 
         // Retrieve the ActionBar object
         val actionBar = supportActionBar

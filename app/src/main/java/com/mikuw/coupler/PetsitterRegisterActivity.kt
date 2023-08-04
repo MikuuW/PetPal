@@ -22,8 +22,8 @@ class PetsitterRegisterActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.title = "Become a Petsitter"
 
+        // BURGER MENU / NAVIGATION DRAWER
         val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
-        val navView: NavigationView = findViewById(R.id.nav_view)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
@@ -32,8 +32,6 @@ class PetsitterRegisterActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupNavigationDrawer(this)
-
-        // Ab here
 
         val btn = findViewById<Button>(R.id.btn_become_petsitter_submit)
 

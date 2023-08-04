@@ -26,9 +26,8 @@ class PetProfileShowActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pet_profile_show)
 
-        //BURGER MENU
+        // BURGER MENU / NAVIGATION DRAWER
         val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
-        val navView: NavigationView = findViewById(R.id.nav_view)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()

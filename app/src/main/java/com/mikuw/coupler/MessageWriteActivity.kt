@@ -23,7 +23,8 @@ class MessageWriteActivity : AppCompatActivity() {
         // Retrieve the ActionBar object
         val actionBar = supportActionBar
         actionBar?.title = "Write Message"
-        //TEST BURGER MENU
+
+        // BURGER MENU / NAVIGATION DRAWER
         val drawerLayout: DrawerLayout = findViewById(R.id.tv_edit_image)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
@@ -31,7 +32,6 @@ class MessageWriteActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupNavigationDrawer(this)
 
-        //WEITER
         val receiverUid = intent.getStringExtra("receiverUid")
         val title = intent.getStringExtra("title")
         val button_send_message = findViewById<Button>(R.id.btn_send_message)

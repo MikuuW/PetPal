@@ -30,9 +30,6 @@ fun setupNavigationDrawer(activity: Activity) {
     val btn_register = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_register)
     val btn_settings = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_settings)
 
-    //hide the textview test if no on is logged in
-
-
     btn_home.setOnClickListener() {
         val intent = Intent(activity, MainActivity::class.java)
         activity.startActivity(intent)
