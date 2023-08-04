@@ -1,7 +1,7 @@
 package com.mikuw.coupler
 
-import Datasource_Firebase_Pets
-import ShowPetsAdapter
+import com.mikuw.coupler.data.Datasource_Firebase_Pets
+import com.mikuw.coupler.adapter.ShowPetsAdapter
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle

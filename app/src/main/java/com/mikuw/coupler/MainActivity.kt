@@ -1,8 +1,8 @@
 package com.mikuw.coupler
 
-import Datasource_Firebase_Searches
-import SearchesAdapter
-import PetsitterAdapter
+import com.mikuw.coupler.data.Datasource_Firebase_Searches
+import com.mikuw.coupler.adapter.SearchesAdapter
+import com.mikuw.coupler.adapter.PetsitterAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -10,13 +10,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.mikuw.coupler.data.Datasource_Firebase_Petsitter
 import com.mikuw.coupler.model.Petsitter
 import com.mikuw.coupler.model.Search
 
-
+// TODO: Alle Files durchgehen, und Empty Spaces entfernen und Code+Comments aufräumen
 class MainActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle

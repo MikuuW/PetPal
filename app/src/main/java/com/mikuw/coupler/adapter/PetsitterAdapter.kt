@@ -1,3 +1,5 @@
+package com.mikuw.coupler.adapter
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -33,29 +35,24 @@ class PetsitterAdapter(
         return ItemViewHolder(adapterLayout)
     }
 
-
     override fun getItemCount(): Int {
         return dataset.size
     }
-
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
         val fullname = item.firstname + " " + item.lastname
         holder.tv_name.text = fullname
         holder.tv_city.text = item.city
-
         Picasso.get()
             .load(item.imageUri)
             .resize(200, 200)
             .centerCrop()
             .into(holder.iv_image)
-
         holder.itemView.setOnClickListener {
             itemClickListener?.onItemClick(item)
         }
     }
-
     interface OnItemClickListener {
         fun onItemClick(petsitter: Petsitter)
     }

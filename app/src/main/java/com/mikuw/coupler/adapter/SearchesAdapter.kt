@@ -1,3 +1,5 @@
+package com.mikuw.coupler.adapter
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +33,6 @@ class SearchesAdapter(
         // create a new view
         val adapterLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item_search, parent, false)
-
         return ItemViewHolder(adapterLayout)
     }
 
@@ -47,8 +48,6 @@ class SearchesAdapter(
         holder.tv_date_days.text =
             calculateDaysBetweenDates(item.from!!, item.to!!).toString() + " days"
         holder.tv_location.text = item.location
-
-
         holder.itemView.setOnClickListener {
             itemClickListener?.onItemClick(item)
         }

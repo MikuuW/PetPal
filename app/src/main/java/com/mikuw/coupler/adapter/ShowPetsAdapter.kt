@@ -1,3 +1,5 @@
+package com.mikuw.coupler.adapter
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -5,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.storage.FirebaseStorage
 import com.mikuw.coupler.R
 import com.mikuw.coupler.model.Pet
 import com.squareup.picasso.Picasso
@@ -33,7 +34,6 @@ class ShowPetsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout =
             LayoutInflater.from(parent.context).inflate(R.layout.list_item_pets_show, parent, false)
-
         return ItemViewHolder(adapterLayout)
     }
 
@@ -44,7 +44,6 @@ class ShowPetsAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
         holder.tv_title.text = item.name
-
         // Load image with Picasso
         if (item.imageUrl.isNotEmpty()) {
             Picasso.get()
@@ -53,10 +52,8 @@ class ShowPetsAdapter(
                 .centerCrop()
                 .into(holder.iv_image)
         }
-
         holder.itemView.setOnClickListener {
             listener?.onItemClick(item)
         }
     }
-
 }

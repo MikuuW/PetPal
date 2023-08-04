@@ -1,3 +1,5 @@
+package com.mikuw.coupler.data
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mikuw.coupler.model.Pet

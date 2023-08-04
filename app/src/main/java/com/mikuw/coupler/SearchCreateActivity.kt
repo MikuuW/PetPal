@@ -1,7 +1,7 @@
 package com.mikuw.coupler
 
-import Datasource_Firebase_Pets
-import SelectPetsAdapter
+import com.mikuw.coupler.data.Datasource_Firebase_Pets
+import com.mikuw.coupler.adapter.SelectPetsAdapter
 import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Intent
@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mikuw.coupler.model.Pet

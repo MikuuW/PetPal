@@ -6,10 +6,8 @@ import com.mikuw.coupler.model.Message
 
 class Datasource_Firebase_Messages {
     private val db = FirebaseFirestore.getInstance()
-
     fun loadMessages(callback: (List<Message>) -> Unit) {
         val currentUser = FirebaseAuth.getInstance().currentUser
-
         db.collection("messages")
             .whereEqualTo("receiver", currentUser?.uid)
             .get()
@@ -28,5 +26,4 @@ class Datasource_Firebase_Messages {
                 callback(messages)
             }
     }
-
 }

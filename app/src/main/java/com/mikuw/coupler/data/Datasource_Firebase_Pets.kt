@@ -1,3 +1,5 @@
+package com.mikuw.coupler.data
+
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth

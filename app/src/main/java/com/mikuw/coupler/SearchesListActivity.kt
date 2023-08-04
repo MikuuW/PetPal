@@ -1,22 +1,19 @@
 package com.mikuw.coupler
 
-import Datasource_Firebase_Searches
-import SearchesAdapter
+import com.mikuw.coupler.data.Datasource_Firebase_Searches
+import com.mikuw.coupler.adapter.SearchesAdapter
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.size
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.mikuw.coupler.model.Search
 

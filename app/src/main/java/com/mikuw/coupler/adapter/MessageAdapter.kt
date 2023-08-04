@@ -37,11 +37,9 @@ class MessageAdapter(
         return ItemViewHolder(adapterLayout)
     }
 
-
     override fun getItemCount(): Int {
         return dataset.size
     }
-
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
@@ -71,22 +69,11 @@ class MessageAdapter(
                 if (documentSnapshot.exists()) {
                     val firstname = documentSnapshot.getString("firstname")
                     val lastname = documentSnapshot.getString("lastname")
-
-                    // Use the firstname and lastname values
-                    // e.g., display them in a TextView
-
                     holder.tv_sender.text = "$firstname $lastname"
-                } else {
-                    // Handle the case where the document does not exist
                 }
             }
             .addOnFailureListener { exception ->
-                // Handle any errors that occurred during the retrieval
             }
-
-
-
-
         holder.itemView.setOnClickListener {
             itemClickListener?.onItemClick(item)
         }

@@ -1,3 +1,4 @@
+package com.mikuw.coupler.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -36,12 +37,10 @@ class SelectPetsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item_pets_select, parent, false)
-
         return ItemViewHolder(adapterLayout)
     }
 
     override fun getItemCount(): Int {
-
         return dataset.size
     }
 
@@ -55,11 +54,9 @@ class SelectPetsAdapter(
             .resize(400, 400)
             .centerCrop()
             .into(holder.iv_image)
-
         holder.itemView.setOnClickListener {
             listener?.onItemClick(item)
         }
-
         holder.cb_select.isChecked = selectedItems.contains(item)
         holder.cb_select.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -67,7 +64,6 @@ class SelectPetsAdapter(
             } else {
                 selectedItems.remove(item)
             }
-
         }
     }
 
