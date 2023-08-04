@@ -69,9 +69,27 @@ class UserRegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun registerUser(
+    companion object {
+        fun isRegistrationDataValid(
+            email: String,
+            password: String,
+            passwordConfirmation: String,
+            agbAccepted: Boolean
+        ): Boolean {
+            if (email.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()) {
+                return false
+            } else if (password != passwordConfirmation) {
+                return false
+            } else if (!agbAccepted) {
+                return false
+            }
+            return true
+        }
+    }
 
-    ) {
+
+
+    private fun registerUser() {
         val email = findViewById<TextView>(R.id.etv_register_email).text.toString()
         val firstname = findViewById<TextView>(R.id.etv_register_firstname).text.toString()
         val lastname = findViewById<TextView>(R.id.etv_register_lastname).text.toString()
@@ -83,23 +101,15 @@ class UserRegisterActivity : AppCompatActivity() {
         val passwordConfirmation =
             findViewById<TextView>(R.id.etv_register_passwordConfirmation).text.toString()
 
-        val auth = FirebaseAuth.getInstance()
-
-        // Wenn ein Feld leer ist oder Passwörter nicht übereinstimmen
-        if (email.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()) {
-            Toast.makeText(this, "Please fill all the fields.", Toast.LENGTH_SHORT).show()
-        } else if (password != passwordConfirmation) {
-            Toast.makeText(this, "Passwords does not match!", Toast.LENGTH_SHORT).show()
-        }
-
         // Get reference to the AGB checkbox
         val agbCheckBox = findViewById<CheckBox>(R.id.cb_agb)
 
-        // Check if AGB checkbox is checked
-        if (!agbCheckBox.isChecked) {
-            Toast.makeText(this, "You must accept our AGBs", Toast.LENGTH_SHORT).show()
+        if (!isRegistrationDataValid(email, password, passwordConfirmation, agbCheckBox.isChecked)) {
+            Toast.makeText(this, "Please fill all the fields and make sure passwords match and AGBs are accepted.", Toast.LENGTH_SHORT).show()
             return
         }
+
+        val auth = FirebaseAuth.getInstance()
 
         try {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
@@ -153,8 +163,10 @@ class UserRegisterActivity : AppCompatActivity() {
             Toast.makeText(
                 baseContext, "Error! Try again.",
                 Toast.LENGTH_SHORT
-            ).show()        }
+            ).show()
+        }
     }
+
 
     private fun createUserInFirestore(
         firstname: String,
