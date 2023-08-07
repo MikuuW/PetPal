@@ -88,20 +88,17 @@ class PetProfileEditActivity : AppCompatActivity() {
                         } else {
                             // Image upload failed
                             Log.e(TAG, "Error uploading image to Firebase Storage")
-                            // Handle the error or show an error message
                         }
                     }
                 } else {
                     // Pet update failed
                     Log.e(TAG, "Error updating pet in Firestore")
-                    // Handle the error or show an error message
                 }
             }
         }
-
     }
 
-
+    // uploads image to firebase storage
     private fun uploadImageToFirebaseStorage(name: String?, callback: (Boolean) -> Unit) {
         val timestamp = System.currentTimeMillis()
         val storageRef = FirebaseStorage.getInstance().reference.child("images_pets/")
@@ -130,12 +127,11 @@ class PetProfileEditActivity : AppCompatActivity() {
                 callback(false)
             }
         } else {
-            // Image URI is empty
-            callback(true) // No image to upload, consider it as success
+            callback(true)
         }
     }
 
-
+    // updates pet in firestore
     private fun updatePetInFirestore(name: String?, desc: String?, callback: (Boolean) -> Unit) {
         val owner = FirebaseAuth.getInstance().currentUser?.uid
         val db = FirebaseFirestore.getInstance()
@@ -235,7 +231,7 @@ class PetProfileEditActivity : AppCompatActivity() {
         }
     }
 
-
+    // updates image uri in firestore
     private fun updateUriInFirestore(name: String?, uri: String?, callback: (Boolean) -> Unit) {
         val owner = FirebaseAuth.getInstance().currentUser?.uid
         val db = FirebaseFirestore.getInstance()
@@ -269,7 +265,7 @@ class PetProfileEditActivity : AppCompatActivity() {
             }
     }
 
-
+    // displays image from uri
     private fun displayImage(uri: String?) {
         val iv_petProfile_image = findViewById<ImageView>(R.id.iv_petProfile_image)
         Picasso.get()

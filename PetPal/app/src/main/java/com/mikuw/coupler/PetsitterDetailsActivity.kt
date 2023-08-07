@@ -48,8 +48,6 @@ class PetsitterDetailsActivity : AppCompatActivity() {
         val name = "$firstname $lastname"
         val adress = "$street $streetNr\n$postalcode $city"
 
-        // Get views
-
         // Call functions
         setValues(name, adress, desc)
         displayImage(imageUri.toString())
@@ -64,6 +62,7 @@ class PetsitterDetailsActivity : AppCompatActivity() {
         }
     }
 
+    // functions that enables to contact the petsitter
     private fun handleButtonClick(email: String?) {
         val btn = findViewById<TextView>(R.id.btn_petsitter_details)
 
@@ -76,12 +75,11 @@ class PetsitterDetailsActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             } else {
-                // Petsitter document not found or error occurred
-                // Handle the case accordingly
             }
         }
     }
 
+    // retrieve the document id of the petsitter with the given email
     fun getPetsitterDocIdByEmail(email: String?, callback: (String?) -> Unit) {
         val db = FirebaseFirestore.getInstance()
         val petsitterCollection = db.collection("petsitters")
@@ -93,11 +91,11 @@ class PetsitterDetailsActivity : AppCompatActivity() {
                 val docId = documentSnapshot.id
                 callback(docId)
             } else {
-                // No petsitter document found with the given email
+                // No petsitter document found
                 callback(null)
             }
         }.addOnFailureListener { exception ->
-            // Error occurred while retrieving the petsitter document
+            // Error occurred while retrieving
             callback(null)
         }
     }

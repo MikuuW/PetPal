@@ -33,9 +33,6 @@ class UserLoginActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupNavigationDrawer(this)
-        //TEST BURGER MENU
-
-        // Do any additional setup for your activity here
 
         val btn = findViewById<TextView>(R.id.tv_register_here)
 
@@ -44,8 +41,6 @@ class UserLoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-        // Variablen zuweisen
         val emailTextView = findViewById<TextView>(R.id.etv_login_email)
         val passwordTextView = findViewById<TextView>(R.id.etv_login_password)
         val loginButton = findViewById<Button>(R.id.button_login)
@@ -58,8 +53,6 @@ class UserLoginActivity : AppCompatActivity() {
                 val auth = FirebaseAuth.getInstance()
                 auth.signInWithEmailAndPassword(email, password)
             } else {
-                // Handle the case when any of the fields are empty
-                // For example, show an error message to the user
                 println("Please fill all the fields.")
             }
         }
@@ -90,8 +83,6 @@ class UserLoginActivity : AppCompatActivity() {
                         }
                     }
             } else {
-                // Handle the case when any of the fields are empty
-                // For example, show an error message to the user
                 println("Please fill all the fields.")
             }
         }

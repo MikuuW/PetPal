@@ -9,9 +9,9 @@ import com.mikuw.coupler.model.Pet
 class Datasource_Firebase_Pets {
     private val db = FirebaseFirestore.getInstance()
 
+    // load all pets from a user
     fun loadPets(callback: (List<Pet>) -> Unit) {
         val currentUser = FirebaseAuth.getInstance().currentUser
-
         db.collection("pets")
             .whereEqualTo("owner", currentUser?.uid)
             .get()
@@ -29,11 +29,11 @@ class Datasource_Firebase_Pets {
             }
     }
 
+    // load selected pets from specific search
     fun loadPetsinSearch(docId: String, callback: (List<Pet>) -> Unit) {
         if (docId != null) {
             val db = FirebaseFirestore.getInstance()
             val documentRef = db.collection("searches").document(docId)
-
             documentRef.get().addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()) {
                     val petList = documentSnapshot.get("pets") as? List<HashMap<String, Any>>
@@ -70,5 +70,4 @@ class Datasource_Firebase_Pets {
             callback(emptyList()) // Return an empty list if the document ID is null
         }
     }
-
 }

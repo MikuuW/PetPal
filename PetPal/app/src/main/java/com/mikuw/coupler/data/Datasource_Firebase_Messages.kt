@@ -6,6 +6,8 @@ import com.mikuw.coupler.model.Message
 
 class Datasource_Firebase_Messages {
     private val db = FirebaseFirestore.getInstance()
+
+    // load all messages for a user
     fun loadMessages(callback: (List<Message>) -> Unit) {
         val currentUser = FirebaseAuth.getInstance().currentUser
         db.collection("messages")

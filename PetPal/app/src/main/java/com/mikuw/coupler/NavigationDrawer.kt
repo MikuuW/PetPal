@@ -1,4 +1,5 @@
 package com.mikuw.coupler
+
 import android.app.Activity
 import android.content.Intent
 import android.widget.ImageButton
@@ -85,10 +86,10 @@ fun setupNavigationDrawer(activity: Activity) {
     handleNotLoggedInUser(navView)
 }
 
+// handle non-logged in user
 fun handleNotLoggedInUser(navView: NavigationView) {
     val btn_register = navView.getHeaderView(0).findViewById<ImageButton>(R.id.ib_nav_register)
     val tv_show_name = navView.getHeaderView(0).findViewById<TextView>(R.id.nav_header_name)
-
 
     val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
     if (isLoggedIn) {
@@ -105,11 +106,10 @@ fun handleNotLoggedInUser(navView: NavigationView) {
         navMessagesItem?.isVisible = false
         val navBecomePetsitter = navView.menu.findItem(R.id.nav_become_petsitter)
         navBecomePetsitter?.isVisible = false
-
-
     }
 }
 
+// retrieve user's name and email
 fun getUserNameAndEmail(navView: NavigationView) {
     val db = FirebaseFirestore.getInstance()
     val currentUser = FirebaseAuth.getInstance().currentUser
@@ -119,24 +119,18 @@ fun getUserNameAndEmail(navView: NavigationView) {
     val tv_show_email = navView.getHeaderView(0).findViewById<TextView>(R.id.nav_header_email)
     val tv_show_name = navView.getHeaderView(0).findViewById<TextView>(R.id.nav_header_name)
 
-
-
     userRef?.get()?.addOnSuccessListener { document ->
         if (document != null && document.exists()) {
-            // retrieve the user's data
             val email = document.getString("email")
             val firstname = document.getString("firstname")
             val lastname = document.getString("lastname")
             val name = "$firstname $lastname"
-            // do something with the retrieved data
             tv_show_name.text = name
             tv_show_email.text = email
         } else {
-            // handle the case when the document does not exist
             println("No such document")
         }
     }?.addOnFailureListener { exception ->
-        // handle any exceptions that occur
         println("Error getting documents: $exception")
     }
 }

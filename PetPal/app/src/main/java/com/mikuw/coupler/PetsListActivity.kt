@@ -37,8 +37,6 @@ class PetsListActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupNavigationDrawer(this)
-        //TEST BURGER MENU
-        // Initialize data.
         val datasourceFirebasePets = Datasource_Firebase_Pets()
 
         datasourceFirebasePets.loadPets { pets ->
@@ -53,20 +51,16 @@ class PetsListActivity : AppCompatActivity() {
                     }
                 })
             }
-
             recyclerView.setHasFixedSize(true)
         }
         handleNotLoggedInUser()
     }
 
     private fun handleNotLoggedInUser() {
-        // make visible
         val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
         val textView = findViewById<TextView>(R.id.tv_pet_list_not_logged_in)
         val button = findViewById<TextView>(R.id.btn_pet_list_not_logged_in)
         val layout = findViewById<DrawerLayout>(R.id.tv_edit_image)
-
-
 
         if (!isLoggedIn) {
             layout.setBackgroundColor(Color.parseColor("#b1a7a6"))

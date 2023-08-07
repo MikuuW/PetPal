@@ -40,11 +40,11 @@ class MessageWriteActivity : AppCompatActivity() {
         }
     }
 
+    // send message to selected user
     private fun sendMessage(receiverUid: String?, title: String?) {
         val db = FirebaseFirestore.getInstance()
         val userID = FirebaseAuth.getInstance().currentUser?.uid
         val tv_content = findViewById<EditText>(R.id.et_msg_write_content)
-
 
         val message = hashMapOf(
             "title" to title,

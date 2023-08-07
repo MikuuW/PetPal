@@ -48,7 +48,6 @@ class SearchCreateActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupNavigationDrawer(this)
-        //TEST BURGER MENU
 
         val fromDatePickerButton = findViewById<Button>(R.id.btn_select_from)
         fromDatePickerButton.setOnClickListener {
@@ -102,7 +101,7 @@ class SearchCreateActivity : AppCompatActivity() {
         }
     }
 
-
+    // creates a new search in firestore
     private fun createMissionInFirestore(
         title: String,
         fromDate: Date,
@@ -110,7 +109,6 @@ class SearchCreateActivity : AppCompatActivity() {
         desc: String,
         pets: List<Pet>
     ) {
-
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
@@ -145,7 +143,7 @@ class SearchCreateActivity : AppCompatActivity() {
             }
     }
 
-
+    // displays a calender to select a date
     private fun showDatePicker(selectButton: Button, isFromDate: Boolean) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)

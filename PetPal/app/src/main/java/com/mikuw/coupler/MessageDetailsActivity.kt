@@ -33,21 +33,16 @@ class MessageDetailsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupNavigationDrawer(this)
-        // WEITER
         val message = intent.getSerializableExtra("message") as? Message
-
-
         if (message != null) {
             displayMessage(message)
         }
-
         if (message != null) {
             handleAnswerButton(message)
         }
-
-
     }
 
+    // gives the title and receiverUid to the MessageWriteActivity in order to write an answer message
     private fun handleAnswerButton(message: Message) {
         val btn_answer = findViewById<TextView>(R.id.btn_message_details)
         btn_answer.setOnClickListener {
@@ -56,10 +51,9 @@ class MessageDetailsActivity : AppCompatActivity() {
             intent.putExtra("title", message.title)
             startActivity(intent)
         }
-
     }
 
-
+    // display the message
     private fun displayMessage(message: Message) {
         //views holen
         val tv_sender = findViewById<TextView>(R.id.tv_msg_details_sender)
@@ -74,16 +68,11 @@ class MessageDetailsActivity : AppCompatActivity() {
                 if (documentSnapshot.exists()) {
                     val firstname = documentSnapshot.getString("firstname")
                     val lastname = documentSnapshot.getString("lastname")
-
-                    // Use the firstname and lastname values
-                    // e.g., display them in a TextView
                     tv_sender.text = "Message from $firstname $lastname"
                 } else {
-                    // Handle the case where the document does not exist
                 }
             }
             .addOnFailureListener { exception ->
-                // Handle any errors that occurred during the retrieval
             }
 
         val timestamp = message.timestamp

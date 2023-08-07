@@ -8,6 +8,7 @@ import com.mikuw.coupler.model.Search
 class Datasource_Firebase_Searches {
     private val db = FirebaseFirestore.getInstance()
 
+    // load all searches
     fun loadSearches(callback: (List<Search>) -> Unit) {
         db.collection("searches")
             .get()
@@ -40,6 +41,7 @@ class Datasource_Firebase_Searches {
             }
     }
 
+    // load only searches from the current user
     fun loadMySearches(callback: (List<Search>) -> Unit) {
         db.collection("searches")
             .get()
@@ -73,6 +75,7 @@ class Datasource_Firebase_Searches {
             }
     }
 
+    // load only searches from the current user which are marked as done
     fun loadMyPastSearches(callback: (List<Search>) -> Unit) {
         db.collection("searches")
             .get()

@@ -39,13 +39,11 @@ class SearchesListActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupNavigationDrawer(this)
-        // WEITER
 
-        // Daten laden
+        // load data from firebase
         loadMySearches()
         loadMyPastSearches()
 
-        // Views zuweisen
         setView(
             findViewById(R.id.my_searches_list),
             findViewById(R.id.my_searches_row_header),
@@ -60,19 +58,15 @@ class SearchesListActivity : AppCompatActivity() {
     }
 
     private fun handleNotLoggedInUser() {
-        // make visible
         val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
         val textView = findViewById<TextView>(R.id.tv_searches_list_not_logged_in)
         val button = findViewById<TextView>(R.id.btn_searches_list_not_logged_in)
-
-        //make gone
 
         val title1 = findViewById<TextView>(R.id.my_searches_title)
         val title2 = findViewById<TextView>(R.id.past_searches_title)
         val button1 = findViewById<ImageView>(R.id.my_searches_icon)
         val button2 = findViewById<ImageView>(R.id.past_searches_icon)
         val layout = findViewById<DrawerLayout>(R.id.tv_edit_image)
-
 
         if (!isLoggedIn) {
             layout.setBackgroundColor(Color.parseColor("#b1a7a6"))
@@ -89,6 +83,7 @@ class SearchesListActivity : AppCompatActivity() {
         }
     }
 
+    // sets the views with the loaded data
     private fun setView(recyclerView: RecyclerView, title: LinearLayout, icon: ImageView) {
         recyclerView.visibility = RecyclerView.GONE
         icon.setImageResource(R.drawable.baseline_keyboard_arrow_down_24)
@@ -104,19 +99,16 @@ class SearchesListActivity : AppCompatActivity() {
         }
     }
 
-
+    // loads only the searches for the current user
     private fun loadMySearches() {
-        // Initialize data.
         val datasourceFirebaseSearches = Datasource_Firebase_Searches()
 
 
         val recyclerView = findViewById<RecyclerView>(R.id.my_searches_list)
         val searchesAdapter = SearchesAdapter(this, emptyList())
-        // Create an empty adapter initially
         recyclerView.adapter = searchesAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Set the item click listener for the events adapter
         datasourceFirebaseSearches.loadMySearches { searches ->
             val recyclerView = findViewById<RecyclerView>(R.id.my_searches_list)
             recyclerView.adapter = SearchesAdapter(this, searches).apply {
@@ -126,7 +118,6 @@ class SearchesListActivity : AppCompatActivity() {
                             Intent(this@SearchesListActivity, SearchDetailsActivity::class.java)
                         intent.putExtra("search", search)
                         startActivity(intent)
-
                     }
                 })
             }
@@ -135,24 +126,21 @@ class SearchesListActivity : AppCompatActivity() {
 
         datasourceFirebaseSearches.loadMySearches { searches ->
             searchesAdapter.dataset = searches // Update the dataset in the adapter
-            searchesAdapter.notifyDataSetChanged() // Notify the adapter that the data has changed
+            searchesAdapter.notifyDataSetChanged()
             val my_searches_title = findViewById<TextView>(R.id.my_searches_title)
             my_searches_title.text = "My current Searches (${searches.size})"
         }
     }
 
+    // load searches which are marked as done
     private fun loadMyPastSearches() {
-        // Initialize data.
         val datasourceFirebaseSearches = Datasource_Firebase_Searches()
-
 
         val recyclerView = findViewById<RecyclerView>(R.id.past_searches_list)
         val searchesAdapter = SearchesAdapter(this, emptyList())
-        // Create an empty adapter initially
         recyclerView.adapter = searchesAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Set the item click listener for the events adapter
         datasourceFirebaseSearches.loadMyPastSearches { searches ->
             val recyclerView = findViewById<RecyclerView>(R.id.past_searches_list)
             recyclerView.adapter = SearchesAdapter(this, searches).apply {
@@ -162,16 +150,14 @@ class SearchesListActivity : AppCompatActivity() {
                             Intent(this@SearchesListActivity, SearchDetailsActivity::class.java)
                         intent.putExtra("search", search)
                         startActivity(intent)
-
                     }
                 })
             }
             recyclerView.setHasFixedSize(true)
         }
-
         datasourceFirebaseSearches.loadMyPastSearches { searches ->
             searchesAdapter.dataset = searches // Update the dataset in the adapter
-            searchesAdapter.notifyDataSetChanged() // Notify the adapter that the data has changed
+            searchesAdapter.notifyDataSetChanged()
             val past_searches_title = findViewById<TextView>(R.id.past_searches_title)
             past_searches_title.text = "Past Searches (${searches.size})"
         }

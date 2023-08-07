@@ -39,12 +39,9 @@ class PetProfileShowActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.title = "$name's Profile"
 
-        // Get the views
         val tv_pet_desc = findViewById<TextView>(R.id.et_pet_desc)
 
-        // assign the desc value to the textview
         tv_pet_desc.text = desc
-
 
         displayImage(imageUri)
 

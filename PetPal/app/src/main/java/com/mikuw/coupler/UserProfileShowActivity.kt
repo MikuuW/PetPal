@@ -39,8 +39,6 @@ class UserProfileShowActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupNavigationDrawer(this)
-        //TEST BURGER MENU
-        // Display the email in a TextView
         getProfileInformation()
 
         val btn_edit_profile = findViewById<Button>(R.id.btn_edit_profile)
@@ -54,14 +52,10 @@ class UserProfileShowActivity : AppCompatActivity() {
             val intent = Intent(this, ChangePasswordActivity::class.java)
             startActivity(intent)
         }
-
         handleNotLoggedInUser()
-
-
     }
 
     private fun handleNotLoggedInUser() {
-        // make visible
         val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
 
         val textView = findViewById<TextView>(R.id.tv_user_profile_show_not_logged_in)
@@ -78,11 +72,8 @@ class UserProfileShowActivity : AppCompatActivity() {
         val iv_image = findViewById<ImageView>(R.id.iv_profile_show_image)
         val layout = findViewById<DrawerLayout>(R.id.tv_edit_image)
 
-
-
         if (!isLoggedIn) {
             layout.setBackgroundColor(Color.parseColor("#b1a7a6"))
-
             tv_email.visibility = TextView.GONE
             tv_name.visibility = TextView.GONE
             tv_street.visibility = TextView.GONE
@@ -92,7 +83,6 @@ class UserProfileShowActivity : AppCompatActivity() {
             btn_edit_profile.visibility = TextView.GONE
             btn_change_pw.visibility = TextView.GONE
             iv_image.visibility = TextView.GONE
-
             textView.visibility = TextView.VISIBLE
             button.visibility = TextView.VISIBLE
             button.setOnClickListener {
@@ -130,7 +120,6 @@ class UserProfileShowActivity : AppCompatActivity() {
                 val email = document.getString("email")
                 val desc = document.getString("desc")
 
-                // do something with the retrieved data
                 tv_show_firstname.text = "$firstname $lastname"
                 tv_show_street.text = street + " " + streetNr
                 tv_show_postalcode.text = postalcode + " " + city
@@ -146,11 +135,9 @@ class UserProfileShowActivity : AppCompatActivity() {
                 }
 
             } else {
-                // handle the case when the document does not exist
                 println("No such document")
             }
         }.addOnFailureListener { exception ->
-            // handle any exceptions that occur
             println("Error getting documents: $exception")
         }
     }

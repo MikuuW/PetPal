@@ -36,13 +36,14 @@ class ChangePasswordActivity : AppCompatActivity() {
         submit.setOnClickListener { changePassword() }
     }
 
+    // function that enables password reset
     private fun changePassword() {
         val tv_password_new = findViewById<TextView>(R.id.tv_change_pw).text.toString()
         val tv_password_new_confirmation =
             findViewById<TextView>(R.id.tv_change_pw_confirm).text.toString()
         val tv_password_current = findViewById<TextView>(R.id.tv_change_pw_old).text.toString()
 
-        // Passwort checken
+        // check new password
         if (tv_password_new == tv_password_new_confirmation) {
             if (tv_password_new.length < 6) {
                 Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT)
@@ -54,18 +55,14 @@ class ChangePasswordActivity : AppCompatActivity() {
             return
         }
 
-
         val user = FirebaseAuth.getInstance().currentUser
         val credential =
             EmailAuthProvider.getCredential(user?.email.toString(), tv_password_current)
-
-// Prompt the user to reauthenticate with their current password
+        // Prompt the user to reauthenticate with their current password
         user?.reauthenticate(credential)
             ?.addOnCompleteListener { reauthTask ->
                 if (reauthTask.isSuccessful) {
                     // User has been successfully reauthenticated
-                    // Proceed with changing the password
-
                     user.updatePassword(tv_password_new)
                         .addOnCompleteListener { passwordUpdateTask ->
                             if (passwordUpdateTask.isSuccessful) {
@@ -89,8 +86,6 @@ class ChangePasswordActivity : AppCompatActivity() {
                     Toast.makeText(this, "Reauthentication failed", Toast.LENGTH_SHORT).show()
                 }
             }
-
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

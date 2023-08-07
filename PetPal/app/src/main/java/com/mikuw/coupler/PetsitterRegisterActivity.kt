@@ -41,6 +41,7 @@ class PetsitterRegisterActivity : AppCompatActivity() {
 
     }
 
+    // creates petsitter in firestore
     private fun createPetsitterInFirestore() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         val db = FirebaseFirestore.getInstance()
@@ -81,6 +82,7 @@ class PetsitterRegisterActivity : AppCompatActivity() {
         }
     }
 
+    // sets isPetsitter in firestore to true
     private fun setAsPetsitter(userId: String) {
         val db = FirebaseFirestore.getInstance()
         val userRef = db.collection("users").document(userId)
@@ -88,10 +90,8 @@ class PetsitterRegisterActivity : AppCompatActivity() {
         userRef
             .update("isPetsitter", true)
             .addOnSuccessListener {
-                // Update successful
             }
             .addOnFailureListener { e ->
-                // Error occurred
                 e.printStackTrace()
             }
     }

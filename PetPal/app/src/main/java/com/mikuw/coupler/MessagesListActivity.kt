@@ -38,21 +38,18 @@ class MessagesListActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupNavigationDrawer(this)
-        // WEITER
 
         // Setup RecyclerView
         loadMessages()
         handleNotLoggedInUser()
     }
 
-
+    // forbid access for non-authenticated users
     private fun handleNotLoggedInUser() {
-        // make visible
         val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
         val textView = findViewById<TextView>(R.id.tv_messages_list_not_logged_in)
         val button = findViewById<TextView>(R.id.btn_messages_list_not_logged_in)
         val layout = findViewById<DrawerLayout>(R.id.tv_edit_image)
-
 
         if (!isLoggedIn) {
             layout.setBackgroundColor(Color.parseColor("#b1a7a6"))
@@ -65,22 +62,20 @@ class MessagesListActivity : AppCompatActivity() {
         }
     }
 
+    // load all messages for the user from the database
     private fun loadMessages() {
-        // Initialize data.
         val datasourceFirebaseMessages = Datasource_Firebase_Messages()
 
         val recyclerView = findViewById<RecyclerView>(R.id.rv_messages)
         val messagesAdapter = MessageAdapter(this, emptyList())
         recyclerView.adapter = messagesAdapter
 
-        // Load the messages from the data source
         datasourceFirebaseMessages.loadMessages { messages ->
             val sortedMessages = messages.sortedByDescending { it.timestamp }
             messagesAdapter.dataset = sortedMessages
             messagesAdapter.notifyDataSetChanged()
         }
 
-        // Set the item click listener for the events adapter
         messagesAdapter.setOnItemClickListener(object : MessageAdapter.OnItemClickListener {
             override fun onItemClick(message: Message) {
                 val intent = Intent(this@MessagesListActivity, MessageDetailsActivity::class.java)
@@ -90,12 +85,10 @@ class MessagesListActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
-
-        // Use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true)
     }
 
+    // mark a message as read in the database
     fun markMessageAsRead(messageContent: String) {
         val db = FirebaseFirestore.getInstance()
         val collectionRef = db.collection("messages")

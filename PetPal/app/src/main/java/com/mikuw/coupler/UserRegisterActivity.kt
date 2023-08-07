@@ -47,20 +47,15 @@ class UserRegisterActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupNavigationDrawer(this)
-        //TEST BURGER MENU
 
-        //TEST IMAGE PICKER
         iv_register_image = findViewById<ImageView>(R.id.iv_register_image)
         iv_register_image.setOnClickListener {
             openImagePicker()
         }
 
-        // Variablen zuweisen
-
         val registerButton = findViewById<Button>(R.id.button_register)
         registerButton.setOnClickListener {
             registerUser(
-
             )
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -86,7 +81,6 @@ class UserRegisterActivity : AppCompatActivity() {
         }
     }
 
-
     private fun registerUser() {
         val email = findViewById<TextView>(R.id.etv_register_email).text.toString()
         val firstname = findViewById<TextView>(R.id.etv_register_firstname).text.toString()
@@ -101,7 +95,6 @@ class UserRegisterActivity : AppCompatActivity() {
 
         // Get reference to the AGB checkbox
         val agbCheckBox = findViewById<CheckBox>(R.id.cb_agb)
-
         if (!isRegistrationDataValid(
                 email,
                 password,
@@ -122,7 +115,7 @@ class UserRegisterActivity : AppCompatActivity() {
         try {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Login successful, you can get the user information from the AuthResult object
+                    // Login successful
                     var userId = FirebaseAuth.getInstance().currentUser?.uid
                     createUserInFirestore(
                         firstname,
@@ -140,7 +133,7 @@ class UserRegisterActivity : AppCompatActivity() {
                         this, "User created successful", Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    // Login failed, handle specific types of exceptions
+                    // Login failed
                     when (val exception = task.exception) {
                         is FirebaseAuthWeakPasswordException -> {
                             Toast.makeText(
@@ -158,7 +151,7 @@ class UserRegisterActivity : AppCompatActivity() {
                             ).show()
                         }
                         else -> {
-                            // Unknown error occurred, display a generic error message
+                            // error occurred, display error message
                             Toast.makeText(
                                 this, "An error occurred: ${exception?.message}", Toast.LENGTH_SHORT
                             ).show()
@@ -186,7 +179,6 @@ class UserRegisterActivity : AppCompatActivity() {
         email: String,
         userId: String
     ) {
-        // Access a Cloud Firestore instance from your Activity
         val db = FirebaseFirestore.getInstance()
 
         // Create a new user object with the given email
@@ -200,6 +192,7 @@ class UserRegisterActivity : AppCompatActivity() {
                 "postalcode" to postalcode,
                 "city" to city,
                 "email" to email,
+                // false by default
                 "isPetsitter" to false
             )
             db.collection("users")
@@ -212,9 +205,6 @@ class UserRegisterActivity : AppCompatActivity() {
                     Log.w(TAG, "Error adding document", e)
                 }
         }
-
-        // Set the user object to a new document in the "users" collection with the user ID as the document ID
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -267,7 +257,6 @@ class UserRegisterActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 REQUEST_IMAGE_CAPTURE -> {
@@ -305,4 +294,4 @@ class UserRegisterActivity : AppCompatActivity() {
             callback(null)
         }
     }
-} //end
+}

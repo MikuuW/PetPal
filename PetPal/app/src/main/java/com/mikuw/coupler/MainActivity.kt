@@ -16,11 +16,14 @@ import com.mikuw.coupler.model.Petsitter
 import com.mikuw.coupler.model.Search
 
 // TODO: Alle Files durchgehen, und Empty Spaces entfernen und Code+Comments aufräumen
+
+
 // TODO: Tests in die Doku packen
 // TODO: Doku ins Directory
 // TODO: Video ins Directory
 // TODO: README.md erstellen
 // TODO: 2. Account erstellen und testen und in die Doku+Readme packen, damit man auch Testen kann, sich Nacahrichten zu schicken
+// TODO: APK File erstellen
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,13 +54,12 @@ class MainActivity : AppCompatActivity() {
         val switch = findViewById<SwitchMaterial>(R.id.switch_petsitter)
         switch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                // Load events from the second collection
+                // Load petsitter in Recyclerview
                 loadPetsitters()
                 val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
                 recyclerView.adapter = null
-                //loadOriginalCollectionEvents()
             } else {
-                // Load events from the original collection
+                // Load searches in RecyclerView
                 loadSearches()
             }
         }
@@ -65,6 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // Function that loads all petsitters
     private fun loadPetsitters() {
         val datasourceFirebasePetsitter = Datasource_Firebase_Petsitter()
 
@@ -86,26 +89,22 @@ class MainActivity : AppCompatActivity() {
             }
             recyclerView.setHasFixedSize(true)
         }
-
-
     }
 
+    // Function that loads all searches
     private fun loadSearches() {
-        // Initialize data.
         val datasourceFirebaseSearches = Datasource_Firebase_Searches()
 
         val recyclerView = findViewById<RecyclerView>(R.id.rv_show_pets)
         val searchesAdapter = SearchesAdapter(this, emptyList())
         recyclerView.adapter = searchesAdapter
 
-        // Load the searches from the data source
         datasourceFirebaseSearches.loadSearches { searches ->
             val sortedSearches = searches.sortedBy { it.from }
             searchesAdapter.dataset = sortedSearches
             searchesAdapter.notifyDataSetChanged()
         }
 
-        // Set the item click listener for the searches adapter
         searchesAdapter.setOnItemClickListener(object : SearchesAdapter.OnItemClickListener {
             override fun onItemClick(search: Search) {
                 val intent = Intent(this@MainActivity, SearchDetailsActivity::class.java)
@@ -113,9 +112,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
-
-        // Use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true)
     }
 
@@ -126,6 +122,4 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 }

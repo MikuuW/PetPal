@@ -5,6 +5,7 @@ import com.mikuw.coupler.model.Petsitter
 
 class Datasource_Firebase_Petsitter {
     private val db = FirebaseFirestore.getInstance()
+    // load all petsitters
     fun loadPetsitter(callback: (List<Petsitter>) -> Unit) {
         db.collection("petsitters")
             .get()

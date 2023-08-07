@@ -47,7 +47,6 @@ class UserProfileEditActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupNavigationDrawer(this)
-        //TEST BURGER MENU
 
         getProfileInformation()
 
@@ -93,7 +92,6 @@ class UserProfileEditActivity : AppCompatActivity() {
     }
 
     private fun getProfileInformation() {
-
         val db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser == null) {
@@ -101,7 +99,6 @@ class UserProfileEditActivity : AppCompatActivity() {
             return
         }
         val userRef = db.collection("users").document(currentUser.uid)
-
 
         val etv_edit_firstname = findViewById<TextView>(R.id.etv_edit_profile_firstname)
         val etv_edit_lastname = findViewById<TextView>(R.id.etv_edit_profile_lastname)
@@ -115,7 +112,7 @@ class UserProfileEditActivity : AppCompatActivity() {
 
         userRef.get().addOnSuccessListener { document ->
             if (document != null && document.exists()) {
-                // Werte holen
+                // get values
                 val firstname = document.getString("firstname")
                 val lastname = document.getString("lastname")
                 val imageUrl = document.getString("imageUri")
@@ -125,7 +122,7 @@ class UserProfileEditActivity : AppCompatActivity() {
                 val city = document.getString("city")
                 val desc = document.getString("desc")
 
-                // Werte setzen
+                // set values
                 etv_edit_firstname.text = firstname
                 etv_edit_lastname.text = lastname
                 etv_edit_street.text = street
@@ -134,7 +131,7 @@ class UserProfileEditActivity : AppCompatActivity() {
                 etv_edit_city.text = city
                 etv_edit_desc.text = desc
 
-                // Bild setzen wenn vorhanden
+                // set image if available
                 if (!imageUrl.isNullOrEmpty()) {
                     Picasso.get()
                         .load(imageUrl)
@@ -147,13 +144,12 @@ class UserProfileEditActivity : AppCompatActivity() {
                 println("No such document")
             }
         }.addOnFailureListener { exception ->
-            // handle any exceptions that occur
+            // handle exceptions
             println("Error getting documents: $exception")
         }
     }
 
     private fun updateUserOnSubmit(callback: (Boolean) -> Unit) {
-        // Werte holen
         val firstname =
             findViewById<TextView>(R.id.etv_edit_profile_firstname).text.toString().trim()
         val lastname = findViewById<TextView>(R.id.etv_edit_profile_lastname).text.toString().trim()
@@ -165,11 +161,9 @@ class UserProfileEditActivity : AppCompatActivity() {
         val city = findViewById<TextView>(R.id.etv_edit_profile_city).text.toString().trim()
         val desc = findViewById<TextView>(R.id.tv_profile_edit_desc).text.toString().trim()
 
-        // Instanziieren
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        // Werte setzen
         val userUpdates = hashMapOf<String, Any>()
 
         if (firstname.isNotBlank()) {
@@ -210,7 +204,7 @@ class UserProfileEditActivity : AppCompatActivity() {
                     callback(false) // User update failed
                 }
         } else {
-            callback(true) // No updates needed, consider it a success
+            callback(true) // No updates needed
         }
     }
 
@@ -284,7 +278,6 @@ class UserProfileEditActivity : AppCompatActivity() {
         }
         builder.show()
     }
-
 
     private fun updateImageUriInFirestore(collection: String, imageUri: String) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return

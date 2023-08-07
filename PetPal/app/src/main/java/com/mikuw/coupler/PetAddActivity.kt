@@ -47,11 +47,9 @@ class PetAddActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupNavigationDrawer(this)
-        //TEST BURGER MENU
 
         val tv_pet_name = findViewById<android.widget.EditText>(R.id.et_pet_name)
         val tv_pet_desc = findViewById<android.widget.EditText>(R.id.et_pet_desc)
-
 
         val btn_pet_submit = findViewById<View>(R.id.btn_pet_submit)
         btn_pet_submit.setOnClickListener {
@@ -59,18 +57,11 @@ class PetAddActivity : AppCompatActivity() {
                 tv_pet_name.text.toString(),
                 tv_pet_desc.text.toString(),
             )
-
-
         }
-
-        // TEST IMAGE UPLOAD
         iv_pet_add_image = findViewById(R.id.iv_pet_add_image)
         iv_pet_add_image.setOnClickListener {
             openImagePicker()
         }
-
-
-        // TEST IMAGE UPLOAD ENDE
     }
 
 
@@ -110,13 +101,11 @@ class PetAddActivity : AppCompatActivity() {
         data?.data?.let { imageUri ->
             iv_pet_add_image.setImageURI(imageUri)
             this.imageUri = imageUri
-            println("In SetImageFromPicker: $imageUri")
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 REQUEST_IMAGE_CAPTURE -> {
@@ -135,6 +124,7 @@ class PetAddActivity : AppCompatActivity() {
         }
     }
 
+    // upload image to firebase storage
     private fun uploadImageToFirebaseStorage(name: String, callback: (Uri?) -> Unit) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val storageRef = FirebaseStorage.getInstance().reference.child("images_pet/$userId/")
@@ -151,7 +141,7 @@ class PetAddActivity : AppCompatActivity() {
         }
     }
 
-
+    // create new pet in database and check if its already exists
     private fun createPetInFirestore(name: String, desc: String) {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
@@ -192,6 +182,7 @@ class PetAddActivity : AppCompatActivity() {
         }
     }
 
+    // function that checks if pet is already in the database
     private fun checkIfPetAlreadyExists(name: String, userId: String, callback: (Boolean) -> Unit) {
         val db = FirebaseFirestore.getInstance()
 
