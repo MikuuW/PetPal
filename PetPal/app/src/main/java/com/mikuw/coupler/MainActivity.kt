@@ -15,16 +15,6 @@ import com.mikuw.coupler.data.Datasource_Firebase_Petsitter
 import com.mikuw.coupler.model.Petsitter
 import com.mikuw.coupler.model.Search
 
-// TODO: Alle Files durchgehen, und Empty Spaces entfernen und Code+Comments aufräumen
-
-
-// TODO: Tests in die Doku packen
-// TODO: Doku ins Directory
-// TODO: Video ins Directory
-// TODO: README.md erstellen
-// TODO: 2. Account erstellen und testen und in die Doku+Readme packen, damit man auch Testen kann, sich Nacahrichten zu schicken
-// TODO: APK File erstellen
-
 class MainActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
